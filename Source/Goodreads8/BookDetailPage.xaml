@@ -1,0 +1,188 @@
+﻿<Page xmlns:Controls="using:Callisto.Controls"
+    x:Class="Goodreads8.BookDetailPage"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:local="using:Goodreads8"
+    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    xmlns:UI="using:Microsoft.Advertising.WinRT.UI"
+    mc:Ignorable="d"
+    Loaded="Page_Loaded">
+
+    <Page.Resources>
+        <DataTemplate x:Key="ReviewTemplate">
+            <StackPanel Orientation="Vertical" HorizontalAlignment="Left" Margin="0,0,0,30">
+                <!-- Rating -->
+				<Controls:Rating ItemCount="5" Value="{Binding Rating}"  IsEnabled="False" RenderTransformOrigin="0.5,0.5" VerticalAlignment="Center" HorizontalAlignment="Left" Margin="-14,0,0,0" Padding="0" >
+                </Controls:Rating>
+				<!-- Reviewer Name -->
+                <TextBlock Text="{Binding ReviewerText}" MaxWidth="400" TextTrimming="WordEllipsis" HorizontalAlignment="Left" Foreground="White" FontSize="18" />
+				<!-- Review body -->
+                <TextBlock TextWrapping="Wrap" MaxHeight="200" Text="{Binding BodyText}" TextTrimming="WordEllipsis"/>
+            </StackPanel>
+        </DataTemplate>
+    </Page.Resources>
+
+    <Grid>
+        <Grid.Background>
+            <ImageBrush ImageSource="Assets/BGBook.jpg" Stretch="UniformToFill"/>
+        </Grid.Background>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="*"/>
+        </Grid.RowDefinitions>
+
+        <!-- Back button and page title -->
+        <Grid VerticalAlignment="Top" Height="140" Grid.Row="0">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="Auto"/>
+                <ColumnDefinition Width="*"/>
+            </Grid.ColumnDefinitions>
+            <Button x:Name="backButton"  Style="{StaticResource BackButtonStyle}" Click="GoBack"/>
+            <TextBlock x:Name="pageTitle" Text="{Binding Title}" Grid.Column="1" IsHitTestVisible="false" Style="{StaticResource PageHeaderTextStyle}"/>
+        </Grid>
+		<!-- Progress Ring -->
+        <Grid Grid.RowSpan="2" Visibility="Collapsed" x:Name="busyGrid">
+            <ProgressRing IsActive="False" HorizontalAlignment="Center" VerticalAlignment="Center" Height="200" Width="200" x:Name="busyRing"/>
+        </Grid>
+        <ScrollViewer Style="{StaticResource HorizontalScrollViewerStyle}" Grid.Row="1">
+            <StackPanel Orientation="Horizontal" Margin="130,0,0,0">
+                <Image Source="{Binding ImageUrl}" Height="300" VerticalAlignment="Top" Margin="0,70,0,0" />
+                <Grid Margin="50,0,0,0">
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="Auto" />
+                        <RowDefinition Height="Auto" />
+                        <RowDefinition Height="Auto" />
+                        <RowDefinition Height="Auto" />
+                        <RowDefinition Height="Auto" />
+                        <RowDefinition Height="Auto" />
+                        <RowDefinition Height="*"/>
+                    </Grid.RowDefinitions>
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="120" />
+                        <ColumnDefinition Width="300" />
+                    </Grid.ColumnDefinitions>
+
+                    <TextBlock Text="Details" Grid.Column="0" Grid.ColumnSpan="2" IsHitTestVisible="false" Style="{StaticResource SubSectionHeader}" Margin="0,0,0,20"/>
+
+                    <!-- Author -->
+                    <TextBlock Grid.Row="1" Grid.Column="0" Text="Author" Style="{StaticResource DetailLabel}"/>
+                    <TextBlock Grid.Row="1" Grid.Column="1" Text="{Binding PrimaryAuthor}" x:Name="author" Style="{StaticResource DetailValue}"/>
+
+                    <!-- Rating -->
+                    <TextBlock Grid.Row="2" Grid.Column="0" Text="Rating" Style="{StaticResource DetailLabel}"/>
+
+                    <StackPanel Orientation="Horizontal" Grid.Row="2" Grid.Column="1" >
+                        <Controls:Rating x:Name="starRating" ItemCount="5" Value="{Binding AvgRating}" Margin="-14,0,0,0" IsEnabled="False" />
+                        <TextBlock  Text="{Binding AvgRating}" x:Name="rating" Style="{StaticResource DetailValue}" VerticalAlignment="Center"/>
+                    </StackPanel>
+
+                    <!-- Published -->
+                    <TextBlock Grid.Row="3" Grid.Column="0" Text="Published" Style="{StaticResource DetailLabel}"/>
+                    <TextBlock Grid.Row="3" Grid.Column="1" Text="{Binding PublishedText}" x:Name="published" Style="{StaticResource DetailValue}"/>
+
+                    <!-- ISBN -->
+                    <TextBlock Grid.Row="4" Grid.Column="0" Text="ISBN" Style="{StaticResource DetailLabel}"/>
+                    <TextBlock Grid.Row="4" Grid.Column="1" Text="{Binding ISBN}" x:Name="isbn" Style="{StaticResource DetailValue}"/>
+
+                    <!-- Shelf -->
+                    <TextBlock Grid.Row="5" Grid.Column="0" Text="Shelf" Style="{StaticResource DetailLabel}" VerticalAlignment="Center"/>
+                    <StackPanel Orientation="Horizontal" Grid.Row="5" Grid.Column="1">
+                        <TextBlock Text="" x:Name="shelfLabel" Style="{StaticResource DetailValue}" VerticalAlignment="Center"/>
+                        <Button Content="Change" Margin="20,0,0,0" Click="Shelf_Click"></Button>
+                    </StackPanel>
+
+                    <!-- Desc -->
+                    <ScrollViewer Style="{StaticResource VerticalScrollViewerStyle}" Grid.Row="6" Grid.Column="0" Grid.ColumnSpan="2" Margin="0,20,0,0">
+                        <TextBlock  x:Name="desc" Style="{StaticResource DetailValue}"
+                               TextWrapping="Wrap"
+                               Text="{Binding Description}"
+                               Margin="0,0,20,0"/>
+                    </ScrollViewer>
+                </Grid>
+
+				<!-- Reviews -->
+                <Grid Margin="80,0,0,0">
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="Auto"/>
+                        <RowDefinition Height="*"/>
+                    </Grid.RowDefinitions>
+
+                    <TextBlock Text="Reviews" IsHitTestVisible="false" Style="{StaticResource SubSectionHeader}" Margin="0,0,0,20" Grid.Row="0"/>
+                    <ListView
+                        IsItemClickEnabled="True"
+                        Width="500"
+                        Grid.Row="1"
+                        Padding="10"
+                        ItemTemplate="{StaticResource ReviewTemplate}"
+                        ItemsSource="{Binding Reviews}"
+                        SelectionMode="None"
+                        ItemClick="Review_ItemClick"/>
+                </Grid>
+
+				<!-- Friend Reviews -->
+                <Grid Margin="80,0,0,0">
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="Auto"/>
+                        <RowDefinition Height="*"/>
+                    </Grid.RowDefinitions>
+
+                    <TextBlock Text="Friend Reviews" IsHitTestVisible="false" Style="{StaticResource SubSectionHeader}" Margin="0,0,0,20" Grid.Row="0"/>
+                    <ListView
+                        IsItemClickEnabled="True"
+                        Width="500"
+                        Grid.Row="1"
+                        Padding="10"
+                        ItemTemplate="{StaticResource ReviewTemplate}"
+                        ItemsSource="{Binding FriendReviews}"
+                        SelectionMode="None"
+                        ItemClick="Review_ItemClick"/>
+                </Grid>
+
+                <!-- Ads -->
+                <Grid Margin="80,0,0,0">
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="Auto"/>
+                        <RowDefinition Height="*"/>
+                    </Grid.RowDefinitions>
+
+                    <TextBlock Text="Ads" IsHitTestVisible="false" Style="{StaticResource SubSectionHeader}" Margin="0,0,0,20" Grid.Row="0"/>
+
+                    <UI:AdControl
+                        Grid.Row="1"
+                        ApplicationId="test_client"
+                        AdUnitId="Image_300x600"
+                        HorizontalAlignment="Left"
+                        Height="600"
+                        Margin="0,0,0,0"
+                        VerticalAlignment="Top"
+                        Width="300"
+                        CountryOrRegion="US"
+                        Keywords="books,authors,nook,kindle,ebook,reading"/>
+                </Grid>
+
+            </StackPanel>
+        </ScrollViewer>
+    </Grid>
+
+    <Page.BottomAppBar>
+        <AppBar VerticalAlignment="Bottom">
+            <Grid>
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="50*"/>
+                    <ColumnDefinition Width="50*"/>
+                </Grid.ColumnDefinitions>
+                <StackPanel Orientation="Horizontal" Grid.Column="0" HorizontalAlignment="Left">
+                    <Button AutomationProperties.Name="Back" Style="{StaticResource BackAppBarButtonStyle}" HorizontalAlignment="Left" Click="GoBack"/>
+                    <Button x:Name="ButtonReview" Style="{StaticResource ReviewAppBarButtonStyle}" Tag="Review" Click="Review_Click"/>
+                    <Button Style="{StaticResource ShelfAppBarButtonStyle}" Tag="Shelves" Click="Shelf_Click"/>
+                    <Button Style="{StaticResource AuthorAppBarButtonStyle}" Tag="Author" Click="Author_Click"/>
+                    <Button x:Name="ButtonStatus" Style="{StaticResource StatusAppBarButtonStyle}" Tag="Status" Click="Status_Click"/>
+                </StackPanel>
+                <StackPanel x:Name="RightPanel" Orientation="Horizontal" Grid.Column="1" HorizontalAlignment="Right">
+                    <Button Style="{StaticResource HomeAppBarButtonStyle}" Tag="Home" Click="Home_Click"/>
+                </StackPanel>
+            </Grid>
+        </AppBar>
+    </Page.BottomAppBar>
+</Page>

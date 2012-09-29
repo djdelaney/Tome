@@ -1,0 +1,231 @@
+﻿<Page
+    xmlns:Controls="using:Callisto.Controls"
+    x:Class="Goodreads8.MainPage"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:local="using:Goodreads8"
+    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    mc:Ignorable="d"
+    xmlns:Callisto="using:Callisto.Converters"
+    xmlns:UI="using:Microsoft.Advertising.WinRT.UI">
+    <Page.Resources>
+        <Callisto:BooleanToVisibilityConverter x:Key="BooleanToVisibilityConverter"/>
+
+        <Style x:Key="SubSectionHeader" TargetType="TextBlock">
+            <Setter Property="FontSize" Value="40"/>
+            <Setter Property="FontWeight" Value="Light"/>
+            <Setter Property="LineHeight" Value="40"/>
+            <Setter Property="TextWrapping" Value="NoWrap"/>
+            <Setter Property="VerticalAlignment" Value="Bottom"/>
+        </Style>
+
+        <!--Updates Template-->
+        <DataTemplate x:Key="UpdateTemplate">
+            <StackPanel Orientation="Horizontal" HorizontalAlignment="Left">
+                <Image Source="{Binding ImageUrl}" Height="80" Width="50" VerticalAlignment="Top" Stretch="UniformToFill" />
+                <StackPanel Orientation="Vertical" HorizontalAlignment="Left" Margin="20,0,0,30" VerticalAlignment="Center" Width="400">
+                    <!-- Book title-->
+                    <TextBlock Text="{Binding UserText}" TextTrimming="WordEllipsis" HorizontalAlignment="Left" Foreground="White" FontSize="18" />
+                    <!-- Published-->
+                    <TextBlock TextWrapping="Wrap" Text="{Binding UpdateText}" FontSize="18"/>
+                </StackPanel>
+            </StackPanel>
+        </DataTemplate>
+
+        <!--Shelf Template-->
+        <DataTemplate x:Key="ShelfTemplate">
+            <Grid Width="248" Height="120" Background="#e6e1c3" Margin="10">
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="40"/>
+                    <RowDefinition Height="*"/>
+                    <RowDefinition Height="40"/>
+                </Grid.RowDefinitions>
+                <TextBlock
+                        Grid.Row="1"
+                        Text="{Binding Count}" TextTrimming="WordEllipsis" HorizontalAlignment="Center" Foreground="#FF0F0101" FontSize="48" FontFamily="Segoe UI Light" VerticalAlignment="Center" FontWeight="Bold" />
+                <TextBlock
+                        Grid.Row="2"
+                        Margin="10,0,0,10"
+                        Text="{Binding Name}" HorizontalAlignment="Left" Foreground="#FF0F0101" FontSize="18" VerticalAlignment="Bottom" FontFamily="Segoe UI"  />
+            </Grid>
+        </DataTemplate>
+    </Page.Resources>
+
+    <Grid>
+        <Grid.Background>
+            <ImageBrush ImageSource="Assets/BGShelf.jpg" Stretch="UniformToFill"/>
+        </Grid.Background>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="*"/>
+        </Grid.RowDefinitions>
+
+        <TextBlock x:Name="pageTitle" Text="Goodreads" IsHitTestVisible="false" Style="{StaticResource PageHeaderTextStyle}" Margin="40"/>
+
+		<!-- Progress Ring -->
+        <Grid Grid.RowSpan="2" Visibility="{Binding Path=IsLoading, Converter={StaticResource BooleanToVisibilityConverter}}">
+            <ProgressRing IsActive="{Binding Path=IsLoading}" HorizontalAlignment="Center" VerticalAlignment="Center" Height="200" Width="200"/>
+        </Grid>
+
+        <ScrollViewer Style="{StaticResource HorizontalScrollViewerStyle}" Grid.Row="1">
+            <StackPanel Orientation="Horizontal" Margin="130,0,0,0">
+
+                <!-- Updates -->
+                <Grid Margin="80,0,0,0">
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="Auto"/>
+                        <RowDefinition Height="*"/>
+                    </Grid.RowDefinitions>
+
+                    <TextBlock Text="Updates" IsHitTestVisible="false" Style="{StaticResource SubSectionHeader}" Margin="0,0,0,20" Grid.Row="0"/>
+                    <ListView
+                            Margin="0,10,0,0"
+                            Width="500"
+                            Grid.Row="1"
+                            Padding="10"
+                            ItemTemplate="{StaticResource UpdateTemplate}"
+                            ItemsSource="{Binding Updates}"
+                            SelectionMode="None"
+                            IsItemClickEnabled="True"
+                            ItemClick="Update_Click"/>
+                </Grid>
+
+                <!-- Shelves -->
+                <Grid Margin="80,0,0,0">
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="Auto"/>
+                        <RowDefinition Height="*"/>
+                    </Grid.RowDefinitions>
+
+                    <TextBlock Text="Shelves" IsHitTestVisible="false" Style="{StaticResource SubSectionHeader}" Margin="0,0,0,20" Grid.Row="0"/>
+                    <ListView
+                            Width="315"
+                            Grid.Row="1"
+                            Padding="10"
+                            IsItemClickEnabled="True"
+                            ItemsSource="{Binding Shelves}"
+                            SelectionMode="None"
+                            ItemClick="Shelf_ItemClick"
+                            ItemTemplate="{StaticResource ShelfTemplate}"/>
+                </Grid>
+
+                <!-- Extras -->
+                <Grid Margin="120,0,0,0">
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="Auto"/>
+                        <RowDefinition Height="*"/>
+                    </Grid.RowDefinitions>
+
+                    <TextBlock Text="Extras" IsHitTestVisible="false" Style="{StaticResource SubSectionHeader}" Margin="0,0,0,20" Grid.Row="0"/>
+
+                    <StackPanel Orientation="Vertical" Grid.Row="1" Margin="0,4,0,0">
+                        <!-- Friends -->
+                        <Button Click="Friend_Click">
+                            <Button.Template>
+                                <ControlTemplate TargetType="Button">
+                                    <ContentPresenter Content="{TemplateBinding Content}"/>
+                                </ControlTemplate>
+                            </Button.Template>
+                            <Grid Width="248" Height="120" Background="#8d3992" Margin="0,20,0,10"  VerticalAlignment="Top">
+                                <Grid.ColumnDefinitions>
+                                    <ColumnDefinition Width="80"/>
+                                    <ColumnDefinition Width="*"/>
+                                    <ColumnDefinition Width="80"/>
+                                </Grid.ColumnDefinitions>
+                                <TextBlock Text="&#xE1E2;" Grid.Column="1"  HorizontalAlignment="Center" Foreground="#FF0F0101" FontSize="48" FontFamily="Segoe UI Symbol" VerticalAlignment="Center" />
+                                <TextBlock
+                            Margin="10,0,0,10"
+                            Text="Friends" HorizontalAlignment="Left" Foreground="#FF0F0101" FontSize="18" VerticalAlignment="Bottom" FontFamily="Segoe UI" />
+                            </Grid>
+                        </Button>
+
+                        <!-- Groups -->
+                        <Button Padding="0"  Margin="0,20,0,30" Click="Group_Click">
+                            <Button.Template>
+                                <ControlTemplate TargetType="Button">
+                                    <ContentPresenter Content="{TemplateBinding Content}"/>
+                                </ControlTemplate>
+                            </Button.Template>
+                            <Grid Width="248" Height="120" Background="#926339"  VerticalAlignment="Top">
+                                <Grid.ColumnDefinitions>
+                                    <ColumnDefinition Width="80"/>
+                                    <ColumnDefinition Width="*"/>
+                                    <ColumnDefinition Width="80"/>
+                                </Grid.ColumnDefinitions>
+                                <TextBlock Text="&#xE205;" Grid.Column="1"  HorizontalAlignment="Center" Foreground="#FF0F0101" FontSize="48" FontFamily="Segoe UI Symbol" VerticalAlignment="Center" />
+                                <TextBlock
+                                Margin="10,0,0,10"
+                                Text="Groups" HorizontalAlignment="Left" Foreground="#FF0F0101" FontSize="18" VerticalAlignment="Bottom" FontFamily="Segoe UI" />
+                            </Grid>
+                        </Button>
+
+                        <!-- Search -->
+                        <Button Click="Search_Click">
+                            <Button.Template>
+                                <ControlTemplate TargetType="Button">
+                                    <ContentPresenter Content="{TemplateBinding Content}"/>
+                                </ControlTemplate>
+                            </Button.Template>
+                            <Grid Width="248" Height="120" Background="#549239" Margin="0"  VerticalAlignment="Top">
+                                <Grid.ColumnDefinitions>
+                                    <ColumnDefinition Width="80"/>
+                                    <ColumnDefinition Width="*"/>
+                                    <ColumnDefinition Width="80"/>
+                                </Grid.ColumnDefinitions>
+                                <TextBlock Text="&#xE1A3;" Grid.Column="1"  HorizontalAlignment="Center" Foreground="#FF0F0101" FontSize="48" FontFamily="Segoe UI Symbol" VerticalAlignment="Center" />
+                                <TextBlock
+                                Margin="10,0,0,10"
+                                Text="Search" HorizontalAlignment="Left" Foreground="#FF0F0101" FontSize="18" VerticalAlignment="Bottom" FontFamily="Segoe UI" />
+                            </Grid>
+                        </Button>
+
+                        <!-- Scan -->
+                        <Button Click="Scan_Click" Margin="0,30,0,0">
+                            <Button.Template>
+                                <ControlTemplate TargetType="Button">
+                                    <ContentPresenter Content="{TemplateBinding Content}"/>
+                                </ControlTemplate>
+                            </Button.Template>
+                            <Grid Width="248" Height="120" Background="#51309d" Margin="0"  VerticalAlignment="Top">
+                                <Grid.ColumnDefinitions>
+                                    <ColumnDefinition Width="80"/>
+                                    <ColumnDefinition Width="*"/>
+                                    <ColumnDefinition Width="80"/>
+                                </Grid.ColumnDefinitions>
+                                <TextBlock Text="&#xE0FA;" Grid.Column="1"  HorizontalAlignment="Center" Foreground="#FF0F0101" FontSize="48" FontFamily="Segoe UI Symbol" VerticalAlignment="Center" />
+                                <TextBlock
+                                Margin="10,0,0,10"
+                                Text="Scan" HorizontalAlignment="Left" Foreground="#FF0F0101" FontSize="18" VerticalAlignment="Bottom" FontFamily="Segoe UI" />
+                            </Grid>
+                        </Button>
+                    </StackPanel>
+                </Grid>
+
+
+                <!-- Ads -->
+                <Grid Margin="80,0,0,0">
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="Auto"/>
+                        <RowDefinition Height="*"/>
+                    </Grid.RowDefinitions>
+
+                    <TextBlock Text="Ads" IsHitTestVisible="false" Style="{StaticResource SubSectionHeader}" Margin="0,0,0,20" Grid.Row="0"/>
+
+                    <UI:AdControl
+                        Grid.Row="1"
+                        ApplicationId="test_client"
+                        AdUnitId="Image_300x600"
+                        HorizontalAlignment="Left"
+                        Height="600"
+                        Margin="0,0,0,0"
+                        VerticalAlignment="Top"
+                        Width="300"
+                        CountryOrRegion="US"
+                        Keywords="books,authors,nook,kindle,ebook,reading"/>
+                </Grid>
+
+            </StackPanel>
+        </ScrollViewer>
+    </Grid>
+</Page>
