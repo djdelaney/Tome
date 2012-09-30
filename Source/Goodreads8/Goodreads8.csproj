@@ -302,7 +302,7 @@
   </ItemGroup>
   <ItemGroup>
     <Reference Include="Chq.OAuth">
-      <HintPath>..\..\..\..\Users\Daniel\Downloads\myquay-Chq.OAuth-fc74f3a\Chq.OAuth\bin\WinRT\Debug\Chq.OAuth.winmd</HintPath>
+      <HintPath>..\packages\Chq.OAuth.dll.0.8.3\lib\winrt45\Chq.OAuth.winmd</HintPath>
     </Reference>
   </ItemGroup>
   <PropertyGroup Condition=" '$(VisualStudioVersion)' == '' or '$(VisualStudioVersion)' &lt; '11.0' ">
