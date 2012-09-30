@@ -1,3 +1,4 @@
 syntax: glob
 Source/Goodreads8/bin/**
 Source/Goodreads8/obj/**
+Source/Goodreads8.v11.suo
