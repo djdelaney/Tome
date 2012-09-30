@@ -220,9 +220,7 @@
                         Height="600"
                         Margin="0,0,0,0"
                         VerticalAlignment="Top"
-                        Width="300"
-                        CountryOrRegion="US"
-                        Keywords="books,authors,nook,kindle,ebook,reading"/>
+                        Width="300"/>
                 </Grid>
 
             </StackPanel>
