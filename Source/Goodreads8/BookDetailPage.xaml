@@ -47,7 +47,16 @@
         </Grid>
         <ScrollViewer Style="{StaticResource HorizontalScrollViewerStyle}" Grid.Row="1">
             <StackPanel Orientation="Horizontal" Margin="130,0,0,0">
-                <Image Source="{Binding ImageUrl}" Height="300" VerticalAlignment="Top" Margin="0,70,0,0" />
+                <StackPanel Orientation="Vertical">
+                    <Image Source="{Binding ImageUrl}" Width="250" VerticalAlignment="Top" Margin="0,70,0,0" />
+                    <UI:AdControl
+                        Grid.Row="1"
+                        ApplicationId="testclient"
+                        AdUnitId="ADPT33"
+                        Height="250"
+                        Margin="0,50,0,0"
+                        Width="250"/>
+                </StackPanel>
                 <Grid Margin="50,0,0,0">
                     <Grid.RowDefinitions>
                         <RowDefinition Height="Auto" />
@@ -139,28 +148,9 @@
                         ItemClick="Review_ItemClick"/>
                 </Grid>
 
-                <!-- Ads -->
-                <Grid Margin="80,0,0,0">
-                    <Grid.RowDefinitions>
-                        <RowDefinition Height="Auto"/>
-                        <RowDefinition Height="*"/>
-                    </Grid.RowDefinitions>
-
-                    <TextBlock Text="Ads" IsHitTestVisible="false" Style="{StaticResource SubSectionHeader}" Margin="0,0,0,20" Grid.Row="0"/>
-
-                    <UI:AdControl
-                        Grid.Row="1"
-                        ApplicationId="test_client"
-                        AdUnitId="Image_300x600"
-                        HorizontalAlignment="Left"
-                        Height="600"
-                        Margin="0,0,0,0"
-                        VerticalAlignment="Top"
-                        Width="300"/>
-                </Grid>
-
             </StackPanel>
         </ScrollViewer>
+
     </Grid>
 
     <Page.BottomAppBar>

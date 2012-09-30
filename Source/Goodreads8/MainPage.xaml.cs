@@ -98,8 +98,8 @@ namespace Goodreads8
             //if they were able to login
             if (api.IsConfigured())
             {
-               // model = new MainPageViewModel();
-               // this.DataContext = model;
+                model = new MainPageViewModel();
+                this.DataContext = model;
             }
         }
 
@@ -277,14 +277,16 @@ namespace Goodreads8
                 var imageXml = wideTileXml.GetElementsByTagName("image");
                 imageXml.Item(0).Attributes.GetNamedItem("src").InnerText = u.ImageUrl;
                 var textXml = wideTileXml.GetElementsByTagName("text");
-                textXml.Item(0).InnerText = u.UpdateText;
+                if(u.UpdateText != null)
+                    textXml.Item(0).InnerText = u.UpdateText;
 
                 //Square
                 var tileXml = TileUpdateManager.GetTemplateContent(TileTemplateType.TileSquarePeekImageAndText04);
                 imageXml = tileXml.GetElementsByTagName("image");
                 imageXml.Item(0).Attributes.GetNamedItem("src").InnerText = u.ImageUrl;
                 textXml = tileXml.GetElementsByTagName("text");
-                textXml.Item(0).InnerText = u.UpdateText;
+                if (u.UpdateText != null)
+                    textXml.Item(0).InnerText = u.UpdateText;
 
                 // Merge the two XML :
                 var tempNode = wideTileXml.ImportNode(tileXml.GetElementsByTagName("binding").Item(0), true);

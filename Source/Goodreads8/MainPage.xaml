@@ -78,10 +78,10 @@
                         <RowDefinition Height="*"/>
                     </Grid.RowDefinitions>
 
-                    <TextBlock Text="Updates" IsHitTestVisible="false" Style="{StaticResource SubSectionHeader}" Margin="0,0,0,20" Grid.Row="0"/>
+                    <TextBlock Text="Updates" IsHitTestVisible="false" Style="{StaticResource SubSectionHeader}" Margin="15,0,0,20" Grid.Row="0"/>
                     <ListView
                             Margin="0,10,0,0"
-                            Width="500"
+                            Width="510"
                             Grid.Row="1"
                             Padding="10"
                             ItemTemplate="{StaticResource UpdateTemplate}"
@@ -98,9 +98,9 @@
                         <RowDefinition Height="*"/>
                     </Grid.RowDefinitions>
 
-                    <TextBlock Text="Shelves" IsHitTestVisible="false" Style="{StaticResource SubSectionHeader}" Margin="0,0,0,20" Grid.Row="0"/>
+                    <TextBlock Text="Shelves" IsHitTestVisible="false" Style="{StaticResource SubSectionHeader}" Margin="20,0,0,20" Grid.Row="0"/>
                     <ListView
-                            Width="315"
+                            Width="305"
                             Grid.Row="1"
                             Padding="10"
                             IsItemClickEnabled="True"
@@ -111,7 +111,7 @@
                 </Grid>
 
                 <!-- Extras -->
-                <Grid Margin="120,0,0,0">
+                <Grid Margin="80,0,0,0">
                     <Grid.RowDefinitions>
                         <RowDefinition Height="Auto"/>
                         <RowDefinition Height="*"/>
@@ -214,8 +214,8 @@
 
                     <UI:AdControl
                         Grid.Row="1"
-                        ApplicationId="test_client"
-                        AdUnitId="Image_300x600"
+                        ApplicationId="testclient"
+                        AdUnitId="ADPT38"
                         HorizontalAlignment="Left"
                         Height="600"
                         Margin="0,0,0,0"
