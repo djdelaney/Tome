@@ -14,90 +14,28 @@ namespace Goodreads8.ViewModel
     {
         public ShelfViewModel()
         {
+            source = null;
         }
 
         private bool isBusy;
-
         public bool IsBusy
         {
             get { return isBusy; }
             set { isBusy = value; OnPropertyChanged("IsBusy"); }
         }
 
-        public String ShelfName { get; set; }
-
-
-        private ObservableCollection<Book> _books;
-
-        public ObservableCollection<Book> Books
+        private String shelfName;
+        public String ShelfName
         {
-            get
-            {
-                if (_books == null)
-                {
-                    LoadData();//Don't await...
-                }
-                return _books;
-
-            }
-            private set
-            {
-                SetProperty(ref _books, value);
-            }
-
+            get { return shelfName; }
+            set { shelfName = value; OnPropertyChanged("ShelfName"); }
         }
 
-        private bool _isLoading;
-        public bool IsLoading
+        private IncrementalSource<IncrementalShelf, Review> source;
+        public IncrementalSource<IncrementalShelf, Review> Source
         {
-            get
-            {
-                return _isLoading;
-            }
-            private set
-            {
-                SetProperty(ref _isLoading, value);
-            }
-        }
-
-        private async Task LoadData()
-        {
-            if (!IsLoading)
-            {
-                IsLoading = true;
-
-                Books = new ObservableCollection<Book>();
-
-                Author osc = new Author();
-                osc.Name = "Orson Scott Card";
-                List<Author> b1Authors = new List<Author>();
-                b1Authors.Add(osc);
-
-                Book b = new Book();
-                b.Title = "Ender's Game";
-                b.Authors = b1Authors;
-                b.ImageUrl = "http://www.goodreads.com/assets/nocover/111x148.png";
-                Books.Add(b);
-
-                Book b1 = new Book();
-                b1.Title = "Dune";
-                b1.ImageUrl = "http://photo.goodreads.com/books/1332376530m/13542606.jpg";
-                Books.Add(b1);
-                Books.Add(b1);
-                Books.Add(b1);
-                Books.Add(b1);
-                Books.Add(b1);
-                Books.Add(b1);
-                Books.Add(b1);
-                Books.Add(b1);
-                Books.Add(b1);
-                Books.Add(b1);
-
-                Books.Add(b1);
-                Books.Add(b1);
-                Books.Add(b1);
-            }
-            IsLoading = false;
+            get { return source; }
+            set { source = value; OnPropertyChanged("Source"); }
         }
     }
 }

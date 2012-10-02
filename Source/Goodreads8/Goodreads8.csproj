@@ -128,14 +128,22 @@
       <DependentUpon>BrowseShelfPage.xaml</DependentUpon>
     </Compile>
     <Compile Include="Common\BindableBase.cs" />
+    <Compile Include="Common\BooleanNegationConverter.cs" />
+    <Compile Include="Common\BooleanToVisibilityConverter.cs" />
     <Compile Include="Common\IncrementalSource.cs" />
     <Compile Include="Common\IPagedResponse.cs" />
     <Compile Include="Common\IPagedSource.cs" />
+    <Compile Include="Common\LayoutAwarePage.cs" />
+    <Compile Include="Common\RichTextColumns.cs" />
+    <Compile Include="Common\SuspensionManager.cs" />
     <Compile Include="GroupListPage.xaml.cs">
       <DependentUpon>GroupListPage.xaml</DependentUpon>
     </Compile>
     <Compile Include="GroupPage.xaml.cs">
       <DependentUpon>GroupPage.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="NewTopicPage.xaml.cs">
+      <DependentUpon>NewTopicPage.xaml</DependentUpon>
     </Compile>
     <Compile Include="ViewModel\Cache\WorksCache.cs" />
     <Compile Include="ViewModel\IncrementalTopics.cs" />
@@ -221,6 +229,10 @@
     <Content Include="Assets\SplashScreen.png" />
     <Content Include="Assets\StoreLogo.png" />
     <Content Include="Assets\TileLogo.png" />
+    <Page Include="NewTopicPage.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
     <Page Include="ViewStatusPage.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
@@ -309,7 +321,7 @@
     <VisualStudioVersion>11.0</VisualStudioVersion>
   </PropertyGroup>
   <Import Project="$(MSBuildExtensionsPath)\Microsoft\WindowsXaml\v$(VisualStudioVersion)\Microsoft.Windows.UI.Xaml.CSharp.targets" />
-  <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
+  <!-- To modify your build process, add your task inside one of the targets below and uncomment it.
        Other similar extension points exist, see Microsoft.Common.targets.
   <Target Name="BeforeBuild">
   </Target>

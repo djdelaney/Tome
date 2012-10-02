@@ -39,14 +39,14 @@ namespace Goodreads8.ViewModel
             m_client.AccessToken = new TokenContainer();
 
             //GR@hactar.com
-            m_client.AccessToken.Secret = "9q2uH85GoKg1Hi8UZxfUdaHt43HwNd5ZBgX1vWR381g";
-            m_client.AccessToken.Token = "acThks95mAhQI0FXaKQCxg";
-            AuthenticatedUserId = 12725081;
+            //m_client.AccessToken.Secret = "9q2uH85GoKg1Hi8UZxfUdaHt43HwNd5ZBgX1vWR381g";
+            //m_client.AccessToken.Token = "acThks95mAhQI0FXaKQCxg";
+            //AuthenticatedUserId = 12725081;
 
             //Dan@hactar.com
-            //m_client.AccessToken.Secret = "ZBAiSbJQWsOHgASt1EKoigcXFqfozi8pJ5Nqaw";
-            //m_client.AccessToken.Token = "JgNTryl1vDVxh6k3sVGSw";
-            //AuthenticatedUserId = 889496;
+            m_client.AccessToken.Secret = "ZBAiSbJQWsOHgASt1EKoigcXFqfozi8pJ5Nqaw";
+            m_client.AccessToken.Token = "JgNTryl1vDVxh6k3sVGSw";
+            AuthenticatedUserId = 889496;
 
             m_cache = new APICache();
         }

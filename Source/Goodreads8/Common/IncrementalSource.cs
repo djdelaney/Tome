@@ -22,6 +22,7 @@ namespace Goodreads8.Common
         private int CurrentTotal { get; set; }
         private int CurrentPage { get; set; }
         private IPagedSource<K> Source { get; set; }
+        private bool isLoading = false;
 
         public void UpdateArgument(object argument)
         {
@@ -89,6 +90,14 @@ namespace Goodreads8.Common
             return Task.Run<LoadMoreItemsResult>(
                 async () =>
                 {
+                    lock (this)
+                    {
+                        if (isLoading)
+                            return new LoadMoreItemsResult() { Count = 0 };
+
+                        isLoading = true;
+                    }
+
                     IPagedResponse<K> result = await this.Source.GetPage(++this.CurrentPage);
 
                     this.VirtualTotal = result.VirtualTotal;
@@ -98,11 +107,17 @@ namespace Goodreads8.Common
                         CoreDispatcherPriority.Normal,
                         () =>
                         {
+
                             if (EndLoad != null)
                                 EndLoad();
 
                             foreach (K item in result.Items)
                                 this.Add(item);
+
+                            lock (this)
+                            {
+                                isLoading = false;
+                            }
                         });
 
                     return new LoadMoreItemsResult() { Count = (uint)result.Items.Count() };

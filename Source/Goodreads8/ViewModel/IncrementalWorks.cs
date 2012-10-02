@@ -35,7 +35,6 @@ namespace Goodreads8.ViewModel
             return new BookResponse(set.Books, set.End, set.Total);
         }
 
-        [DebuggerDisplay("PageIndex = {PageIndex} - VirtualCount = {VirtualCount}")]
         public class BookResponse : IPagedResponse<Book>
         {
             public BookResponse(IEnumerable<Book> items, int currentTotal, int virtualTotal)

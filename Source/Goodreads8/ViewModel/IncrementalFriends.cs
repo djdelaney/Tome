@@ -37,7 +37,6 @@ namespace Goodreads8.ViewModel
         }
     }
 
-    [DebuggerDisplay("PageIndex = {PageIndex} - VirtualCount = {VirtualCount}")]
     public class ProfileResponse : IPagedResponse<Profile>
     {
         public ProfileResponse(IEnumerable<Profile> items, int currentTotal, int virtualTotal)

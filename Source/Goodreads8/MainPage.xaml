@@ -1,4 +1,4 @@
-﻿<Page
+﻿<common:LayoutAwarePage
     xmlns:Controls="using:Callisto.Controls"
     x:Class="Goodreads8.MainPage"
     xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
@@ -8,7 +8,8 @@
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
     mc:Ignorable="d"
     xmlns:Callisto="using:Callisto.Converters"
-    xmlns:UI="using:Microsoft.Advertising.WinRT.UI">
+    xmlns:UI="using:Microsoft.Advertising.WinRT.UI"
+    xmlns:common="using:Goodreads8.Common">
     <Page.Resources>
         <Callisto:BooleanToVisibilityConverter x:Key="BooleanToVisibilityConverter"/>
 
@@ -35,7 +36,7 @@
 
         <!--Shelf Template-->
         <DataTemplate x:Key="ShelfTemplate">
-            <Grid Width="248" Height="120" Background="#e6e1c3" Margin="10">
+            <Grid Width="248" Height="120" Background="#e6e1c3" Margin="10" HorizontalAlignment="Center">
                 <Grid.RowDefinitions>
                     <RowDefinition Height="40"/>
                     <RowDefinition Height="*"/>
@@ -49,6 +50,30 @@
                         Margin="10,0,0,10"
                         Text="{Binding Name}" HorizontalAlignment="Left" Foreground="#FF0F0101" FontSize="18" VerticalAlignment="Bottom" FontFamily="Segoe UI"  />
             </Grid>
+        </DataTemplate>
+        <!--Snapped Shelf Template-->
+        <DataTemplate x:Key="SnappedShelfTemplate">
+            <Grid>
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="*"/>
+                    <ColumnDefinition Width="248"/>
+                    <ColumnDefinition Width="*"/>
+                </Grid.ColumnDefinitions>
+                <Grid Height="120" Background="#e6e1c3" Grid.Column="1">
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="40"/>
+                        <RowDefinition Height="*"/>
+                        <RowDefinition Height="40"/>
+                    </Grid.RowDefinitions>
+                    <TextBlock
+                        Grid.Row="1"
+                        Text="{Binding Count}" TextTrimming="WordEllipsis" HorizontalAlignment="Center" Foreground="#FF0F0101" FontSize="48" FontFamily="Segoe UI Light" VerticalAlignment="Center" FontWeight="Bold" />
+                    <TextBlock
+                        Grid.Row="2"
+                        Margin="10,0,0,10"
+                        Text="{Binding Name}" HorizontalAlignment="Left" Foreground="#FF0F0101" FontSize="18" VerticalAlignment="Bottom" FontFamily="Segoe UI"  />
+                </Grid>
+            </Grid>            
         </DataTemplate>
     </Page.Resources>
 
@@ -68,7 +93,7 @@
             <ProgressRing IsActive="{Binding Path=IsLoading}" HorizontalAlignment="Center" VerticalAlignment="Center" Height="200" Width="200"/>
         </Grid>
 
-        <ScrollViewer Style="{StaticResource HorizontalScrollViewerStyle}" Grid.Row="1">
+        <ScrollViewer Style="{StaticResource HorizontalScrollViewerStyle}" Grid.Row="1" x:Name="MainScroll">
             <StackPanel Orientation="Horizontal" Margin="130,0,0,0">
 
                 <!-- Updates -->
@@ -81,7 +106,7 @@
                     <TextBlock Text="Updates" IsHitTestVisible="false" Style="{StaticResource SubSectionHeader}" Margin="15,0,0,20" Grid.Row="0"/>
                     <ListView
                             Margin="0,10,0,0"
-                            Width="510"
+                            Width="520"
                             Grid.Row="1"
                             Padding="10"
                             ItemTemplate="{StaticResource UpdateTemplate}"
@@ -92,7 +117,7 @@
                 </Grid>
 
                 <!-- Shelves -->
-                <Grid Margin="80,0,0,0">
+                <Grid Margin="60,0,0,0">
                     <Grid.RowDefinitions>
                         <RowDefinition Height="Auto"/>
                         <RowDefinition Height="*"/>
@@ -225,5 +250,134 @@
 
             </StackPanel>
         </ScrollViewer>
+
+        <!-- Snapped Views -->
+        <ScrollViewer x:Name="SnappedView" Visibility="Collapsed" Style="{StaticResource VerticalScrollViewerStyle}" Grid.Row="1">
+            <StackPanel Orientation="Vertical">
+                <!-- Shelves -->
+                <TextBlock Text="Shelves" IsHitTestVisible="false" Style="{StaticResource SubSectionHeader}" Margin="20,10,0,0"/>
+                <ListView
+                    Margin="30,0,0,0"
+                    HorizontalAlignment="Center"
+                    IsItemClickEnabled="True"
+                    ItemsSource="{Binding Shelves}"
+                    SelectionMode="None"
+                    ItemClick="Shelf_ItemClick"
+                    ItemTemplate="{StaticResource SnappedShelfTemplate}"/>
+
+                <!-- Extras -->
+                <TextBlock Text="Extras" IsHitTestVisible="false" Style="{StaticResource SubSectionHeader}" Margin="20,10,0,0"/>
+
+                <!-- Friends -->
+                <Button Padding="0" Margin="0,5,0,5" Click="Friend_Click" HorizontalAlignment="Center">
+                    <Button.Template>
+                        <ControlTemplate TargetType="Button">
+                            <ContentPresenter Content="{TemplateBinding Content}"/>
+                        </ControlTemplate>
+                    </Button.Template>
+                    <Grid Width="248" Height="120" Background="#8d3992" VerticalAlignment="Top">
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="80"/>
+                            <ColumnDefinition Width="*"/>
+                            <ColumnDefinition Width="80"/>
+                        </Grid.ColumnDefinitions>
+                        <TextBlock Text="&#xE1E2;" Grid.Column="1"  HorizontalAlignment="Center" Foreground="#FF0F0101" FontSize="48" FontFamily="Segoe UI Symbol" VerticalAlignment="Center" />
+                        <TextBlock
+                        Margin="10,0,0,10"
+                        Text="Friends" HorizontalAlignment="Left" Foreground="#FF0F0101" FontSize="18" VerticalAlignment="Bottom" FontFamily="Segoe UI" />
+                    </Grid>
+                </Button>
+
+                <!-- Groups -->
+                <Button Padding="0" Margin="0,5,0,5" Click="Group_Click" HorizontalAlignment="Center">
+                    <Button.Template>
+                        <ControlTemplate TargetType="Button">
+                            <ContentPresenter Content="{TemplateBinding Content}"/>
+                        </ControlTemplate>
+                    </Button.Template>
+                    <Grid Width="248" Height="120" Background="#926339"  VerticalAlignment="Top">
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="80"/>
+                            <ColumnDefinition Width="*"/>
+                            <ColumnDefinition Width="80"/>
+                        </Grid.ColumnDefinitions>
+                        <TextBlock Text="&#xE205;" Grid.Column="1"  HorizontalAlignment="Center" Foreground="#FF0F0101" FontSize="48" FontFamily="Segoe UI Symbol" VerticalAlignment="Center" />
+                        <TextBlock
+                            Margin="10,0,0,10"
+                            Text="Groups" HorizontalAlignment="Left" Foreground="#FF0F0101" FontSize="18" VerticalAlignment="Bottom" FontFamily="Segoe UI" />
+                    </Grid>
+                </Button>
+
+                <!-- Search -->
+                <Button Click="Search_Click" HorizontalAlignment="Center" Margin="0,5,0,5">
+                    <Button.Template>
+                        <ControlTemplate TargetType="Button">
+                            <ContentPresenter Content="{TemplateBinding Content}"/>
+                        </ControlTemplate>
+                    </Button.Template>
+                    <Grid Width="248" Height="120" Background="#549239" Margin="0"  VerticalAlignment="Top">
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="80"/>
+                            <ColumnDefinition Width="*"/>
+                            <ColumnDefinition Width="80"/>
+                        </Grid.ColumnDefinitions>
+                        <TextBlock Text="&#xE1A3;" Grid.Column="1"  HorizontalAlignment="Center" Foreground="#FF0F0101" FontSize="48" FontFamily="Segoe UI Symbol" VerticalAlignment="Center" />
+                        <TextBlock
+                            Margin="10,0,0,10"
+                            Text="Search" HorizontalAlignment="Left" Foreground="#FF0F0101" FontSize="18" VerticalAlignment="Bottom" FontFamily="Segoe UI" />
+                    </Grid>
+                </Button>
+
+                <UI:AdControl
+                        ApplicationId="testclient"
+                        AdUnitId="ADPT33"
+                        HorizontalAlignment="Center"
+                        Height="250"
+                        Margin="0,5,0,20"
+                        Width="250"/>
+
+            </StackPanel>
+        </ScrollViewer>
+
+
+        <!-- Visual States -->
+        <VisualStateManager.VisualStateGroups>
+            <!-- Visual states reflect the application's view state -->
+            <VisualStateGroup>
+                <VisualState x:Name="FullScreenLandscape">
+                    <Storyboard>
+                    </Storyboard>
+                </VisualState>
+                <VisualState x:Name="Filled">
+                    <Storyboard>
+                    </Storyboard>
+                </VisualState>
+                <VisualState x:Name="FullScreenPortrait">
+                    <Storyboard>
+                    </Storyboard>
+                </VisualState>
+                <VisualState x:Name="Snapped">
+                    <Storyboard>
+                        <ObjectAnimationUsingKeyFrames Storyboard.TargetProperty="(FrameworkElement.Margin)" Storyboard.TargetName="pageTitle">
+                            <DiscreteObjectKeyFrame KeyTime="0">
+                                <DiscreteObjectKeyFrame.Value>
+                                    <Thickness>20,20,20,20</Thickness>
+                                </DiscreteObjectKeyFrame.Value>
+                            </DiscreteObjectKeyFrame>
+                        </ObjectAnimationUsingKeyFrames>
+
+                        <ObjectAnimationUsingKeyFrames Storyboard.TargetName="MainScroll" Storyboard.TargetProperty="Visibility">
+                            <DiscreteObjectKeyFrame KeyTime="0" Value="Collapsed"/>
+                        </ObjectAnimationUsingKeyFrames>
+
+
+                        <ObjectAnimationUsingKeyFrames Storyboard.TargetName="SnappedView" Storyboard.TargetProperty="Visibility">
+                            <DiscreteObjectKeyFrame KeyTime="0" Value="Visible"/>
+                        </ObjectAnimationUsingKeyFrames>
+
+                    </Storyboard>
+                </VisualState>
+            </VisualStateGroup>
+        </VisualStateManager.VisualStateGroups>
     </Grid>
-</Page>
+</common:LayoutAwarePage>

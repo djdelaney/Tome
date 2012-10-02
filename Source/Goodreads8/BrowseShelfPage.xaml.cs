@@ -14,6 +14,7 @@ using Windows.UI.Xaml.Input;
 using Windows.UI.Xaml.Media;
 using Windows.UI.Xaml.Navigation;
 using Windows.UI.Popups;
+using Windows.UI.ViewManagement;
 
 // The Blank Page item template is documented at http://go.microsoft.com/fwlink/?LinkId=234238
 
@@ -22,7 +23,7 @@ namespace Goodreads8
     /// <summary>
     /// An empty page that can be used on its own or navigated to within a Frame.
     /// </summary>
-    public sealed partial class BrowseShelfPage : Page
+    public sealed partial class BrowseShelfPage : Goodreads8.Common.LayoutAwarePage
     {
         private ShelfViewModel model;
         private IncrementalShelf.ShelfArguments args = null;
@@ -38,6 +39,23 @@ namespace Goodreads8
         {
             this.InitializeComponent();
             args = new IncrementalShelf.ShelfArguments();
+            Window.Current.SizeChanged += WindowSizeChanged;
+        }
+
+        private void WindowSizeChanged(object sender, Windows.UI.Core.WindowSizeChangedEventArgs e)
+        {
+            // Obtain view state by explicitly querying for it
+            ApplicationViewState myViewState = ApplicationView.Value;
+            if (ApplicationView.Value == ApplicationViewState.Snapped)
+            {
+                this.gv.Visibility = Windows.UI.Xaml.Visibility.Collapsed;
+                this.lv.Visibility = Windows.UI.Xaml.Visibility.Visible;
+            }
+            else
+            {
+                this.gv.Visibility = Windows.UI.Xaml.Visibility.Visible;
+                this.lv.Visibility = Windows.UI.Xaml.Visibility.Collapsed;
+            }
         }
 
         /// <summary>
@@ -47,6 +65,17 @@ namespace Goodreads8
         /// property is typically used to configure the page.</param>
         protected override void OnNavigatedTo(NavigationEventArgs e)
         {
+            base.OnNavigatedTo(e);
+
+            if (ApplicationView.Value == ApplicationViewState.Snapped)
+            {
+                this.gv.Visibility = Windows.UI.Xaml.Visibility.Collapsed;
+            }
+            else
+            {
+                this.lv.Visibility = Windows.UI.Xaml.Visibility.Collapsed;
+            }
+
             Args arg = e.Parameter as Args;
             if (arg == null || string.IsNullOrEmpty(arg.ShelfName) || arg.UserId <= 0)
             {
@@ -81,9 +110,9 @@ namespace Goodreads8
             if (source == null)
             {
                 source = new IncrementalSource<IncrementalShelf, Review>(args);
+                model.Source = source;
                 source.EndLoad += source_EndLoad;
                 source.BeginLoad += source_BeginLoad;
-                this.gv.ItemsSource = source;
             }
             else
             {

@@ -38,7 +38,6 @@ namespace Goodreads8.ViewModel
         }
     }
 
-    [DebuggerDisplay("PageIndex = {PageIndex} - VirtualCount = {VirtualCount}")]
     public class ReviewResponse : IPagedResponse<Review>
     {
         public ReviewResponse(IEnumerable<Review> items, int currentTotal, int virtualTotal)
