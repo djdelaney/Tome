@@ -134,7 +134,7 @@ namespace Goodreads8
             if (this.Frame != null && this.Frame.CanGoBack) this.Frame.GoBack();
         }
 
-        private void GridView_ItemClick(object sender, ItemClickEventArgs e)
+        private void Book_ItemClick(object sender, ItemClickEventArgs e)
         {
             Review r = e.ClickedItem as Review;
             this.Frame.Navigate(typeof(BookDetailPage), r.Book.Id);
