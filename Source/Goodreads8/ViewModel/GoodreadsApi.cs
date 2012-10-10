@@ -161,11 +161,11 @@ namespace Goodreads8.ViewModel
             if (cached != null)
                 return cached;
 
-            String requestUrl = "http://www.goodreads.com/book/show/";
+            String requestUrl = "http://www.goodreads.com/book/show/" + bookId;
 
             String response = await m_client.MakeRequest("GET")
                   .ForResource(m_client.AccessToken.Token, new Uri(requestUrl))
-                  .WithParameters(new { key = m_consumerKey, format = "xml", id = bookId })
+                  .WithParameters(new { key = m_consumerKey, format = "xml" })
                   .Sign(m_client.AccessToken.Secret)
                   .ExecuteRequest();
 

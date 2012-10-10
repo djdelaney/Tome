@@ -46,6 +46,9 @@ namespace Goodreads8.ViewModel.Model
                     if (Shelves == null || Shelves.Contains("to-read"))
                         return "Marked To-Read";
 
+                    if(Rating > 0)
+                        return "No text";
+
                     return "No review";
                 }
 
