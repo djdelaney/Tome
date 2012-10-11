@@ -59,6 +59,13 @@ namespace Goodreads8
             GoodreadsAPI api = GoodreadsAPI.Instance;
             model = await api.GetBook((int)bookId);
 
+            if (model == null)
+            {
+                await UIUtil.ShowError("Unable to load book information from Goodreads. Please try again later");
+                Frame.GoBack();
+                return;
+            }
+
             Review myReview = await api.GetUserReview((int)bookId, api.AuthenticatedUserId);
             if (myReview == null || myReview.Shelves == null || myReview.Shelves.Count == 0)
             {

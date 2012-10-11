@@ -49,6 +49,13 @@ namespace Goodreads8
             model = await api.GetTopic((int)topicId);
             this.DataContext = model;
 
+            if (model == null)
+            {
+                await UIUtil.ShowError("Unable to load topic information from Goodreads. Please try again later");
+                Frame.GoBack();
+                return;
+            }
+
             this.busyGrid.Visibility = Windows.UI.Xaml.Visibility.Collapsed;
             this.busyRing.IsActive = false;
         }

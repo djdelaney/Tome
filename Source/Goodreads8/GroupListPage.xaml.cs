@@ -42,6 +42,13 @@ namespace Goodreads8
             List<Group> groups = await api.GetGroups();
             this.gv.ItemsSource = groups;
 
+            if (groups == null)
+            {
+                await UIUtil.ShowError("Unable to load group information from Goodreads. Please try again later");
+                Frame.GoBack();
+                return;
+            }
+
             this.busyGrid.Visibility = Windows.UI.Xaml.Visibility.Collapsed;
             this.busyRing.IsActive = false;
         }

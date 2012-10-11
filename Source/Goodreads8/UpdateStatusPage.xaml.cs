@@ -66,7 +66,7 @@ namespace Goodreads8
 
             if (m_book == null)
             {
-                ShowSimpleToast("Unable to load book data");
+                await UIUtil.ShowError("Unable to load book information from Goodreads. Please try again later");
                 Frame.GoBack();
                 return;
             }

@@ -62,6 +62,13 @@ namespace Goodreads8
             model = await api.GetStatus((int)statusId);
             this.DataContext = model;
 
+            if (model == null)
+            {
+                await UIUtil.ShowError("Unable to load status information from Goodreads. Please try again later");
+                Frame.GoBack();
+                return;
+            }
+
             this.busyGrid.Visibility = Windows.UI.Xaml.Visibility.Collapsed;
             this.busyRing.IsActive = false;
         }

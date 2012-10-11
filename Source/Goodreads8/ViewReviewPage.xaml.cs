@@ -53,6 +53,13 @@ namespace Goodreads8
             model = await api.GetReview((int)reviewId);
             this.DataContext = model;
 
+            if (model == null)
+            {
+                await UIUtil.ShowError("Unable to load review information from Goodreads. Please try again later");
+                Frame.GoBack();
+                return;
+            }
+
             this.busyGrid.Visibility = Windows.UI.Xaml.Visibility.Collapsed;
             this.busyRing.IsActive = false;
         }

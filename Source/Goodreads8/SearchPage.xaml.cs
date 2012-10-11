@@ -88,6 +88,9 @@ namespace Goodreads8
             this.query.IsEnabled = true;
             this.busyGrid.Visibility = Windows.UI.Xaml.Visibility.Collapsed;
             this.busyRing.IsActive = false;
+
+            if (model == null)
+                UIUtil.ShowError("Unable to load Goodreads results. Please try again later");
         }
 
         private void Query_KeyDown(object sender, KeyRoutedEventArgs e)

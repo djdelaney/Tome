@@ -64,6 +64,13 @@ namespace Goodreads8
             model = await api.GetProfile((int)userId);
             this.DataContext = model;
 
+            if (model == null)
+            {
+                await UIUtil.ShowError("Unable to load user information from Goodreads. Please try again later");
+                Frame.GoBack();
+                return;
+            }
+
             this.busyGrid.Visibility = Windows.UI.Xaml.Visibility.Collapsed;
             this.busyRing.IsActive = false;
         }

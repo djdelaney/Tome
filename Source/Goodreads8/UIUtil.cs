@@ -22,7 +22,7 @@ namespace Goodreads8
             ToastNotificationManager.CreateToastNotifier().Show(toast);
         }
 
-        public static async void ShowError(string message)
+        public static async Task ShowError(string message)
         {
             MessageDialog dialog = new MessageDialog(message);
             await dialog.ShowAsync();
