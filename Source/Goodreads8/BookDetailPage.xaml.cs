@@ -24,7 +24,7 @@ namespace Goodreads8
     /// <summary>
     /// An empty page that can be used on its own or navigated to within a Frame.
     /// </summary>
-    public sealed partial class BookDetailPage : Page
+    public sealed partial class BookDetailPage : Goodreads8.Common.LayoutAwarePage
     {
         private Book model;
 
@@ -41,6 +41,7 @@ namespace Goodreads8
         /// property is typically used to configure the page.</param>
         protected override async void OnNavigatedTo(NavigationEventArgs e)
         {
+            base.OnNavigatedTo(e);
             int? bookId = e.Parameter as int?;
 
             if (bookId == null)
