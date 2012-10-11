@@ -15,7 +15,7 @@
         <DataTemplate x:Key="ReviewTemplate">
             <StackPanel Orientation="Vertical" HorizontalAlignment="Left" Margin="0,0,0,30">
                 <!-- Rating -->
-				<Controls:Rating ItemCount="5" Value="{Binding Rating}"  IsEnabled="False" RenderTransformOrigin="0.5,0.5" VerticalAlignment="Center" HorizontalAlignment="Left" Margin="0,0,0,0" Padding="0" >
+                <Controls:Rating ItemCount="5" Value="{Binding Rating}"  IsEnabled="False" RenderTransformOrigin="0.5,0.5" VerticalAlignment="Center" HorizontalAlignment="Left" Margin="0,0,0,0" Padding="0" Background="#001D1D1D" >
                 </Controls:Rating>
 				<!-- Reviewer Name -->
                 <TextBlock Text="{Binding ReviewerText}" MaxWidth="400" TextTrimming="WordEllipsis" HorizontalAlignment="Left" Foreground="White" FontSize="18" />
@@ -84,7 +84,7 @@
                     <TextBlock Grid.Row="2" Grid.Column="0" Text="Rating" Style="{StaticResource DetailLabel}"/>
 
                     <StackPanel Orientation="Horizontal" Grid.Row="2" Grid.Column="1" >
-                        <Controls:Rating x:Name="starRating" ItemCount="5" Value="{Binding AvgRating}" Margin="0,0,0,0" IsEnabled="False" />
+                        <Controls:Rating x:Name="starRating" ItemCount="5" Value="{Binding AvgRating}" Margin="0,0,0,0" IsEnabled="False" Background="#001D1D1D" />
                         <TextBlock  Text="{Binding AvgRating}" x:Name="rating" Style="{StaticResource DetailValue}" VerticalAlignment="Center"/>
                     </StackPanel>
 
@@ -176,7 +176,7 @@
 
                     <!-- Rating -->
                     <TextBlock Grid.Row="1" Grid.Column="0" Text="Rating" Style="{StaticResource DetailLabel}"/>
-                    <Controls:Rating ItemCount="5" Value="{Binding AvgRating}" Margin="0,0,0,0" IsEnabled="False" Grid.Row="1" Grid.Column="1" />
+                    <Controls:Rating ItemCount="5" Value="{Binding AvgRating}" Margin="0,0,0,0" IsEnabled="False" Grid.Row="1" Grid.Column="1" Background="#001D1D1D"/>
 
                     <!-- Published -->
                     <TextBlock Grid.Row="2" Grid.Column="0" Text="Published" Style="{StaticResource DetailLabel}"/>

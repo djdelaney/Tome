@@ -74,7 +74,7 @@
                     <!-- Rating -->
                     <TextBlock Grid.Row="2" Grid.Column="0" Text="Rating" Style="{StaticResource DetailLabel}"/>
                     <StackPanel Orientation="Horizontal" Grid.Row="2" Grid.Column="1">
-                    <Controls:Rating  ItemCount="5" Value="{Binding Rating}" Margin="0,0,0,0" IsEnabled="False" />
+                        <Controls:Rating  ItemCount="5" Value="{Binding Rating}" Margin="0,0,0,0" IsEnabled="False" Background="#001D1D1D" />
                     </StackPanel>
 
                     <!-- Date Read -->
