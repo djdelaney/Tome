@@ -57,6 +57,9 @@ namespace Goodreads8
 
         private void GridView_ItemClick(object sender, ItemClickEventArgs e)
         {
+            if (!query.IsEnabled)
+                return;
+
             Book b = e.ClickedItem as Book;
             this.Frame.Navigate(typeof(BookDetailPage), b.Id);
         }
@@ -69,6 +72,8 @@ namespace Goodreads8
                 await msg.ShowAsync();
                 return;
             }
+            model = null;
+            this.gv.ItemsSource = null;
 
             this.SearchBtn.IsEnabled = false;
             this.query.IsEnabled = false;
@@ -83,6 +88,18 @@ namespace Goodreads8
             this.query.IsEnabled = true;
             this.busyGrid.Visibility = Windows.UI.Xaml.Visibility.Collapsed;
             this.busyRing.IsActive = false;
+        }
+
+        private void Query_KeyDown(object sender, KeyRoutedEventArgs e)
+        {
+            if (e.Key == Windows.System.VirtualKey.Enter)
+            {
+                if (!string.IsNullOrEmpty(this.query.Text))
+                {
+                    query.IsEnabled = false;
+                    Search_Click(sender, e);
+                }
+            }
         }
     }
 }

@@ -39,12 +39,12 @@
                 <ColumnDefinition Width="Auto"/>
                 <ColumnDefinition Width="*"/>
             </Grid.ColumnDefinitions>
-            <Button x:Name="backButton"  Style="{StaticResource BackButtonStyle}" Click="GoBack"/>
+            <Button x:Name="backButton"  Style="{StaticResource BackButtonStyle}" Click="GoBack" IsTabStop="False"/>
             <TextBlock x:Name="pageTitle" Text="Search" Grid.Column="1" IsHitTestVisible="false" Style="{StaticResource PageHeaderTextStyle}"/>
         </Grid>
 
         <StackPanel Orientation="Horizontal" Grid.Row="1" Margin="140,0,0,0" VerticalAlignment="Top" Height="50">
-            <TextBox  Width="200" x:Name="query" VerticalAlignment="Center"/>
+            <TextBox  Width="200" x:Name="query" VerticalAlignment="Center" KeyDown="Query_KeyDown"/>
             <Button Content="Find It!" Margin="20,0,0,0" Click="Search_Click" x:Name="SearchBtn"></Button>
         </StackPanel>
 
@@ -61,6 +61,7 @@
             ItemTemplate="{StaticResource BookTemplate}"
             SelectionMode="None"
             IsItemClickEnabled="True"
-            ItemClick="GridView_ItemClick"/>
+            ItemClick="GridView_ItemClick"
+            IsTabStop="False"/>
     </Grid>
 </Page>
