@@ -55,6 +55,7 @@ namespace Goodreads8
             if (bookId == null || bookId <= 0)
             {
                 this.Frame.GoBack();
+                return;
             }
 
             SaveButton.IsEnabled = false;

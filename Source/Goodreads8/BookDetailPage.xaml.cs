@@ -105,12 +105,12 @@ namespace Goodreads8
 
         private void Review_Click(object sender, RoutedEventArgs e)
         {
-            this.Frame.Navigate(typeof(WriteReviewPage));
+            this.Frame.Navigate(typeof(WriteReviewPage), model.Id);
         }
 
         private void Status_Click(object sender, RoutedEventArgs e)
         {
-            this.Frame.Navigate(typeof(UpdateStatusPage));
+            this.Frame.Navigate(typeof(UpdateStatusPage), model.Id);
         }
 
         private async void Author_Click(object sender, RoutedEventArgs e)

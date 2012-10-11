@@ -54,6 +54,7 @@ namespace Goodreads8
             if (bookId == null || bookId <= 0)
             {
                 this.Frame.GoBack();
+                return;
             }
             m_bookId = (int)bookId;
         }
