@@ -72,188 +72,249 @@ namespace Goodreads8.ViewModel
 
         public async Task<int> GetAuthenticatedId()
         {
-            String response = await m_client.MakeRequest("GET")
-                    .ForResource(m_client.AccessToken.Token, new Uri("http://www.goodreads.com/api/auth_user"))
-                    .Sign(m_client.AccessToken.Secret)
-                    .ExecuteRequest();
-            if (string.IsNullOrEmpty(response))
-                return 0;
+            try
+            {
+                String response = await m_client.MakeRequest("GET")
+                        .ForResource(m_client.AccessToken.Token, new Uri("http://www.goodreads.com/api/auth_user"))
+                        .Sign(m_client.AccessToken.Secret)
+                        .ExecuteRequest();
+                if (string.IsNullOrEmpty(response))
+                    return 0;
 
-            return GoodreadsData.ParseAuthResponse(response);
+                return GoodreadsData.ParseAuthResponse(response);
+            }
+            catch (Exception e)
+            {
+                return -1;
+            }
         }
 
         public async Task<List<Update>> GetUpdates()
         {
-            List<Update> cached = m_cache.GetUpdates();
-            if (cached != null)
-                return cached;
+            try
+            {
+                List<Update> cached = m_cache.GetUpdates();
+                if (cached != null)
+                    return cached;
 
 
-            String response = await m_client.MakeRequest("GET")
-                    .ForResource(m_client.AccessToken.Token, new Uri("http://www.goodreads.com/updates/friends.xml"))
-                    .Sign(m_client.AccessToken.Secret)
-                    .ExecuteRequest();
+                String response = await m_client.MakeRequest("GET")
+                        .ForResource(m_client.AccessToken.Token, new Uri("http://www.goodreads.com/updates/friends.xml"))
+                        .Sign(m_client.AccessToken.Secret)
+                        .ExecuteRequest();
 
-            List<Update> data = GoodreadsData.ParseUpdates(response);
-            if (data != null)
-                m_cache.StoreUpdates(data);
+                List<Update> data = GoodreadsData.ParseUpdates(response);
+                if (data != null)
+                    m_cache.StoreUpdates(data);
 
-            return data;
+                return data;
+            }
+            catch (Exception e)
+            {
+                return null;
+            }
         }
 
         public async Task<Profile> GetProfile(int userId)
         {
-            Profile cached = m_cache.GetProfile(userId);
-            if (cached != null)
-                return cached;
+            try
+            {
+                Profile cached = m_cache.GetProfile(userId);
+                if (cached != null)
+                    return cached;
 
-            String requestUrl = "http://www.goodreads.com/user/show/" + userId + ".xml";
+                String requestUrl = "http://www.goodreads.com/user/show/" + userId + ".xml";
 
-            String response = await m_client.MakeRequest("GET")
-                  .ForResource(m_client.AccessToken.Token, new Uri(requestUrl))
-                  .WithParameters(new { key = m_consumerKey }) //it's important to add the prameters after the resource, internal paramerters reset on ForResource calls
-                  .Sign(m_client.AccessToken.Secret)
-                  .ExecuteRequest();
+                String response = await m_client.MakeRequest("GET")
+                      .ForResource(m_client.AccessToken.Token, new Uri(requestUrl))
+                      .WithParameters(new { key = m_consumerKey }) //it's important to add the prameters after the resource, internal paramerters reset on ForResource calls
+                      .Sign(m_client.AccessToken.Secret)
+                      .ExecuteRequest();
 
-            Profile data = GoodreadsData.ParseProfile(response);
-            if (data != null)
-                m_cache.StoreProfile(userId, data);
+                Profile data = GoodreadsData.ParseProfile(response);
+                if (data != null)
+                    m_cache.StoreProfile(userId, data);
 
-            return data;
+                return data;
+            }
+            catch (Exception e)
+            {
+                return null;
+            }
         }
 
         public async Task<ReviewSet> GetShelfContents(int userId, String shelf, int page, String sort, String order, int perBooksPage)
         {
-            if (string.IsNullOrEmpty(shelf) || string.IsNullOrEmpty(sort) || string.IsNullOrEmpty(order) || userId < 1)
+            try
+            {
+                if (string.IsNullOrEmpty(shelf) || string.IsNullOrEmpty(sort) || string.IsNullOrEmpty(order) || userId < 1)
+                    return null;
+
+                if (page < 1)
+                    page = 1;
+                if (perBooksPage < 1)
+                    perBooksPage = 20;
+
+                //Check for cached item
+                ReviewSet cached = m_cache.GetShelfContents(userId, shelf, page, sort, order);
+                if (cached != null)
+                    return cached;
+
+                shelf = Uri.EscapeUriString(shelf);
+
+                String requestUrl = "http://www.goodreads.com/review/list/" + userId + ".xml";
+
+                String response = await m_client.MakeRequest("GET")
+                      .ForResource(m_client.AccessToken.Token, new Uri(requestUrl))
+                      .WithParameters(new { key = m_consumerKey, shelf = shelf, page = page, order = order, per_page = perBooksPage, v = "2", sort = sort }) //it's important to add the prameters after the resource, internal paramerters reset on ForResource calls
+                      .Sign(m_client.AccessToken.Secret)
+                      .ExecuteRequest();
+
+                ReviewSet data = GoodreadsData.ParseShelf(response);
+
+                if (data != null)
+                    m_cache.StoreShelfContents(userId, shelf, page, sort, order, data);
+
+                return data;
+            }
+            catch (Exception e)
+            {
                 return null;
-
-            if (page < 1)
-                page = 1;
-            if (perBooksPage < 1)
-                perBooksPage = 20;
-
-            //Check for cached item
-            ReviewSet cached = m_cache.GetShelfContents(userId, shelf, page, sort, order);
-            if (cached != null)
-                return cached;
-
-            shelf = Uri.EscapeUriString(shelf);
-
-            String requestUrl = "http://www.goodreads.com/review/list/" + userId + ".xml";
-
-            String response = await m_client.MakeRequest("GET")
-                  .ForResource(m_client.AccessToken.Token, new Uri(requestUrl))
-                  .WithParameters(new { key = m_consumerKey, shelf = shelf, page = page, order = order, per_page = perBooksPage, v = "2", sort = sort }) //it's important to add the prameters after the resource, internal paramerters reset on ForResource calls
-                  .Sign(m_client.AccessToken.Secret)
-                  .ExecuteRequest();
-
-            ReviewSet data = GoodreadsData.ParseShelf(response);
-
-            if (data != null)
-                m_cache.StoreShelfContents(userId, shelf, page, sort, order, data);
-
-            return data;
+            }
         }
 
         public async Task<Book> GetBook(int bookId)
         {
-            Book cached = m_cache.GetBook(bookId);
-            if (cached != null)
-                return cached;
+            try
+            {
+                Book cached = m_cache.GetBook(bookId);
+                if (cached != null)
+                    return cached;
 
-            String requestUrl = "http://www.goodreads.com/book/show/" + bookId;
+                String requestUrl = "http://www.goodreads.com/book/show/" + bookId;
 
-            String response = await m_client.MakeRequest("GET")
-                  .ForResource(m_client.AccessToken.Token, new Uri(requestUrl))
-                  .WithParameters(new { key = m_consumerKey, format = "xml" })
-                  .Sign(m_client.AccessToken.Secret)
-                  .ExecuteRequest();
+                String response = await m_client.MakeRequest("GET")
+                      .ForResource(m_client.AccessToken.Token, new Uri(requestUrl))
+                      .WithParameters(new { key = m_consumerKey, format = "xml" })
+                      .Sign(m_client.AccessToken.Secret)
+                      .ExecuteRequest();
 
-            Book data = GoodreadsData.ParseBook(response);
+                Book data = GoodreadsData.ParseBook(response);
 
-            if (data != null)
-                m_cache.StoreBook(bookId, data);
+                if (data != null)
+                    m_cache.StoreBook(bookId, data);
 
-            return data;
+                return data;
+            }
+            catch (Exception e)
+            {
+                return null;
+            }
         }
 
         public async Task<Author> GetAuthor(int authorId)
         {
-            Author cached = m_cache.GetAuthor(authorId);
-            if (cached != null)
-                return cached;
+            try
+            {
+                Author cached = m_cache.GetAuthor(authorId);
+                if (cached != null)
+                    return cached;
 
-            String requestUrl = "http://www.goodreads.com/author/show/" + authorId + ".xml";
+                String requestUrl = "http://www.goodreads.com/author/show/" + authorId + ".xml";
 
-            String response = await m_client.MakeRequest("GET")
-                  .ForResource(m_client.AccessToken.Token, new Uri(requestUrl))
-                  .WithParameters(new { key = m_consumerKey })
-                  .Sign(m_client.AccessToken.Secret)
-                  .ExecuteRequest();
+                String response = await m_client.MakeRequest("GET")
+                      .ForResource(m_client.AccessToken.Token, new Uri(requestUrl))
+                      .WithParameters(new { key = m_consumerKey })
+                      .Sign(m_client.AccessToken.Secret)
+                      .ExecuteRequest();
 
-            Author data = GoodreadsData.ParseAuthor(response);
-            if (data != null)
-                m_cache.StoreAuthor(authorId, data);
+                Author data = GoodreadsData.ParseAuthor(response);
+                if (data != null)
+                    m_cache.StoreAuthor(authorId, data);
 
-            return data;
+                return data;
+            }
+            catch (Exception e)
+            {
+                return null;
+            }
         }
 
         public async Task<FriendSet> GetFriends(int userId, int page)
         {
-            FriendSet cached = m_cache.GetFriends(userId, page);
-            if (cached != null)
-                return cached;
+            try
+            {
+                FriendSet cached = m_cache.GetFriends(userId, page);
+                if (cached != null)
+                    return cached;
 
-            String requestUrl = "http://www.goodreads.com/friend/user/" + userId + ".xml";
+                String requestUrl = "http://www.goodreads.com/friend/user/" + userId + ".xml";
 
-            String response = await m_client.MakeRequest("GET")
-                  .ForResource(m_client.AccessToken.Token, new Uri(requestUrl))
-                  .WithParameters(new { key = m_consumerKey, format = "xml", page = page }) //it's important to add the prameters after the resource, internal paramerters reset on ForResource calls
-                  .Sign(m_client.AccessToken.Secret)
-                  .ExecuteRequest();
+                String response = await m_client.MakeRequest("GET")
+                      .ForResource(m_client.AccessToken.Token, new Uri(requestUrl))
+                      .WithParameters(new { key = m_consumerKey, format = "xml", page = page }) //it's important to add the prameters after the resource, internal paramerters reset on ForResource calls
+                      .Sign(m_client.AccessToken.Secret)
+                      .ExecuteRequest();
 
-            FriendSet data = GoodreadsData.ParseFriends(response);
-            if (data != null)
-                m_cache.StoreFriends(userId, page, data);
+                FriendSet data = GoodreadsData.ParseFriends(response);
+                if (data != null)
+                    m_cache.StoreFriends(userId, page, data);
 
-            return data;
+                return data;
+            }
+            catch (Exception e)
+            {
+                return null;
+            }
         }
 
         public async Task<Review> GetReview(int reviewId)
         {
-            Review cached = m_cache.GetReview(reviewId);
-            if (cached != null)
-                return cached;
+            try
+            {
+                Review cached = m_cache.GetReview(reviewId);
+                if (cached != null)
+                    return cached;
 
-            String requestUrl = "http://www.goodreads.com/review/show/" + reviewId + ".xml";
+                String requestUrl = "http://www.goodreads.com/review/show/" + reviewId + ".xml";
 
-            String response = await m_client.MakeRequest("GET")
-                  .ForResource(m_client.AccessToken.Token, new Uri(requestUrl))
-                  .WithParameters(new { key = m_consumerKey })
-                  .Sign(m_client.AccessToken.Secret)
-                  .ExecuteRequest();
+                String response = await m_client.MakeRequest("GET")
+                      .ForResource(m_client.AccessToken.Token, new Uri(requestUrl))
+                      .WithParameters(new { key = m_consumerKey })
+                      .Sign(m_client.AccessToken.Secret)
+                      .ExecuteRequest();
 
-            Review data = GoodreadsData.ParseReview(response);
+                Review data = GoodreadsData.ParseReview(response);
 
-            if (data != null)
-                m_cache.StoreReview(reviewId, data);
+                if (data != null)
+                    m_cache.StoreReview(reviewId, data);
 
-            return data;
+                return data;
+            }
+            catch (Exception e)
+            {
+                return null;
+            }
         }
 
         public async Task<List<Book>> GetSearchResults(String query)
         {
-            //query = Uri.EscapeUriString(query);
+            try
+            {
+                String requestUrl = "http://www.goodreads.com/search/search";
 
-            String requestUrl = "http://www.goodreads.com/search/search";
+                String response = await m_client.MakeRequest("GET")
+                      .ForResource(m_client.AccessToken.Token, new Uri(requestUrl))
+                      .WithParameters(new { key = m_consumerKey, format = "xml", q = query })
+                      .Sign(m_client.AccessToken.Secret)
+                      .ExecuteRequest();
 
-            String response = await m_client.MakeRequest("GET")
-                  .ForResource(m_client.AccessToken.Token, new Uri(requestUrl))
-                  .WithParameters(new { key = m_consumerKey, format = "xml", q = query })
-                  .Sign(m_client.AccessToken.Secret)
-                  .ExecuteRequest();
-
-            return GoodreadsData.ParseSearchResults(response);
+                return GoodreadsData.ParseSearchResults(response);
+            }
+            catch (Exception e)
+            {
+                return null;
+            }
         }
 
         public async Task<Review> GetUserReview(int bookId, int userId)
@@ -287,135 +348,177 @@ namespace Goodreads8.ViewModel
 
         public async Task<List<Group>> GetGroups()
         {
-            List<Group> cached = m_cache.GetGroups();
-            if (cached != null)
-                return cached;
+            try
+            {
+                List<Group> cached = m_cache.GetGroups();
+                if (cached != null)
+                    return cached;
 
-            String requestUrl = "http://www.goodreads.com/group/list/" + AuthenticatedUserId + ".xml";
+                String requestUrl = "http://www.goodreads.com/group/list/" + AuthenticatedUserId + ".xml";
 
-            String response = await m_client.MakeRequest("GET")
-                  .ForResource(m_client.AccessToken.Token, new Uri(requestUrl))
-                  .WithParameters(new { key = m_consumerKey })
-                  .Sign(m_client.AccessToken.Secret)
-                  .ExecuteRequest();
+                String response = await m_client.MakeRequest("GET")
+                      .ForResource(m_client.AccessToken.Token, new Uri(requestUrl))
+                      .WithParameters(new { key = m_consumerKey })
+                      .Sign(m_client.AccessToken.Secret)
+                      .ExecuteRequest();
 
-            List<Group> data = GoodreadsData.ParseGroups(response);
-            if (data != null)
-                m_cache.StoreGroups(data);
+                List<Group> data = GoodreadsData.ParseGroups(response);
+                if (data != null)
+                    m_cache.StoreGroups(data);
 
-            return data;
+                return data;
+            }
+            catch (Exception e)
+            {
+                return null;
+            }
         }
 
         public async Task<Group> GetGroup(int groupId)
         {
-            Group cached = m_cache.GetGroup(groupId);
-            if (cached != null)
-                return cached;
+            try
+            {
+                Group cached = m_cache.GetGroup(groupId);
+                if (cached != null)
+                    return cached;
 
-            String requestUrl = "http://www.goodreads.com/group/show/" + groupId + ".xml";
+                String requestUrl = "http://www.goodreads.com/group/show/" + groupId + ".xml";
 
-            String response = await m_client.MakeRequest("GET")
-                  .ForResource(m_client.AccessToken.Token, new Uri(requestUrl))
-                  .WithParameters(new { key = m_consumerKey })
-                  .Sign(m_client.AccessToken.Secret)
-                  .ExecuteRequest();
+                String response = await m_client.MakeRequest("GET")
+                      .ForResource(m_client.AccessToken.Token, new Uri(requestUrl))
+                      .WithParameters(new { key = m_consumerKey })
+                      .Sign(m_client.AccessToken.Secret)
+                      .ExecuteRequest();
 
-            Group data = GoodreadsData.ParseGroup(response);
+                Group data = GoodreadsData.ParseGroup(response);
 
-            if (data != null)
-                m_cache.StoreGroup(groupId, data);
+                if (data != null)
+                    m_cache.StoreGroup(groupId, data);
 
-            return data;
+                return data;
+            }
+            catch (Exception e)
+            {
+                return null;
+            }
         }
 
         public async Task<TopicSet> GetTopics(int groupId, int folderId, int page)
         {
-            TopicSet cached = m_cache.GetTopicSet(groupId, folderId, page);
-            if (cached != null)
-                return cached;
+            try
+            {
+                TopicSet cached = m_cache.GetTopicSet(groupId, folderId, page);
+                if (cached != null)
+                    return cached;
 
-            String folderValue = folderId.ToString();
-            if (folderId == -1)
-                folderValue = "unread";
+                String folderValue = folderId.ToString();
+                if (folderId == -1)
+                    folderValue = "unread";
 
-            String requestUrl = "http://www.goodreads.com/topic/group_folder/" + folderValue + ".xml";
-            String response = await m_client.MakeRequest("GET")
-                  .ForResource(m_client.AccessToken.Token, new Uri(requestUrl))
-                  .WithParameters(new { key = m_consumerKey, group_id = groupId, page = page })
-                  .Sign(m_client.AccessToken.Secret)
-                  .ExecuteRequest();
+                String requestUrl = "http://www.goodreads.com/topic/group_folder/" + folderValue + ".xml";
+                String response = await m_client.MakeRequest("GET")
+                      .ForResource(m_client.AccessToken.Token, new Uri(requestUrl))
+                      .WithParameters(new { key = m_consumerKey, group_id = groupId, page = page })
+                      .Sign(m_client.AccessToken.Secret)
+                      .ExecuteRequest();
 
-            TopicSet data = GoodreadsData.ParseTopics(response);
+                TopicSet data = GoodreadsData.ParseTopics(response);
 
-            if (data != null)
-               m_cache.StoreTopicSet(groupId, folderId, page, data);
+                if (data != null)
+                    m_cache.StoreTopicSet(groupId, folderId, page, data);
 
-            return data;
+                return data;
+            }
+            catch (Exception e)
+            {
+                return null;
+            }
         }
 
         public async Task<Topic> GetTopic(int topicId)
         {
-            Topic cached = m_cache.GetTopic(topicId);
-            if (cached != null)
-                return cached;
+            try
+            {
+                Topic cached = m_cache.GetTopic(topicId);
+                if (cached != null)
+                    return cached;
 
-            String requestUrl = "http://www.goodreads.com/topic/show/" + topicId + ".xml";
+                String requestUrl = "http://www.goodreads.com/topic/show/" + topicId + ".xml";
 
-            String response = await m_client.MakeRequest("GET")
-                  .ForResource(m_client.AccessToken.Token, new Uri(requestUrl))
-                  .WithParameters(new { key = m_consumerKey })
-                  .Sign(m_client.AccessToken.Secret)
-                  .ExecuteRequest();
+                String response = await m_client.MakeRequest("GET")
+                      .ForResource(m_client.AccessToken.Token, new Uri(requestUrl))
+                      .WithParameters(new { key = m_consumerKey })
+                      .Sign(m_client.AccessToken.Secret)
+                      .ExecuteRequest();
 
-            Topic data = GoodreadsData.ParseTopic(response);
+                Topic data = GoodreadsData.ParseTopic(response);
 
-            if (data != null)
-                m_cache.StoreTopic(topicId, data);
+                if (data != null)
+                    m_cache.StoreTopic(topicId, data);
 
-            return data;
+                return data;
+            }
+            catch (Exception e)
+            {
+                return null;
+            }
         }
 
         public async Task<BookSet> GetAuthorBooks(int authorId, int page)
         {
-            BookSet cached = m_cache.GetAuthorWorks(authorId, page);
-            if (cached != null)
-                return cached;
+            try
+            {
+                BookSet cached = m_cache.GetAuthorWorks(authorId, page);
+                if (cached != null)
+                    return cached;
 
-            String requestUrl = "http://www.goodreads.com/author/list.xml";
-            String response = await m_client.MakeRequest("GET")
-                  .ForResource(m_client.AccessToken.Token, new Uri(requestUrl))
-                  .WithParameters(new { key = m_consumerKey, id = authorId, page = page })
-                  .Sign(m_client.AccessToken.Secret)
-                  .ExecuteRequest();
+                String requestUrl = "http://www.goodreads.com/author/list.xml";
+                String response = await m_client.MakeRequest("GET")
+                      .ForResource(m_client.AccessToken.Token, new Uri(requestUrl))
+                      .WithParameters(new { key = m_consumerKey, id = authorId, page = page })
+                      .Sign(m_client.AccessToken.Secret)
+                      .ExecuteRequest();
 
-            BookSet data = GoodreadsData.ParseAuthorShelf(response);
+                BookSet data = GoodreadsData.ParseAuthorShelf(response);
 
-            if (data != null)
-                m_cache.StoreAuthorWorks(authorId, page, data);
+                if (data != null)
+                    m_cache.StoreAuthorWorks(authorId, page, data);
 
-            return data;
+                return data;
+            }
+            catch (Exception e)
+            {
+                return null;
+            }
         }
 
         public async Task<Status> GetStatus(int statusId)
         {
-            Status cached = m_cache.GetStatus(statusId);
-            if (cached != null)
-                return cached;
+            try
+            {
+                Status cached = m_cache.GetStatus(statusId);
+                if (cached != null)
+                    return cached;
 
-            String requestUrl = "http://www.goodreads.com/user_status/show/" + statusId;
+                String requestUrl = "http://www.goodreads.com/user_status/show/" + statusId;
 
-            String response = await m_client.MakeRequest("GET")
-                  .ForResource(m_client.AccessToken.Token, new Uri(requestUrl))
-                  .WithParameters(new { key = m_consumerKey, format = "xml" })
-                  .Sign(m_client.AccessToken.Secret)
-                  .ExecuteRequest();
+                String response = await m_client.MakeRequest("GET")
+                      .ForResource(m_client.AccessToken.Token, new Uri(requestUrl))
+                      .WithParameters(new { key = m_consumerKey, format = "xml" })
+                      .Sign(m_client.AccessToken.Secret)
+                      .ExecuteRequest();
 
-            Status data = GoodreadsData.ParseStatus(response);
+                Status data = GoodreadsData.ParseStatus(response);
 
-            if (data != null)
-                m_cache.StoreStatus(statusId, data);
+                if (data != null)
+                    m_cache.StoreStatus(statusId, data);
 
-            return data;
+                return data;
+            }
+            catch (Exception e)
+            {
+                return null;
+            }
         }
 
 
@@ -424,39 +527,53 @@ namespace Goodreads8.ViewModel
          * --------------------------------*/
         public async Task<bool> AddToShelf(int bookId, String shelfName)
         {
-            String requestUrl = "http://www.goodreads.com/shelf/add_to_shelf.xml";
+            try
+            {
+                String requestUrl = "http://www.goodreads.com/shelf/add_to_shelf.xml";
 
-            String response = await m_client.MakeRequest("POST")
-                  .ForResource(m_client.AccessToken.Token, new Uri(requestUrl))
-                  .WithParameters(new { name = shelfName, book_id = bookId })
-                  .Sign(m_client.AccessToken.Secret)
-                  .ExecuteRequest();
+                String response = await m_client.MakeRequest("POST")
+                      .ForResource(m_client.AccessToken.Token, new Uri(requestUrl))
+                      .WithParameters(new { name = shelfName, book_id = bookId })
+                      .Sign(m_client.AccessToken.Secret)
+                      .ExecuteRequest();
 
-            if(string.IsNullOrEmpty(response) || !response.Contains("<shelf>"))
+                if (string.IsNullOrEmpty(response) || !response.Contains("<shelf>"))
+                    return false;
+
+                m_cache.InvalidateMyReview(AuthenticatedUserId, bookId);
+                return true;
+            }
+            catch (Exception e)
+            {
                 return false;
-
-            m_cache.InvalidateMyReview(AuthenticatedUserId, bookId);
-            return true;
+            }
         }
 
         public async Task<bool> RemoveFromShelf(int bookId, String shelfName)
         {
-            String requestUrl = "http://www.goodreads.com/shelf/add_to_shelf.xml";
+            try
+            {
+                String requestUrl = "http://www.goodreads.com/shelf/add_to_shelf.xml";
 
-            String response = await m_client.MakeRequest("POST")
-                  .ForResource(m_client.AccessToken.Token, new Uri(requestUrl))
-                  .WithParameters(new { name = shelfName, book_id = bookId, a = "remove" })
-                  .Sign(m_client.AccessToken.Secret)
-                  .ExecuteRequest();
+                String response = await m_client.MakeRequest("POST")
+                      .ForResource(m_client.AccessToken.Token, new Uri(requestUrl))
+                      .WithParameters(new { name = shelfName, book_id = bookId, a = "remove" })
+                      .Sign(m_client.AccessToken.Secret)
+                      .ExecuteRequest();
 
-            if(string.IsNullOrEmpty(response))
+                if (string.IsNullOrEmpty(response))
+                    return false;
+
+                if (!response.Contains("removed") && !response.Contains("<shelf>"))
+                    return false;
+
+                m_cache.InvalidateMyReview(AuthenticatedUserId, bookId);
+                return true;
+            }
+            catch (Exception e)
+            {
                 return false;
-
-            if(!response.Contains("removed") && !response.Contains("<shelf>"))
-                return false;
-
-            m_cache.InvalidateMyReview(AuthenticatedUserId, bookId);
-            return true;
+            }
         }
 
         /// <summary>
@@ -469,62 +586,76 @@ namespace Goodreads8.ViewModel
         /// <returns>true for success</returns>
         public async Task<bool> PostStatusUpdate(int bookId, String body, int page, int percent)
         {
-            if (bookId <= 0)
+            try
+            {
+                if (bookId <= 0)
+                    return false;
+
+                if ((page > 0 && percent > 0) || (page <= 0 && percent <= 0))
+                    return false;
+
+                Dictionary<string, string> reqParams = new Dictionary<string, string>();
+                reqParams.Add("user_status[book_id]", bookId.ToString());
+
+                if (!string.IsNullOrEmpty(body))
+                    reqParams.Add("user_status[body]", body);
+
+                if (page > 0)
+                    reqParams.Add("user_status[page]", page.ToString());
+                else
+                    reqParams.Add("user_status[percent]", percent.ToString());
+
+
+                HttpWebRequest req = await BuildRequest("http://www.goodreads.com/user_status.xml", reqParams);
+
+                HttpWebResponse Response = (HttpWebResponse)await req.GetResponseAsync();
+                StreamReader ResponseDataStream = new StreamReader(Response.GetResponseStream());
+                String response = ResponseDataStream.ReadToEnd();
+                if (response != null && response.Contains("user-status"))
+                    return true;
+
                 return false;
-
-            if ((page > 0 && percent > 0) || (page <= 0 && percent <=0))
+            }
+            catch (Exception e)
+            {
                 return false;
-
-            Dictionary<string, string> reqParams = new Dictionary<string,string>();
-            reqParams.Add("user_status[book_id]", bookId.ToString());
-
-            if(!string.IsNullOrEmpty(body))
-                reqParams.Add("user_status[body]", body);
-
-            if(page > 0)
-                reqParams.Add("user_status[page]", page.ToString());
-            else
-                reqParams.Add("user_status[percent]", percent.ToString());
-
-
-            HttpWebRequest req = await BuildRequest("http://www.goodreads.com/user_status.xml", reqParams);
-
-            HttpWebResponse Response = (HttpWebResponse)await req.GetResponseAsync();
-            StreamReader ResponseDataStream = new StreamReader(Response.GetResponseStream());
-            String response = ResponseDataStream.ReadToEnd();
-            if (response != null && response.Contains("user-status"))
-                return true;
-
-            return false;
+            }
         }
 
         public enum CommentType { review, topic, user_status }
         public async Task<bool> PostComment(int objectId, CommentType objectType, String body)
         {
-            if (objectId <= 0 || string.IsNullOrEmpty(body))
+            try
+            {
+                if (objectId <= 0 || string.IsNullOrEmpty(body))
+                    return false;
+
+                Dictionary<string, string> reqParams = new Dictionary<string, string>();
+                reqParams.Add("type", objectType.ToString());
+                reqParams.Add("id", objectId.ToString());
+                reqParams.Add("comment[body]", body);
+
+                HttpWebRequest req = await BuildRequest("http://www.goodreads.com/comment.xml", reqParams);
+
+                HttpWebResponse Response = (HttpWebResponse)await req.GetResponseAsync();
+                StreamReader ResponseDataStream = new StreamReader(Response.GetResponseStream());
+                String response = ResponseDataStream.ReadToEnd();
+                if (response == null || !response.Contains("comment"))
+                    return false;
+
+                if (objectType == CommentType.review)
+                    m_cache.InvalidateReview(objectId);
+                else if (objectType == CommentType.user_status)
+                    m_cache.InvalidateStatus(objectId);
+                else if (objectType == CommentType.topic)
+                    m_cache.InvalidateTopic(objectId);
+
+                return true;
+            }
+            catch (Exception e)
+            {
                 return false;
-
-            Dictionary<string, string> reqParams = new Dictionary<string, string>();
-            reqParams.Add("type", objectType.ToString());
-            reqParams.Add("id", objectId.ToString());
-            reqParams.Add("comment[body]", body);
-
-            HttpWebRequest req = await BuildRequest("http://www.goodreads.com/comment.xml", reqParams);
-
-            HttpWebResponse Response = (HttpWebResponse)await req.GetResponseAsync();
-            StreamReader ResponseDataStream = new StreamReader(Response.GetResponseStream());
-            String response = ResponseDataStream.ReadToEnd();
-            if (response == null || !response.Contains("comment"))
-                return false;
-
-            if (objectType == CommentType.review)
-                m_cache.InvalidateReview(objectId);
-            else if (objectType == CommentType.user_status)
-                m_cache.InvalidateStatus(objectId);
-            else if (objectType == CommentType.topic)
-                m_cache.InvalidateTopic(objectId);
-
-            return true;
+            }
         }
 
         /// <summary>
@@ -534,53 +665,67 @@ namespace Goodreads8.ViewModel
         /// <returns></returns>
         public async Task<bool> DestroyReview(int bookId)
         {
-            if (bookId <= 0)
+            try
+            {
+                if (bookId <= 0)
+                    return false;
+
+                String requestUrl = "http://www.goodreads.com/review/destroy.xml";
+                String response = await m_client.MakeRequest("POST")
+                      .ForResource(m_client.AccessToken.Token, new Uri(requestUrl))
+                      .WithParameters(new { book_id = bookId })
+                      .Sign(m_client.AccessToken.Secret)
+                      .ExecuteRequest();
+
+                m_cache.InvalidateMyReview(AuthenticatedUserId, bookId);
+                return true;
+            }
+            catch (Exception e)
+            {
                 return false;
-
-            String requestUrl = "http://www.goodreads.com/review/destroy.xml";
-            String response = await m_client.MakeRequest("POST")
-                  .ForResource(m_client.AccessToken.Token, new Uri(requestUrl))
-                  .WithParameters(new { book_id = bookId })
-                  .Sign(m_client.AccessToken.Secret)
-                  .ExecuteRequest();
-
-            m_cache.InvalidateMyReview(AuthenticatedUserId, bookId);
-            return true;
+            }
         }
 
         public async Task<bool> PostBookReview(int bookId, String review, int rating)
         {
-            if (bookId <= 0 || rating <= 0)
-                return false;
-
-            Review myReview = await GetUserReview(bookId, AuthenticatedUserId);
-            if (myReview != null)
+            try
             {
-                await DestroyReview(bookId);
+                if (bookId <= 0 || rating <= 0)
+                    return false;
+
+                Review myReview = await GetUserReview(bookId, AuthenticatedUserId);
+                if (myReview != null)
+                {
+                    await DestroyReview(bookId);
+                }
+
+                //new review
+                Dictionary<string, string> reqParams = new Dictionary<string, string>();
+                reqParams.Add("book_id", bookId.ToString());
+
+                if (!string.IsNullOrEmpty(review))
+                    reqParams.Add("review[review]", review);
+
+                reqParams.Add("review[rating]", rating.ToString());
+
+                String dateRead = DateTime.Now.ToString("yyyy-MM-dd");
+                reqParams.Add("review[read_at]", dateRead);
+
+
+                HttpWebRequest req = await BuildRequest("http://www.goodreads.com/review.xml", reqParams);
+
+                HttpWebResponse Response = (HttpWebResponse)await req.GetResponseAsync();
+                StreamReader ResponseDataStream = new StreamReader(Response.GetResponseStream());
+                String response = ResponseDataStream.ReadToEnd();
+                if (response != null && response.Contains("review"))
+                    return true;
+
+                return false;
             }
-
-            //new review
-            Dictionary<string, string> reqParams = new Dictionary<string, string>();
-            reqParams.Add("book_id", bookId.ToString());
-
-            if (!string.IsNullOrEmpty(review))
-                reqParams.Add("review[review]", review);
-
-            reqParams.Add("review[rating]", rating.ToString());
-
-            String dateRead = DateTime.Now.ToString("yyyy-MM-dd");
-            reqParams.Add("review[read_at]", dateRead);
-
-
-            HttpWebRequest req = await BuildRequest("http://www.goodreads.com/review.xml", reqParams);
-
-            HttpWebResponse Response = (HttpWebResponse)await req.GetResponseAsync();
-            StreamReader ResponseDataStream = new StreamReader(Response.GetResponseStream());
-            String response = ResponseDataStream.ReadToEnd();
-            if (response != null && response.Contains("review"))
-                return true;
-
-            return false;
+            catch (Exception e)
+            {
+                return false;
+            }
         }
 
         /********************************
