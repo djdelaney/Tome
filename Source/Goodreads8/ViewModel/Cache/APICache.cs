@@ -11,13 +11,13 @@ namespace Goodreads8.ViewModel.Cache
     {
         private Dictionary<ShelfCache, ReviewSet> m_shelfCache;
         private Dictionary<WorksCache, BookSet> m_authorShelfCache;
-        private Dictionary<int, Book> m_bookCache;
-        private Dictionary<int, Review> m_reviewCache;
-        private Dictionary<int, Author> m_authorCache;
-        private Dictionary<int, Profile> m_userCache;
-        private Dictionary<int, Group> m_groupCache;
-        private Dictionary<int, Topic> m_topicCache;
-        private Dictionary<int, Status> m_statusCache;
+        private Dictionary<int, CacheEntry> m_bookCache;
+        private Dictionary<int, CacheEntry> m_reviewCache;
+        private Dictionary<int, CacheEntry> m_authorCache;
+        private Dictionary<int, CacheEntry> m_userCache;
+        private Dictionary<int, CacheEntry> m_groupCache;
+        private Dictionary<int, CacheEntry> m_topicCache;
+        private Dictionary<int, CacheEntry> m_statusCache;
         private Dictionary<FriendCache, FriendSet> m_friendsCache;
         private Dictionary<UserReviewCache, Review> m_userReviewCache;
         private Dictionary<TopicSetCache, TopicSet> m_topicListCache;
@@ -30,18 +30,18 @@ namespace Goodreads8.ViewModel.Cache
 
         public APICache()
         {
-            m_shelfCache = new Dictionary<ShelfCache, ReviewSet>();
-            m_bookCache = new Dictionary<int, Book>();
-            m_reviewCache = new Dictionary<int, Review>();
-            m_authorCache = new Dictionary<int, Author>();
-            m_userCache = new Dictionary<int, Profile>();
-            m_friendsCache = new Dictionary<FriendCache, FriendSet>();
-            m_userReviewCache = new Dictionary<UserReviewCache, Review>();
-            m_groupCache = new Dictionary<int, Group>();
-            m_topicListCache = new Dictionary<TopicSetCache, TopicSet>();
-            m_topicCache = new Dictionary<int, Topic>();
-            m_authorShelfCache = new Dictionary<WorksCache, BookSet>();
-            m_statusCache = new Dictionary<int, Status>();
+            m_shelfCache 		= new Dictionary<ShelfCache, ReviewSet>();
+            m_authorShelfCache 	= new Dictionary<WorksCache, BookSet>();
+            m_bookCache 		= new Dictionary<int, CacheEntry>();
+            m_reviewCache 		= new Dictionary<int, CacheEntry>();
+            m_authorCache 		= new Dictionary<int, CacheEntry>();
+            m_userCache 		= new Dictionary<int, CacheEntry>();
+            m_groupCache 		= new Dictionary<int, CacheEntry>();
+            m_topicCache 		= new Dictionary<int, CacheEntry>();
+            m_statusCache 		= new Dictionary<int, CacheEntry>();
+            m_friendsCache 		= new Dictionary<FriendCache, FriendSet>();
+            m_userReviewCache 	= new Dictionary<UserReviewCache, Review>();
+            m_topicListCache 	= new Dictionary<TopicSetCache, TopicSet>();
         }
 
         public void InvalidateMyReview(int userId, int bookId)
@@ -59,6 +59,7 @@ namespace Goodreads8.ViewModel.Cache
 
         private void PruneCache()
         {
+            //Shelf
             List<ShelfCache> shelfKeys = new List<ShelfCache>();
             foreach (KeyValuePair<ShelfCache, ReviewSet> pair in m_shelfCache)
             {
@@ -71,15 +72,150 @@ namespace Goodreads8.ViewModel.Cache
             }
 
             //Authors
-            List<WorksCache> authorKeys = new List<WorksCache>();
+            List<WorksCache> authorWorkKeys = new List<WorksCache>();
             foreach (KeyValuePair<WorksCache, BookSet> pair in m_authorShelfCache)
             {
                 if (pair.Key.IsExpired())
-                    authorKeys.Add(pair.Key);
+                    authorWorkKeys.Add(pair.Key);
             }
-            foreach (WorksCache key in authorKeys)
+            foreach (WorksCache key in authorWorkKeys)
             {
                 m_authorShelfCache.Remove(key);
+            }
+
+            //Cache entry style
+            //Book
+            List<int> bookKeys = new List<int>();
+            foreach (KeyValuePair<int, CacheEntry> pair in m_bookCache)
+            {
+                if (pair.Value.IsExpired())
+                    bookKeys.Add(pair.Key);
+            }
+            foreach (int key in bookKeys)
+            {
+                m_bookCache.Remove(key);
+            }
+
+            //Reviews
+            List<int> reviewKeys = new List<int>();
+            foreach (KeyValuePair<int, CacheEntry> pair in m_reviewCache)
+            {
+                if (pair.Value.IsExpired())
+                    reviewKeys.Add(pair.Key);
+            }
+            foreach (int key in reviewKeys)
+            {
+                m_reviewCache.Remove(key);
+            }
+
+            //Authors
+            List<int> authorKeys = new List<int>();
+            foreach (KeyValuePair<int, CacheEntry> pair in m_authorCache)
+            {
+                if (pair.Value.IsExpired())
+                    authorKeys.Add(pair.Key);
+            }
+            foreach (int key in authorKeys)
+            {
+                m_authorCache.Remove(key);
+            }
+
+            //Users
+            List<int> userKeys = new List<int>();
+            foreach (KeyValuePair<int, CacheEntry> pair in m_userCache)
+            {
+                if (pair.Value.IsExpired())
+                    userKeys.Add(pair.Key);
+            }
+            foreach (int key in userKeys)
+            {
+                m_userCache.Remove(key);
+            }
+
+            //Groups
+            List<int> groupKeys = new List<int>();
+            foreach (KeyValuePair<int, CacheEntry> pair in m_groupCache)
+            {
+                if (pair.Value.IsExpired())
+                    groupKeys.Add(pair.Key);
+            }
+            foreach (int key in groupKeys)
+            {
+                m_groupCache.Remove(key);
+            }
+
+            //Topic
+            List<int> topicKeys = new List<int>();
+            foreach (KeyValuePair<int, CacheEntry> pair in m_topicCache)
+            {
+                if (pair.Value.IsExpired())
+                    topicKeys.Add(pair.Key);
+            }
+            foreach (int key in topicKeys)
+            {
+                m_topicCache.Remove(key);
+            }
+
+            //Status
+            List<int> statusKeys = new List<int>();
+            foreach (KeyValuePair<int, CacheEntry> pair in m_statusCache)
+            {
+                if (pair.Value.IsExpired())
+                    statusKeys.Add(pair.Key);
+            }
+            foreach (int key in statusKeys)
+            {
+                m_statusCache.Remove(key);
+            }
+
+            //pages of friends (invalidate all if any are expired)
+            bool invalidateFriendCache = false;
+            foreach (KeyValuePair<FriendCache, FriendSet> pair in m_friendsCache)
+            {
+                if (pair.Key.IsExpired())
+                    invalidateFriendCache = true;
+            }
+            if (invalidateFriendCache)
+            {
+                m_friendsCache.Clear();
+            }
+
+            //User Reviews
+            List<UserReviewCache> userReviewKeys = new List<UserReviewCache>();
+            foreach (KeyValuePair<UserReviewCache, Review> pair in m_userReviewCache)
+            {
+                if (pair.Key.IsExpired())
+                    userReviewKeys.Add(pair.Key);
+            }
+            foreach (UserReviewCache key in userReviewKeys)
+            {
+                m_userReviewCache.Remove(key);
+            }
+
+            //Topic List
+            List<TopicSetCache> topicListKeys = new List<TopicSetCache>();
+            foreach (KeyValuePair<TopicSetCache, TopicSet> pair in m_topicListCache)
+            {
+                if (pair.Key.IsExpired())
+                    topicListKeys.Add(pair.Key);
+            }
+            foreach (TopicSetCache key in topicListKeys)
+            {
+                m_topicListCache.Remove(key);
+            }
+
+            //updates
+            if (m_updates != null && m_updateExpiration.CompareTo(DateTime.Now) < 0)
+            {
+                m_updates = null;
+                m_updateExpiration = DateTime.MinValue;
+            }
+
+            //Groups
+            if (m_groups != null && m_groupExpiration.CompareTo(DateTime.Now) < 0)
+            {
+                m_groups = null;
+                m_groupExpiration = DateTime.MinValue;
             }
         }
 
@@ -124,14 +260,16 @@ namespace Goodreads8.ViewModel.Cache
          * ----------------------- */
         public Book GetBook(int bookId)
         {
+            PruneCache();
+
             if (m_bookCache.ContainsKey(bookId))
-                return m_bookCache[bookId];
+                return m_bookCache[bookId].Object as Book;
             return null;
         }
 
         public void StoreBook(int bookId, Book data)
         {
-            m_bookCache.Add(bookId, data);
+            m_bookCache.Add(bookId, new CacheEntry(data));
         }
 
         /** -----------------------
@@ -141,14 +279,16 @@ namespace Goodreads8.ViewModel.Cache
          * ----------------------- */
         public Review GetReview(int reviewId)
         {
+            PruneCache();
+
             if (m_reviewCache.ContainsKey(reviewId))
-                return m_reviewCache[reviewId];
+                return m_reviewCache[reviewId].Object as Review;
             return null;
         }
 
         public void StoreReview(int reviewId, Review data)
         {
-            m_reviewCache.Add(reviewId, data);
+            m_reviewCache.Add(reviewId, new CacheEntry(data));
         }
 
         public void InvalidateReview(int reviewId)
@@ -164,14 +304,16 @@ namespace Goodreads8.ViewModel.Cache
          * ----------------------- */
         public Author GetAuthor(int authorId)
         {
+            PruneCache();
+
             if (m_authorCache.ContainsKey(authorId))
-                return m_authorCache[authorId];
+                return m_authorCache[authorId].Object as Author;
             return null;
         }
 
         public void StoreAuthor(int authorId, Author data)
         {
-            m_authorCache.Add(authorId, data);
+            m_authorCache.Add(authorId, new CacheEntry(data));
         }
 
         /** -----------------------
@@ -181,14 +323,16 @@ namespace Goodreads8.ViewModel.Cache
          * ----------------------- */
         public Profile GetProfile(int userId)
         {
+            PruneCache();
+
             if (m_userCache.ContainsKey(userId))
-                return m_userCache[userId];
+                return m_userCache[userId].Object as Profile;
             return null;
         }
 
         public void StoreProfile(int userId, Profile data)
         {
-            m_userCache.Add(userId, data);
+            m_userCache.Add(userId, new CacheEntry(data));
         }
 
         /** -----------------------
@@ -198,6 +342,8 @@ namespace Goodreads8.ViewModel.Cache
          * ----------------------- */
         public FriendSet GetFriends(int userId, int page)
         {
+            PruneCache();
+
             foreach (KeyValuePair<FriendCache, FriendSet> pair in m_friendsCache)
             {
                 if (pair.Key.Page == page &&
@@ -224,6 +370,8 @@ namespace Goodreads8.ViewModel.Cache
          * ----------------------- */
         public List<Update> GetUpdates()
         {
+            PruneCache();
+
             if (m_updates != null && m_updateExpiration.CompareTo(DateTime.Now) < 0)
             {
                 m_updates = null;
@@ -247,6 +395,8 @@ namespace Goodreads8.ViewModel.Cache
          * ----------------------- */
         public Review GetUserReview(int bookId, int userId)
         {
+            PruneCache();
+
             foreach (KeyValuePair<UserReviewCache, Review> pair in m_userReviewCache)
             {
                 if (pair.Key.UserId == userId &&
@@ -273,6 +423,8 @@ namespace Goodreads8.ViewModel.Cache
          * ----------------------- */
         public List<Group> GetGroups()
         {
+            PruneCache();
+
             if (m_groups != null && m_groupExpiration.CompareTo(DateTime.Now) < 0)
             {
                 m_groups = null;
@@ -296,14 +448,16 @@ namespace Goodreads8.ViewModel.Cache
          * ----------------------- */
         public Group GetGroup(int groupId)
         {
+            PruneCache();
+
             if (m_groupCache.ContainsKey(groupId))
-                return m_groupCache[groupId];
+                return m_groupCache[groupId].Object as Group;
             return null;
         }
 
         public void StoreGroup(int groupId, Group data)
         {
-            m_groupCache.Add(groupId, data);
+            m_groupCache.Add(groupId, new CacheEntry(data));
         }
 
         /** -----------------------
@@ -313,6 +467,8 @@ namespace Goodreads8.ViewModel.Cache
          * ----------------------- */
         public TopicSet GetTopicSet(int groupId, int folderId, int page)
         {
+            PruneCache();
+
             foreach (KeyValuePair<TopicSetCache, TopicSet> pair in m_topicListCache)
             {
                 if (pair.Key.GroupId == groupId &&
@@ -341,14 +497,16 @@ namespace Goodreads8.ViewModel.Cache
          * ----------------------- */
         public Topic GetTopic(int topicId)
         {
+            PruneCache();
+
             if (m_topicCache.ContainsKey(topicId))
-                return m_topicCache[topicId];
+                return m_topicCache[topicId].Object as Topic;
             return null;
         }
 
         public void StoreTopic(int topicId, Topic data)
         {
-            m_topicCache.Add(topicId, data);
+            m_topicCache.Add(topicId, new CacheEntry(data));
         }
 
         public void InvalidateTopic(int topicId)
@@ -392,14 +550,16 @@ namespace Goodreads8.ViewModel.Cache
          * ----------------------- */
         public Status GetStatus(int statusId)
         {
+            PruneCache();
+
             if (m_statusCache.ContainsKey(statusId))
-                return m_statusCache[statusId];
+                return m_statusCache[statusId].Object as Status;
             return null;
         }
 
         public void StoreStatus(int statusId, Status data)
         {
-            m_statusCache.Add(statusId, data);
+            m_statusCache.Add(statusId, new CacheEntry(data));
         }
 
         public void InvalidateStatus(int statusId)

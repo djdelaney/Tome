@@ -101,7 +101,7 @@
   </PropertyGroup>
   <ItemGroup>
     <!-- A reference to the entire .Net Framework and Windows SDK are automatically included -->
-    <SDKReference Include="Callisto, Version=1.2.1">
+    <SDKReference Include="Callisto, Version=1.2.3">
       <Name>Callisto</Name>
     </SDKReference>
     <SDKReference Include="MSAdvertisingXaml, Version=6.1">
@@ -145,6 +145,7 @@
     <Compile Include="NewTopicPage.xaml.cs">
       <DependentUpon>NewTopicPage.xaml</DependentUpon>
     </Compile>
+    <Compile Include="ViewModel\Cache\CacheEntry.cs" />
     <Compile Include="ViewModel\Cache\WorksCache.cs" />
     <Compile Include="ViewModel\IncrementalTopics.cs" />
     <Compile Include="ListTopicsPage.xaml.cs">
