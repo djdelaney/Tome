@@ -78,7 +78,7 @@
 
                     <!-- Author -->
                     <TextBlock Grid.Row="1" Grid.Column="0" Text="Author" Style="{StaticResource DetailLabel}"/>
-                    <TextBlock Grid.Row="1" Grid.Column="1" Text="{Binding PrimaryAuthor}" x:Name="author" Style="{StaticResource DetailValue}"/>
+                    <TextBlock Grid.Row="1" Grid.Column="1" Text="{Binding PrimaryAuthor}" x:Name="author" Style="{StaticResource DetailValue}" Tapped="Author_Tapped" Foreground="#FF54ABDC"/>
 
                     <!-- Rating -->
                     <TextBlock Grid.Row="2" Grid.Column="0" Text="Rating" Style="{StaticResource DetailLabel}"/>
@@ -172,7 +172,7 @@
 
                     <!-- Author -->
                     <TextBlock Grid.Row="0" Grid.Column="0" Text="Author" Style="{StaticResource DetailLabel}"/>
-                    <TextBlock Grid.Row="0" Grid.Column="1" Text="{Binding PrimaryAuthor}" Style="{StaticResource DetailValue}"/>
+                    <TextBlock Grid.Row="0" Grid.Column="1" Text="{Binding PrimaryAuthor}" Style="{StaticResource DetailValue}" Tapped="Author_Tapped" Foreground="#FF54ABDC"/>
 
                     <!-- Rating -->
                     <TextBlock Grid.Row="1" Grid.Column="0" Text="Rating" Style="{StaticResource DetailLabel}"/>

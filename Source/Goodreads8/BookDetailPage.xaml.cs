@@ -133,7 +133,7 @@ namespace Goodreads8
                 popupMenu.Commands.Add(cmd);
             }
 
-            var button = (Button)sender;
+            var button = (FrameworkElement)sender;
             var transform = button.TransformToVisual(this);
             var point = transform.TransformPoint(new Point(45, -10));
 
@@ -165,6 +165,11 @@ namespace Goodreads8
         private void Home_Click(object sender, RoutedEventArgs e)
         {
             this.Frame.Navigate(typeof(MainPage));
+        }
+
+        private void Author_Tapped(object sender, TappedRoutedEventArgs e)
+        {
+            Author_Click(sender, e);
         }
     }
 }
