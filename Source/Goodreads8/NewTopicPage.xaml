@@ -13,7 +13,7 @@
     <Page.Resources>
 
         <!-- TODO: Delete this line if the key AppName is declared in App.xaml -->
-        <x:String x:Key="AppName">My Application</x:String>
+        <x:String x:Key="AppName">New Topic</x:String>
     </Page.Resources>
 
     <!--
@@ -22,6 +22,9 @@
         * Row 1 contains the rest of the page layout
     -->
     <Grid Style="{StaticResource LayoutRootStyle}">
+        <Grid.Background>
+            <ImageBrush ImageSource="Assets/BGBook.jpg" Stretch="UniformToFill"/>
+        </Grid.Background>
         <Grid.RowDefinitions>
             <RowDefinition Height="140"/>
             <RowDefinition Height="*"/>
@@ -36,6 +39,20 @@
             <Button x:Name="backButton" Click="GoBack" IsEnabled="{Binding Frame.CanGoBack, ElementName=pageRoot}" Style="{StaticResource BackButtonStyle}"/>
             <TextBlock x:Name="pageTitle" Grid.Column="1" Text="{StaticResource AppName}" Style="{StaticResource PageHeaderTextStyle}"/>
         </Grid>
+
+        <!-- Progress Ring -->
+        <Grid Grid.RowSpan="2" Visibility="Collapsed" x:Name="busyGrid">
+            <ProgressRing IsActive="False" HorizontalAlignment="Center" VerticalAlignment="Center" Height="200" Width="200" x:Name="busyRing"/>
+        </Grid>
+
+        <!-- New topic -->
+        <StackPanel Margin="140,0,80,0" Width="400" Grid.Row="1" HorizontalAlignment="Left" x:Name="MainView">
+            <TextBlock Text="Title" IsHitTestVisible="false" FontSize="30" Margin="0,0,0,20" Grid.Row="0"/>
+            <TextBox x:Name="CommentTitle" Margin="0,0,0,20"/>
+            <TextBlock Text="Comment" IsHitTestVisible="false" FontSize="30" Margin="0,0,0,20" Grid.Row="0"/>
+            <TextBox Height="200" x:Name="CommentBox" AcceptsReturn="True" TextWrapping="Wrap"/>
+            <Button Content="Post" Margin="0,10,0,0" x:Name="PostButton" Click="PostButton_Click"></Button>
+        </StackPanel>
 
         <VisualStateManager.VisualStateGroups>
 
@@ -62,6 +79,18 @@
                         <ObjectAnimationUsingKeyFrames Storyboard.TargetName="pageTitle" Storyboard.TargetProperty="Style">
                             <DiscreteObjectKeyFrame KeyTime="0" Value="{StaticResource SnappedPageHeaderTextStyle}"/>
                         </ObjectAnimationUsingKeyFrames>
+
+                        <!--Views-->
+                        <ObjectAnimationUsingKeyFrames Storyboard.TargetProperty="(FrameworkElement.Margin)" Storyboard.TargetName="MainView">
+                            <DiscreteObjectKeyFrame KeyTime="0">
+                                <DiscreteObjectKeyFrame.Value>
+                                    <Thickness>40,0,80,0</Thickness>
+                                </DiscreteObjectKeyFrame.Value>
+                            </DiscreteObjectKeyFrame>
+                        </ObjectAnimationUsingKeyFrames>
+
+                        <DoubleAnimation Storyboard.TargetName="MainView" 
+                            Storyboard.TargetProperty="Width" From="400" To="300" Duration="0:0:1" BeginTime="0:0:0"/>
                     </Storyboard>
                 </VisualState>
             </VisualStateGroup>

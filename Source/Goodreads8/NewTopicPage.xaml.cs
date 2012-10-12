@@ -1,9 +1,11 @@
-﻿using System;
+﻿using Goodreads8.ViewModel;
+using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using Windows.Foundation;
 using Windows.Foundation.Collections;
+using Windows.UI.ViewManagement;
 using Windows.UI.Xaml;
 using Windows.UI.Xaml.Controls;
 using Windows.UI.Xaml.Controls.Primitives;
@@ -21,9 +23,31 @@ namespace Goodreads8
     /// </summary>
     public sealed partial class NewTopicPage : Goodreads8.Common.LayoutAwarePage
     {
+        public class Args
+        {
+            public int GroupId { get; set; }
+            public int FolderId { get; set; }
+        }
+
         public NewTopicPage()
         {
             this.InitializeComponent();
+        }
+
+        /// <summary>
+        /// Invoked when this page is about to be displayed in a Frame.
+        /// </summary>
+        /// <param name="e">Event data that describes how this page was reached.  The Parameter
+        /// property is typically used to configure the page.</param>
+        protected override void OnNavigatedTo(NavigationEventArgs e)
+        {
+            base.OnNavigatedTo(e);
+
+            Args arg = e.Parameter as Args;
+            if (arg == null || arg.GroupId <=0 || arg.FolderId <= 0)
+            {
+                this.Frame.GoBack();
+            }
         }
 
         /// <summary>
@@ -47,6 +71,34 @@ namespace Goodreads8
         /// <param name="pageState">An empty dictionary to be populated with serializable state.</param>
         protected override void SaveState(Dictionary<String, Object> pageState)
         {
+        }
+
+        private async void PostButton_Click(object sender, RoutedEventArgs e)
+        {
+            if (busyRing.IsActive)
+                return;
+
+            if (string.IsNullOrEmpty(CommentTitle.Text))
+            {
+                UIUtil.ShowToast("You must specify a title");
+                return;
+            }
+            if (string.IsNullOrEmpty(CommentBox.Text))
+            {
+                UIUtil.ShowToast("You must specify a comment");
+                return;
+            }
+
+            this.PostButton.IsEnabled = false;
+            this.busyGrid.Visibility = Windows.UI.Xaml.Visibility.Visible;
+            this.busyRing.IsActive = true;
+
+            GoodreadsAPI api = GoodreadsAPI.Instance;
+            //todo, actual posting
+
+            this.busyGrid.Visibility = Windows.UI.Xaml.Visibility.Collapsed;
+            this.busyRing.IsActive = false;
+            this.PostButton.IsEnabled = true;
         }
     }
 }
