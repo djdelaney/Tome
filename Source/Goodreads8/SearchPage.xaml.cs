@@ -7,6 +7,7 @@ using System.Linq;
 using Windows.Foundation;
 using Windows.Foundation.Collections;
 using Windows.UI.Popups;
+using Windows.UI.ViewManagement;
 using Windows.UI.Xaml;
 using Windows.UI.Xaml.Controls;
 using Windows.UI.Xaml.Controls.Primitives;
@@ -22,7 +23,7 @@ namespace Goodreads8
     /// <summary>
     /// An empty page that can be used on its own or navigated to within a Frame.
     /// </summary>
-    public sealed partial class SearchPage : Page
+    public sealed partial class SearchPage : Goodreads8.Common.LayoutAwarePage
     {
         List<Book> model;
 
@@ -31,6 +32,23 @@ namespace Goodreads8
             this.InitializeComponent();
 
             this.NavigationCacheMode = Windows.UI.Xaml.Navigation.NavigationCacheMode.Enabled;
+            Window.Current.SizeChanged += WindowSizeChanged;
+        }
+
+        private void WindowSizeChanged(object sender, Windows.UI.Core.WindowSizeChangedEventArgs e)
+        {
+            // Obtain view state by explicitly querying for it
+            ApplicationViewState myViewState = ApplicationView.Value;
+            if (ApplicationView.Value == ApplicationViewState.Snapped)
+            {
+                this.gv.Visibility = Windows.UI.Xaml.Visibility.Collapsed;
+                this.lv.Visibility = Windows.UI.Xaml.Visibility.Visible;
+            }
+            else
+            {
+                this.gv.Visibility = Windows.UI.Xaml.Visibility.Visible;
+                this.lv.Visibility = Windows.UI.Xaml.Visibility.Collapsed;
+            }
         }
 
         /// <summary>
@@ -40,6 +58,16 @@ namespace Goodreads8
         /// property is typically used to configure the page.</param>
         protected override void OnNavigatedTo(NavigationEventArgs e)
         {
+            base.OnNavigatedTo(e);
+
+            if (ApplicationView.Value == ApplicationViewState.Snapped)
+            {
+                this.gv.Visibility = Windows.UI.Xaml.Visibility.Collapsed;
+            }
+            else
+            {
+                this.lv.Visibility = Windows.UI.Xaml.Visibility.Collapsed;
+            }
         }
 
         /// <summary>
@@ -55,7 +83,7 @@ namespace Goodreads8
             if (this.Frame != null && this.Frame.CanGoBack) this.Frame.GoBack();
         }
 
-        private void GridView_ItemClick(object sender, ItemClickEventArgs e)
+        private void Book_ItemClick(object sender, ItemClickEventArgs e)
         {
             if (!query.IsEnabled)
                 return;
@@ -74,6 +102,7 @@ namespace Goodreads8
             }
             model = null;
             this.gv.ItemsSource = null;
+            this.lv.ItemsSource = null;
 
             this.SearchBtn.IsEnabled = false;
             this.query.IsEnabled = false;
@@ -83,6 +112,7 @@ namespace Goodreads8
             GoodreadsAPI api = GoodreadsAPI.Instance;
             model = await api.GetSearchResults(this.query.Text);
             this.gv.ItemsSource = model;
+            this.lv.ItemsSource = model;
 
             this.SearchBtn.IsEnabled = true;
             this.query.IsEnabled = true;
