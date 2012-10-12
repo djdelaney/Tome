@@ -32,7 +32,7 @@ namespace Goodreads8
             public String Name { get; set; }
         }
 
-        private TopicArgs args = null;
+        private TopicArgs m_arg = null;
         private IncrementalSource<IncrementalTopics, Topic> source = null;
 
         public ListTopicsPage()
@@ -60,8 +60,8 @@ namespace Goodreads8
         /// property is typically used to configure the page.</param>
         protected override async void OnNavigatedTo(NavigationEventArgs e)
         {
-            args = e.Parameter as TopicArgs;
-            if (args == null)
+            m_arg = e.Parameter as TopicArgs;
+            if (m_arg == null)
             {
                 this.Frame.GoBack();
                 return;
@@ -70,11 +70,11 @@ namespace Goodreads8
             this.busyGrid.Visibility = Windows.UI.Xaml.Visibility.Visible;
             this.busyRing.IsActive = true;
 
-            pageTitle.Text = args.Name;
+            pageTitle.Text = m_arg.Name;
 
             IncrementalTopics.TopicArguments sourceArgs = new IncrementalTopics.TopicArguments();
-            sourceArgs.GroupId = args.GroupId;
-            sourceArgs.FolderId = args.FolderId;
+            sourceArgs.GroupId = m_arg.GroupId;
+            sourceArgs.FolderId = m_arg.FolderId;
             source = new IncrementalSource<IncrementalTopics, Topic>(sourceArgs);
             source.CollectionChanged += source_CollectionChanged;
 
@@ -93,8 +93,12 @@ namespace Goodreads8
             this.busyRing.IsActive = false;
         }
 
-        private async void New_Click(object sender, RoutedEventArgs e)
+        private void New_Click(object sender, RoutedEventArgs e)
         {
+            NewTopicPage.Args arg = new NewTopicPage.Args();
+            arg.FolderId = m_arg.FolderId;
+            arg.GroupId = m_arg.GroupId;
+            this.Frame.Navigate(typeof(NewTopicPage), arg);
         }
     }
 }

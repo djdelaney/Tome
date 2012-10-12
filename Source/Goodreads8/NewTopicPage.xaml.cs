@@ -29,6 +29,8 @@ namespace Goodreads8
             public int FolderId { get; set; }
         }
 
+        private Args m_args = null;
+
         public NewTopicPage()
         {
             this.InitializeComponent();
@@ -43,8 +45,8 @@ namespace Goodreads8
         {
             base.OnNavigatedTo(e);
 
-            Args arg = e.Parameter as Args;
-            if (arg == null || arg.GroupId <=0 || arg.FolderId <= 0)
+            m_args = e.Parameter as Args;
+            if (m_args == null || m_args.GroupId <= 0 || m_args.FolderId <= 0)
             {
                 this.Frame.GoBack();
             }
@@ -94,11 +96,18 @@ namespace Goodreads8
             this.busyRing.IsActive = true;
 
             GoodreadsAPI api = GoodreadsAPI.Instance;
-            //todo, actual posting
-
-            this.busyGrid.Visibility = Windows.UI.Xaml.Visibility.Collapsed;
-            this.busyRing.IsActive = false;
-            this.PostButton.IsEnabled = true;
+            if (false == await api.PostNewTopic(m_args.GroupId, m_args.FolderId, CommentTitle.Text, CommentBox.Text))
+            {
+                await UIUtil.ShowError("Unable to post your new topic to Goodreads. Please try again later");
+                this.busyGrid.Visibility = Windows.UI.Xaml.Visibility.Collapsed;
+                this.busyRing.IsActive = false;
+                this.PostButton.IsEnabled = true;
+            }
+            else
+            {
+                this.Frame.GoBack();
+            }
+            
         }
     }
 }

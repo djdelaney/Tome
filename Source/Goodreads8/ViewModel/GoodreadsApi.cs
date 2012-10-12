@@ -728,6 +728,43 @@ namespace Goodreads8.ViewModel
             }
         }
 
+        public async Task<bool> PostNewTopic(int groupId, int folderId, String title, String comment)
+        {
+            try
+            {
+                if (groupId <= 0 || folderId <= 0)
+                    return false;
+
+                if (string.IsNullOrEmpty(title) || string.IsNullOrEmpty(comment))
+                    return false;
+
+                //new topic
+                Dictionary<string, string> reqParams = new Dictionary<string, string>();
+                reqParams.Add("topic[subject_type]", "Group");
+                reqParams.Add("topic[subject_id]", groupId.ToString());
+                reqParams.Add("topic[folder_id]", folderId.ToString());
+                reqParams.Add("topic[title]", title);
+                reqParams.Add("comment[body_usertext]", comment);
+
+                HttpWebRequest req = await BuildRequest("http://www.goodreads.com/topic.xml", reqParams);
+
+                HttpWebResponse Response = (HttpWebResponse)await req.GetResponseAsync();
+                StreamReader ResponseDataStream = new StreamReader(Response.GetResponseStream());
+                String response = ResponseDataStream.ReadToEnd();
+                if (response != null && response.Contains("topic"))
+                {
+                    m_cache.InvalidateTopicSet(groupId, folderId);
+                    return true;
+                }
+
+                return false;
+            }
+            catch (Exception e)
+            {
+                return false;
+            }
+        }
+
         /********************************
          * Utility
          * *****************************/

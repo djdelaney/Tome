@@ -490,6 +490,20 @@ namespace Goodreads8.ViewModel.Cache
             m_topicListCache.Add(cache, data);
         }
 
+        public void InvalidateTopicSet(int groupId, int folderId)
+        {
+            List<TopicSetCache> topicListKeys = new List<TopicSetCache>();
+            foreach (KeyValuePair<TopicSetCache, TopicSet> pair in m_topicListCache)
+            {
+                if (pair.Key.FolderId == folderId && pair.Key.GroupId == groupId)
+                    topicListKeys.Add(pair.Key);
+            }
+            foreach (TopicSetCache key in topicListKeys)
+            {
+                m_topicListCache.Remove(key);
+            }
+        }
+
         /** -----------------------
          *
          *       Topic
