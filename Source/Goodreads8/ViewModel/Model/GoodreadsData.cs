@@ -382,6 +382,9 @@ namespace Goodreads8.ViewModel.Model
                                          Publisher = (string)b.Element("publisher"),
                                          ISBN = (string)b.Element("isbn"),
                                          AvgRating = (double)b.Element("average_rating"),
+                                         PublicationYear = GetXElementIntValue(b, "publication_year"),
+                                         PublicationMonth = GetXElementIntValue(b, "publication_month"),
+                                         PublicationDay = GetXElementIntValue(b, "publication_day"),
 
                                      })
 
