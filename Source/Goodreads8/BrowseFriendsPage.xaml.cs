@@ -7,6 +7,7 @@ using System.IO;
 using System.Linq;
 using Windows.Foundation;
 using Windows.Foundation.Collections;
+using Windows.UI.ViewManagement;
 using Windows.UI.Xaml;
 using Windows.UI.Xaml.Controls;
 using Windows.UI.Xaml.Controls.Primitives;
@@ -22,7 +23,7 @@ namespace Goodreads8
     /// <summary>
     /// An empty page that can be used on its own or navigated to within a Frame.
     /// </summary>
-    public sealed partial class BrowseFriendsPage : Page
+    public sealed partial class BrowseFriendsPage : Goodreads8.Common.LayoutAwarePage
     {
         private BusyViewModel model;
         private IncrementalSource<IncrementalFriends, Profile> source;
@@ -30,20 +31,23 @@ namespace Goodreads8
         public BrowseFriendsPage()
         {
             this.InitializeComponent();
+            Window.Current.SizeChanged += WindowSizeChanged;
+        }
 
-            model = new BusyViewModel();
-            model.IsBusy = true;
-            this.DataContext = model;
-
-            GoodreadsAPI api = GoodreadsAPI.Instance;
-
-            IncrementalFriends.FriendArguments args = new IncrementalFriends.FriendArguments();
-            args.userId = api.AuthenticatedUserId;
-
-            source = new IncrementalSource<IncrementalFriends, Profile>(args);
-            source.CollectionChanged += source_CollectionChanged;
-            source.BeginLoad += source_BeginLoad;
-            this.gv.ItemsSource = source;
+        private void WindowSizeChanged(object sender, Windows.UI.Core.WindowSizeChangedEventArgs e)
+        {
+            // Obtain view state by explicitly querying for it
+            ApplicationViewState myViewState = ApplicationView.Value;
+            if (ApplicationView.Value == ApplicationViewState.Snapped)
+            {
+                this.gv.Visibility = Windows.UI.Xaml.Visibility.Collapsed;
+                this.lv.Visibility = Windows.UI.Xaml.Visibility.Visible;
+            }
+            else
+            {
+                this.gv.Visibility = Windows.UI.Xaml.Visibility.Visible;
+                this.lv.Visibility = Windows.UI.Xaml.Visibility.Collapsed;
+            }
         }
 
         void source_BeginLoad()
@@ -76,6 +80,30 @@ namespace Goodreads8
         /// property is typically used to configure the page.</param>
         protected override void OnNavigatedTo(NavigationEventArgs e)
         {
+            base.OnNavigatedTo(e);
+            if (ApplicationView.Value == ApplicationViewState.Snapped)
+            {
+                this.gv.Visibility = Windows.UI.Xaml.Visibility.Collapsed;
+            }
+            else
+            {
+                this.lv.Visibility = Windows.UI.Xaml.Visibility.Collapsed;
+            }
+
+            model = new BusyViewModel();
+            model.IsBusy = true;
+            this.DataContext = model;
+
+            GoodreadsAPI api = GoodreadsAPI.Instance;
+
+            IncrementalFriends.FriendArguments args = new IncrementalFriends.FriendArguments();
+            args.userId = api.AuthenticatedUserId;
+
+            source = new IncrementalSource<IncrementalFriends, Profile>(args);
+            source.CollectionChanged += source_CollectionChanged;
+            source.BeginLoad += source_BeginLoad;
+            this.gv.ItemsSource = source;
+            this.lv.ItemsSource = source;
         }
 
         private void Friend_Click(object sender, ItemClickEventArgs e)

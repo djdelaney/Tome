@@ -29,7 +29,7 @@
 
     <Grid>
         <Grid.Background>
-            <ImageBrush ImageSource="Assets/BGAuthor.jpg"/>
+            <ImageBrush ImageSource="Assets/BGAuthor.jpg" Stretch="UniformToFill"/>
         </Grid.Background>
         <Grid.RowDefinitions>
             <RowDefinition Height="Auto"/>

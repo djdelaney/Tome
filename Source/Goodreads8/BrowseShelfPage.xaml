@@ -46,7 +46,7 @@
             <RowDefinition Height="*"/>
         </Grid.RowDefinitions>
         <Grid.Background>
-            <ImageBrush ImageSource="Assets/BGShelf.jpg"/>
+            <ImageBrush ImageSource="Assets/BGShelf.jpg" Stretch="UniformToFill"/>
         </Grid.Background>
 
         <!-- Back button and page title -->
