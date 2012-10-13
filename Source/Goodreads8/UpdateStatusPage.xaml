@@ -9,7 +9,8 @@
 
     <Grid x:Name="RootPanel"
         HorizontalAlignment="Stretch"
-        VerticalAlignment="Stretch">
+        VerticalAlignment="Stretch"
+        Background="{StaticResource ApplicationPageBackgroundThemeBrush}">
 
         <Grid VerticalAlignment="Center" Background="#FF3E3E3E" Width="800">
             <Grid.ColumnDefinitions>

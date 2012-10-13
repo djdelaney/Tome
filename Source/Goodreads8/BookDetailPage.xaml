@@ -227,6 +227,17 @@
                         <ObjectAnimationUsingKeyFrames Storyboard.TargetName="SnappedView" Storyboard.TargetProperty="Visibility">
                             <DiscreteObjectKeyFrame KeyTime="0" Value="Visible"/>
                         </ObjectAnimationUsingKeyFrames>
+
+                        <!-- hide buttons -->
+                        <ObjectAnimationUsingKeyFrames Storyboard.TargetName="ButtonReview" Storyboard.TargetProperty="Visibility">
+                            <DiscreteObjectKeyFrame KeyTime="0" Value="Collapsed"/>
+                        </ObjectAnimationUsingKeyFrames>
+                        <ObjectAnimationUsingKeyFrames Storyboard.TargetName="ButtonStatus" Storyboard.TargetProperty="Visibility">
+                            <DiscreteObjectKeyFrame KeyTime="0" Value="Collapsed"/>
+                        </ObjectAnimationUsingKeyFrames>
+                        <ObjectAnimationUsingKeyFrames Storyboard.TargetName="ButtonShelves" Storyboard.TargetProperty="Visibility">
+                            <DiscreteObjectKeyFrame KeyTime="0" Value="Collapsed"/>
+                        </ObjectAnimationUsingKeyFrames>
                     </Storyboard>
                 </VisualState>
             </VisualStateGroup>
@@ -243,7 +254,7 @@
                     <Button Style="{StaticResource AuthorAppBarButtonStyle}" Tag="Author" Click="Author_Click"/>
                     <Button x:Name="ButtonReview" Style="{StaticResource ReviewAppBarButtonStyle}" Tag="Review" Click="Review_Click"/>
                     <Button x:Name="ButtonStatus" Style="{StaticResource StatusAppBarButtonStyle}" Tag="Status" Click="Status_Click"/>
-                    <Button Style="{StaticResource ShelfAppBarButtonStyle}" Tag="Shelves" Click="Shelf_Click"/>
+                    <Button x:Name="ButtonShelves" Style="{StaticResource ShelfAppBarButtonStyle}" Tag="Shelves" Click="Shelf_Click"/>
                     <Button Style="{StaticResource HomeAppBarButtonStyle}" Tag="Home" Click="Home_Click"/>
                 </StackPanel>
             </Grid>

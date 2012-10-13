@@ -8,6 +8,7 @@ using Windows.Data.Xml.Dom;
 using Windows.Foundation;
 using Windows.Foundation.Collections;
 using Windows.UI.Notifications;
+using Windows.UI.ViewManagement;
 using Windows.UI.Xaml;
 using Windows.UI.Xaml.Controls;
 using Windows.UI.Xaml.Controls.Primitives;
@@ -29,6 +30,18 @@ namespace Goodreads8
         public UpdateStatusPage()
         {
             this.InitializeComponent();
+            Window.Current.SizeChanged += WindowSizeChanged;
+        }
+
+        private void WindowSizeChanged(object sender, Windows.UI.Core.WindowSizeChangedEventArgs e)
+        {
+            // Obtain view state by explicitly querying for it
+            ApplicationViewState myViewState = ApplicationView.Value;
+            if (ApplicationView.Value == ApplicationViewState.Snapped)
+            {
+                Window.Current.SizeChanged -= WindowSizeChanged;
+                this.Frame.GoBack();
+            }
         }
 
         /// <summary>
