@@ -100,5 +100,46 @@ namespace Goodreads8
 
             this.Frame.Navigate(typeof(BrowseShelfPage), arg);
         }
+
+
+        private void Update_Click(object sender, ItemClickEventArgs e)
+        {
+            Update u = e.ClickedItem as Update;
+            if (u.Type == Update.Actions.review)
+            {
+                String link = u.Link;
+                if (string.IsNullOrEmpty(link) || !link.StartsWith("http://www.goodreads.com/review/show/"))
+                    return;
+
+                String parse = link.Replace("http://www.goodreads.com/review/show/", "");
+                int reviewId = int.Parse(parse);
+
+                this.Frame.Navigate(typeof(ViewReviewPage), reviewId);
+            }
+            else if (u.Type == Update.Actions.comment)
+            {
+                if (string.IsNullOrEmpty(u.Link) || !u.Link.StartsWith("http://www.goodreads.com/topic/show/"))
+                    return;
+
+                String parse = u.Link.Replace("http://www.goodreads.com/topic/show/", "");
+                int pos = parse.IndexOf('-');
+                if (pos > 0)
+                    parse = parse.Substring(0, pos);
+
+                int topicId = int.Parse(parse);
+
+                this.Frame.Navigate(typeof(TopicPage), topicId);
+            }
+            else if (u.Type == Update.Actions.userstatus)
+            {
+                if (string.IsNullOrEmpty(u.Link) || !u.Link.StartsWith("http://www.goodreads.com/user_status/show/"))
+                    return;
+
+                String parse = u.Link.Replace("http://www.goodreads.com/user_status/show/", "");
+                int statusId = int.Parse(parse);
+
+                this.Frame.Navigate(typeof(ViewStatusPage), statusId);
+            }
+        }
     }
 }

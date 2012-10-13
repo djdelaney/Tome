@@ -142,6 +142,7 @@
                         ItemsSource="{Binding Updates}"
                         SelectionMode="None"
                         IsItemClickEnabled="True"
+                        ItemClick="Update_Click"
                         />
                 </Grid>
 
