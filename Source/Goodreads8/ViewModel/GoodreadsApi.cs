@@ -68,6 +68,13 @@ namespace Goodreads8.ViewModel
             AuthenticatedUserId = id;
         }
 
+        public void LogoutApi()
+        {
+            m_client.AccessToken = new TokenContainer();
+            AuthenticatedUserId = 0;
+            m_cache.ClearCache();
+        }
+
         public int AuthenticatedUserId { get; set; }
 
         public async Task<int> GetAuthenticatedId(string token, string secret)

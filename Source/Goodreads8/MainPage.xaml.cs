@@ -52,7 +52,11 @@ namespace Goodreads8
         protected override async void OnNavigatedTo(NavigationEventArgs e)
         {
             base.OnNavigatedTo(e);
+            await ConfigureApp();
+        }
 
+        private async Task ConfigureApp()
+        {
             GoodreadsAPI api = GoodreadsAPI.Instance;
             if (!api.IsConfigured())
             {
@@ -68,7 +72,7 @@ namespace Goodreads8
                 }
                 else
                 {
-                    MessageDialog dialog = new MessageDialog("To use Goodreads8 you must first login to you must first login to your Goodreads account");
+                    MessageDialog dialog = new MessageDialog("To use Goodreads RT you must first login to you must first login to your Goodreads account");
                     UICommandInvokedHandler cmdHandler = new UICommandInvokedHandler(cmd =>
                     {
                         Debug.WriteLine("id:{0} label:{1}", cmd.Id, cmd.Label);
@@ -306,6 +310,27 @@ namespace Goodreads8
             Windows.Storage.ApplicationData.Current.LocalSettings.Values[m_updatesKey] = DateTime.Now.AddHours(2).ToBinary();
         }
 
-    }
+        private async void Logout_Click(object sender, RoutedEventArgs e)
+        {
+            GoodreadsAPI api = GoodreadsAPI.Instance;
+            api.LogoutApi();
 
+            model = null;
+            this.DataContext = null;
+
+            //Clear updates
+            TileUpdater updater = TileUpdateManager.CreateTileUpdaterForApplication();
+            updater.EnableNotificationQueue(true);
+            updater.Clear();
+            Windows.Storage.ApplicationData.Current.LocalSettings.Values.Remove(m_updatesKey);
+
+            //Flush stored credentials
+            Windows.Storage.ApplicationData.Current.LocalSettings.Values.Remove(m_keyToken);
+            Windows.Storage.ApplicationData.Current.LocalSettings.Values.Remove(m_keySecret);
+            Windows.Storage.ApplicationData.Current.LocalSettings.Values.Remove(m_keyID);            
+
+            //Try to reconfigure
+            await ConfigureApp();
+        }
+    }
 }

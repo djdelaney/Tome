@@ -44,6 +44,28 @@ namespace Goodreads8.ViewModel.Cache
             m_topicListCache 	= new Dictionary<TopicSetCache, TopicSet>();
         }
 
+        public void ClearCache()
+        {
+            m_shelfCache.Clear();
+            m_authorShelfCache.Clear();
+            m_bookCache.Clear();
+            m_reviewCache.Clear();
+            m_authorCache.Clear();
+            m_userCache.Clear();
+            m_groupCache.Clear();
+            m_topicCache.Clear();
+            m_statusCache.Clear();
+            m_friendsCache.Clear();
+            m_userReviewCache.Clear();
+            m_topicListCache.Clear();
+
+            m_updates = null;
+            m_updateExpiration = DateTime.MinValue;
+
+            m_groups = null;
+            m_groupExpiration = DateTime.MinValue;
+        }
+
         public void InvalidateMyReview(int userId, int bookId)
         {
             foreach (KeyValuePair<UserReviewCache, Review> pair in m_userReviewCache)
