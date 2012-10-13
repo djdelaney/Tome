@@ -206,7 +206,7 @@
                         </Button>
 
                         <!-- Scan -->
-                        <Button Click="Scan_Click" Margin="0,30,0,0">
+                        <!--<Button Click="Scan_Click" Margin="0,30,0,0">
                             <Button.Template>
                                 <ControlTemplate TargetType="Button">
                                     <ContentPresenter Content="{TemplateBinding Content}"/>
@@ -223,7 +223,7 @@
                                 Margin="10,0,0,10"
                                 Text="Scan" HorizontalAlignment="Left" Foreground="#FF0F0101" FontSize="18" VerticalAlignment="Bottom" FontFamily="Segoe UI" />
                             </Grid>
-                        </Button>
+                        </Button>-->
                     </StackPanel>
                 </Grid>
 

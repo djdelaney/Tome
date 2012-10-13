@@ -17,7 +17,7 @@
     <Application Id="App" Executable="$targetnametoken$.exe" EntryPoint="Goodreads8.App">
       <VisualElements DisplayName="Goodreads RT" Logo="Assets\Logo.png" SmallLogo="Assets\SmallLogo.png" Description="Goodreads8" ForegroundText="light" BackgroundColor="#bd1e1e" ToastCapable="true">
         <DefaultTile ShowName="noLogos" WideLogo="Assets\LogoLarge.png" />
-        <SplashScreen Image="Assets\SplashScreen.png" BackgroundColor="#940606" />
+        <SplashScreen Image="Assets\SplashScreen.png" BackgroundColor="#bd1e1e" />
         <InitialRotationPreference>
           <Rotation Preference="landscape" />
           <Rotation Preference="landscapeFlipped" />

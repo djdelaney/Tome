@@ -44,9 +44,9 @@ namespace Goodreads8.ViewModel
             //AuthenticatedUserId = 12725081;
 
             //Dan@hactar.com
-            m_client.AccessToken.Secret = "ZBAiSbJQWsOHgASt1EKoigcXFqfozi8pJ5Nqaw";
-            m_client.AccessToken.Token = "JgNTryl1vDVxh6k3sVGSw";
-            AuthenticatedUserId = 889496;
+            //m_client.AccessToken.Secret = "ZBAiSbJQWsOHgASt1EKoigcXFqfozi8pJ5Nqaw";
+            //m_client.AccessToken.Token = "JgNTryl1vDVxh6k3sVGSw";
+            //AuthenticatedUserId = 889496;
 
             m_cache = new APICache();
         }
@@ -70,13 +70,13 @@ namespace Goodreads8.ViewModel
 
         public int AuthenticatedUserId { get; set; }
 
-        public async Task<int> GetAuthenticatedId()
+        public async Task<int> GetAuthenticatedId(string token, string secret)
         {
             try
             {
                 String response = await m_client.MakeRequest("GET")
-                        .ForResource(m_client.AccessToken.Token, new Uri("http://www.goodreads.com/api/auth_user"))
-                        .Sign(m_client.AccessToken.Secret)
+                        .ForResource(token, new Uri("http://www.goodreads.com/api/auth_user"))
+                        .Sign(secret)
                         .ExecuteRequest();
                 if (string.IsNullOrEmpty(response))
                     return 0;

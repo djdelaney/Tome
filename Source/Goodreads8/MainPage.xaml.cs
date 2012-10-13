@@ -154,7 +154,7 @@ namespace Goodreads8
             GoodreadsAPI api = GoodreadsAPI.Instance;
             String token = client.AccessToken.Token;
             String secret = client.AccessToken.Secret;
-            int id = await api.GetAuthenticatedId();
+            int id = await api.GetAuthenticatedId(token, secret);
 
             if(string.IsNullOrEmpty(token) ||
                 string.IsNullOrEmpty(secret) ||
