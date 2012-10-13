@@ -306,6 +306,14 @@ namespace Goodreads8.ViewModel.Model
                                      Id = Convert.ToInt32((string)r.Element("book").Element("id")),
                                      Title = (string)r.Element("book").Element("title"),
                                      ImageUrl = (string)r.Element("book").Element("image_url"),
+
+                                     Authors = new List<Author>(
+                                         from a in r.Element("book").Element("authors").Elements()
+                                         select new Author
+                                         {
+                                             Id = Convert.ToInt32((string)a.Element("id")),
+                                             Name = (string)a.Element("name")
+                                         }),
                                  },
 
                                  Reviewer = new Profile()

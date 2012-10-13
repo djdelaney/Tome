@@ -8,6 +8,7 @@ using Windows.Data.Xml.Dom;
 using Windows.Foundation;
 using Windows.Foundation.Collections;
 using Windows.UI.Notifications;
+using Windows.UI.Popups;
 using Windows.UI.ViewManagement;
 using Windows.UI.Xaml;
 using Windows.UI.Xaml.Controls;
@@ -149,6 +150,45 @@ namespace Goodreads8
             // Create a toast from the Xml, then create a ToastNotifier object to show the toast.
             ToastNotification toast = new ToastNotification(toastXml);
             ToastNotificationManager.CreateToastNotifier().Show(toast);
+        }
+
+        private async void Author_Tapped(object sender, TappedRoutedEventArgs e)
+        {
+            if (model.Book.Authors == null)
+                return;
+
+            if (model.Book.Authors.Count == 1)
+            {
+                this.Frame.Navigate(typeof(AuthorPage), model.Book.Authors[0].Id);
+                return;
+            }
+
+            var popupMenu = new PopupMenu();
+
+            foreach (Author a in model.Book.Authors)
+            {
+                UICommand cmd = new UICommand(a.Name);
+                cmd.Id = a;
+                popupMenu.Commands.Add(cmd);
+            }
+
+            var button = (FrameworkElement)sender;
+            var transform = button.TransformToVisual(this);
+            var point = transform.TransformPoint(new Point(45, -10));
+
+            IUICommand result = await popupMenu.ShowAsync(point);
+
+            Author toView = result.Id as Author;
+            if (toView != null)
+            {
+                this.Frame.Navigate(typeof(AuthorPage), toView.Id);
+                return;
+            }
+        }
+
+        private void Book_Cover_Tapped(object sender, TappedRoutedEventArgs e)
+        {
+            More_Click(sender, e);
         }
     }
 }

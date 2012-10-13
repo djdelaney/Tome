@@ -82,7 +82,7 @@
                     </Grid.RowDefinitions>
                     <Grid.ColumnDefinitions>
                         <ColumnDefinition Width="120" />
-                        <ColumnDefinition Width="500" />
+                        <ColumnDefinition Width="400" />
                     </Grid.ColumnDefinitions>
 
                     <TextBlock Text="Details" Grid.Column="0" Grid.ColumnSpan="2" IsHitTestVisible="false" Style="{StaticResource SubSectionHeader}" Margin="0,0,0,20"/>

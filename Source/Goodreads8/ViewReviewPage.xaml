@@ -50,8 +50,8 @@
         <ScrollViewer Style="{StaticResource HorizontalScrollViewerStyle}" Grid.Row="1">
             <StackPanel Orientation="Horizontal" Margin="130,0,0,0">
                 <StackPanel Orientation="Vertical" VerticalAlignment="Top" Margin="0,70,0,0">
-                    <Image Source="{Binding Book.ImageUrl}" Width="250"  />
-                    <Button Content="Book Details..." HorizontalAlignment="Center" Margin="10" Click="More_Click"></Button>
+                    <Image Source="{Binding Book.ImageUrl}" Width="250" Tapped="Book_Cover_Tapped" />
+                    <Button Content="More..." HorizontalAlignment="Center" Click="More_Click" Width="250"></Button>
                     <UI:AdControl
                         Grid.Row="1"
                         ApplicationId="5b00da83-377e-41bf-8d28-ea61dea08c60"
@@ -66,31 +66,36 @@
                         <RowDefinition Height="Auto" />
                         <RowDefinition Height="Auto" />
                         <RowDefinition Height="Auto" />
+                        <RowDefinition Height="Auto" />
                         <RowDefinition Height="*"/>
                     </Grid.RowDefinitions>
                     <Grid.ColumnDefinitions>
                         <ColumnDefinition Width="120" />
-                        <ColumnDefinition Width="500" />
+                        <ColumnDefinition Width="400" />
                     </Grid.ColumnDefinitions>
 
                     <TextBlock Text="Review" Grid.Column="0" Grid.ColumnSpan="2" IsHitTestVisible="false" Style="{StaticResource SubSectionHeader}" Margin="0,0,0,20"/>
 
+                    <!-- Author -->
+                    <TextBlock Grid.Row="1" Grid.Column="0" Text="Author" Style="{StaticResource DetailLabel}"/>
+                    <TextBlock Grid.Row="1" Grid.Column="1" Text="{Binding Book.PrimaryAuthor}" Style="{StaticResource DetailValue}" TextWrapping="Wrap" Tapped="Author_Tapped" Foreground="#FF54ABDC"/>
+
                     <!-- User -->
-                    <TextBlock Grid.Row="1" Grid.Column="0" Text="Reviewer" Style="{StaticResource DetailLabel}"/>
-                    <TextBlock Grid.Row="1" Grid.Column="1" Text="{Binding Reviewer.Name}" Style="{StaticResource DetailValue}" TextWrapping="Wrap" Tapped="Reviewer_Tapped" Foreground="#FF54ABDC"/>
+                    <TextBlock Grid.Row="2" Grid.Column="0" Text="Reviewer" Style="{StaticResource DetailLabel}"/>
+                    <TextBlock Grid.Row="2" Grid.Column="1" Text="{Binding Reviewer.Name}" Style="{StaticResource DetailValue}" TextWrapping="Wrap" Tapped="Reviewer_Tapped" Foreground="#FF54ABDC"/>
 
                     <!-- Rating -->
-                    <TextBlock Grid.Row="2" Grid.Column="0" Text="Rating" Style="{StaticResource DetailLabel}"/>
-                    <StackPanel Orientation="Horizontal" Grid.Row="2" Grid.Column="1">
+                    <TextBlock Grid.Row="3" Grid.Column="0" Text="Rating" Style="{StaticResource DetailLabel}"/>
+                    <StackPanel Orientation="Horizontal" Grid.Row="3" Grid.Column="1">
                         <Controls:Rating  ItemCount="5" Value="{Binding Rating}" Margin="0,0,0,0" IsEnabled="False" Background="#001D1D1D" />
                     </StackPanel>
 
                     <!-- Date Read -->
-                    <TextBlock Grid.Row="3" Grid.Column="0" Text="Date Read" Style="{StaticResource DetailLabel}"/>
-                    <TextBlock Grid.Row="3" Grid.Column="1" Text="{Binding ReviewDate}" Style="{StaticResource DetailValue}"/>
+                    <TextBlock Grid.Row="4" Grid.Column="0" Text="Date Read" Style="{StaticResource DetailLabel}"/>
+                    <TextBlock Grid.Row="4" Grid.Column="1" Text="{Binding ReviewDate}" Style="{StaticResource DetailValue}"/>
 
                     <!-- Desc -->
-                    <TextBlock Grid.Row="4" Grid.Column="0" Grid.ColumnSpan="2" Style="{StaticResource DetailValue}"
+                    <TextBlock Grid.Row="5" Grid.Column="0" Grid.ColumnSpan="2" Style="{StaticResource DetailValue}"
                                TextWrapping="Wrap"
                                Text="{Binding BodyText}"/>
 
