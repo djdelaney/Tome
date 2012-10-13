@@ -23,14 +23,37 @@ namespace Goodreads8.ViewModel.Model
             }
         }
 
+        public String DateLabel
+        {
+            get
+            {
+                if (Shelves != null && Shelves.Contains("currently-reading"))
+                    return "Started";
+
+                if (Shelves == null || Shelves.Contains("to-read"))
+                    return "Added";
+
+                return "Finished";
+            }
+        }
+
         public String ReviewDate
         {
             get
             {
-                if (ReadAt == null || ReadAt == DateTime.MinValue)
+                DateTime toFormat;
+
+                if (Shelves != null && Shelves.Contains("currently-reading"))
+                    toFormat = StartedAt;
+                else if (Shelves == null || Shelves.Contains("to-read"))
+                    toFormat = DateAdded;
+                else
+                    toFormat = ReadAt;
+
+                if (toFormat == null || toFormat == DateTime.MinValue)
                     return "Unknown";
 
-                return ReadAt.ToString("MMM dd, yyyy");
+                return toFormat.ToString("MMM dd, yyyy");
             }
         }
 

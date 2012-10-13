@@ -93,7 +93,7 @@
                     </StackPanel>
 
                     <!-- Date Read -->
-                    <TextBlock Grid.Row="4" Grid.Column="0" Text="Date Read" Style="{StaticResource DetailLabel}"/>
+                    <TextBlock Grid.Row="4" Grid.Column="0" Text="{Binding DateLabel}" Style="{StaticResource DetailLabel}"/>
                     <TextBlock Grid.Row="4" Grid.Column="1" Text="{Binding ReviewDate}" Style="{StaticResource DetailValue}"/>
 
                     <!-- Desc -->
