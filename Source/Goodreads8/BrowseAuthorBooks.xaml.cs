@@ -23,7 +23,7 @@ namespace Goodreads8
     /// <summary>
     /// An empty page that can be used on its own or navigated to within a Frame.
     /// </summary>
-    public sealed partial class BrowseAuthorBooks : Page
+    public sealed partial class BrowseAuthorBooks : Goodreads8.Common.LayoutAwarePage
     {
         private IncrementalSource<IncrementalWorks, Book> source;
         public BrowseAuthorBooks()
@@ -56,6 +56,7 @@ namespace Goodreads8
         /// property is typically used to configure the page.</param>
         protected override void OnNavigatedTo(NavigationEventArgs e)
         {
+            base.OnNavigatedTo(e);
             AuthorBooksArgs inputArgs = e.Parameter as AuthorBooksArgs;
             if (inputArgs == null)
             {

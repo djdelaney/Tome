@@ -25,7 +25,7 @@ namespace Goodreads8
     /// <summary>
     /// An empty page that can be used on its own or navigated to within a Frame.
     /// </summary>
-    public sealed partial class ViewReviewPage : Page
+    public sealed partial class ViewReviewPage : Goodreads8.Common.LayoutAwarePage
     {
         private Review model;
 
@@ -33,6 +33,10 @@ namespace Goodreads8
         {
             this.InitializeComponent();
             Window.Current.SizeChanged += WindowSizeChanged;
+        }
+
+        private void Page_Loaded(object sender, RoutedEventArgs e)
+        {
         }
 
         private void WindowSizeChanged(object sender, Windows.UI.Core.WindowSizeChangedEventArgs e)
@@ -53,6 +57,7 @@ namespace Goodreads8
         /// property is typically used to configure the page.</param>
         protected override async void OnNavigatedTo(NavigationEventArgs e)
         {
+            base.OnNavigatedTo(e);
             int? reviewId = e.Parameter as int?;
 
             if (reviewId == null)

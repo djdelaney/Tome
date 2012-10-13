@@ -23,7 +23,7 @@ namespace Goodreads8
     /// <summary>
     /// An empty page that can be used on its own or navigated to within a Frame.
     /// </summary>
-    public sealed partial class WriteReviewPage : Page
+    public sealed partial class WriteReviewPage : Goodreads8.Common.LayoutAwarePage
     {
         int m_bookId = 0;
         public WriteReviewPage()
@@ -63,6 +63,7 @@ namespace Goodreads8
         /// property is typically used to configure the page.</param>
         protected override void OnNavigatedTo(NavigationEventArgs e)
         {
+            base.OnNavigatedTo(e);
             int? bookId = e.Parameter as int?;
             if (bookId == null || bookId <= 0)
             {

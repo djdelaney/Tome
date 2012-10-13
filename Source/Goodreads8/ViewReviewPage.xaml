@@ -1,4 +1,4 @@
-﻿<Page
+﻿<common:LayoutAwarePage
     xmlns:Controls="using:Callisto.Controls"
     x:Class="Goodreads8.ViewReviewPage"
     xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
@@ -7,7 +7,9 @@
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
     xmlns:UI="using:Microsoft.Advertising.WinRT.UI"
-    mc:Ignorable="d">
+    xmlns:common="using:Goodreads8.Common"
+    mc:Ignorable="d"
+    Loaded="Page_Loaded">
 
     <Page.Resources>
         <DataTemplate x:Key="CommentTemplate">
@@ -131,4 +133,4 @@
             </StackPanel>
         </ScrollViewer>
     </Grid>
-</Page>
+ </common:LayoutAwarePage>
