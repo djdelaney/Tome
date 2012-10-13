@@ -27,10 +27,13 @@ namespace Goodreads8.ViewModel.Model
         {
             get
             {
+                if (Shelves == null || Shelves.Count == 0)
+                    return "Read";
+
                 if (Shelves != null && Shelves.Contains("currently-reading"))
                     return "Started";
 
-                if (Shelves == null || Shelves.Contains("to-read"))
+                if (Shelves.Contains("to-read"))
                     return "Added";
 
                 return "Finished";
@@ -42,6 +45,9 @@ namespace Goodreads8.ViewModel.Model
             get
             {
                 DateTime toFormat;
+
+                if (Shelves == null || Shelves.Count == 0)
+                    return "";
 
                 if (Shelves != null && Shelves.Contains("currently-reading"))
                     toFormat = StartedAt;
@@ -86,7 +92,8 @@ namespace Goodreads8.ViewModel.Model
                 if (Shelves == null || Shelves.Count == 0)
                     return "Unknown";
 
-                return Shelves[0];
+                String mainShelf = Shelves[0];
+                return char.ToUpper(mainShelf[0]) + mainShelf.Substring(1);
             }
         }
 

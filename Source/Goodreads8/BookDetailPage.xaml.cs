@@ -66,17 +66,16 @@ namespace Goodreads8
                 return;
             }
 
-            Review myReview = await api.GetUserReview((int)bookId, api.AuthenticatedUserId);
-            if (myReview == null || myReview.Shelves == null || myReview.Shelves.Count == 0)
+            if (model.MyReview == null || model.MyReview.Shelves == null || model.MyReview.Shelves.Count == 0)
             {
                 shelfLabel.Text = "None";
             }
             else
             {
-                shelfLabel.Text = myReview.ShelfText;
-                if(myReview.Shelves.Contains("currently-reading"))
+                shelfLabel.Text = model.MyReview.ShelfText;
+                if (model.MyReview.Shelves.Contains("currently-reading"))
                     this.ButtonStatus.IsEnabled = true;
-                if (myReview.Shelves.Contains("read"))
+                if (model.MyReview.Shelves.Contains("read"))
                     this.ButtonReview.IsEnabled = false;
             }
 

@@ -204,6 +204,17 @@ namespace Goodreads8.ViewModel.Model
                              PublicationMonth = GetXElementIntValue(b, "publication_month"),
                              PublicationDay = GetXElementIntValue(b, "publication_day"),
 
+                             MyReview = new Review()
+                                {
+                                Id = Convert.ToInt32((string)b.Elements("my_review").Elements("id").FirstOrDefault()),
+                                Shelves = b.Elements("my_review").Elements("shelves").Elements().Select(x => x.Attribute("name").Value).ToList(),
+
+                                StartedAt   = ParseGRDate((string)b.Elements("my_review").Elements("started_at").FirstOrDefault()),
+                                ReadAt      = ParseGRDate((string)b.Elements("my_review").Elements("read_at").FirstOrDefault()),
+                                DateAdded   = ParseGRDate((string)b.Elements("my_review").Elements("date_added").FirstOrDefault()),
+                                DateUpdated = ParseGRDate((string)b.Elements("my_review").Elements("date_updated").FirstOrDefault()),
+                                },
+
                              Reviews = new List<Review>(
                                  from r in b.Element("reviews").Elements()
                                  select new Review

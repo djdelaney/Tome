@@ -67,6 +67,7 @@
                         <RowDefinition Height="Auto" />
                         <RowDefinition Height="Auto" />
                         <RowDefinition Height="Auto" />
+                        <RowDefinition Height="Auto" />
                         <RowDefinition Height="*"/>
                     </Grid.RowDefinitions>
                     <Grid.ColumnDefinitions>
@@ -98,13 +99,14 @@
 
                     <!-- Shelf -->
                     <TextBlock Grid.Row="5" Grid.Column="0" Text="Shelf" Style="{StaticResource DetailLabel}" VerticalAlignment="Center"/>
-                    <StackPanel Orientation="Horizontal" Grid.Row="5" Grid.Column="1">
-                        <TextBlock Text="" x:Name="shelfLabel" Style="{StaticResource DetailValue}" VerticalAlignment="Center"/>
-                        <Button Content="Change" Margin="20,0,0,0" Click="Shelf_Click"></Button>
-                    </StackPanel>
+                    <TextBlock Grid.Row="5" Grid.Column="1" Text="" Style="{StaticResource DetailValue}" VerticalAlignment="Center" Foreground="#FF54ABDC" Tapped="Shelf_Click" x:Name="shelfLabel"/>
+
+                    <!-- Review Date -->
+                    <TextBlock Grid.Row="6" Grid.Column="0" Text="{Binding MyReview.DateLabel}" Style="{StaticResource DetailLabel}"/>
+                    <TextBlock Grid.Row="6" Grid.Column="1" Text="{Binding MyReview.ReviewDate}" Style="{StaticResource DetailValue}"/>
 
                     <!-- Desc -->
-                    <ScrollViewer Style="{StaticResource VerticalScrollViewerStyle}" Grid.Row="6" Grid.Column="0" Grid.ColumnSpan="2" Margin="0,20,0,0">
+                    <ScrollViewer Style="{StaticResource VerticalScrollViewerStyle}" Grid.Row="7" Grid.Column="0" Grid.ColumnSpan="2" Margin="0,20,0,0">
                         <TextBlock  x:Name="desc" Style="{StaticResource DetailValue}"
                                TextWrapping="Wrap"
                                Text="{Binding Description}"

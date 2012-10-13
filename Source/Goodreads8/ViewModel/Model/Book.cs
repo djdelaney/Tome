@@ -58,6 +58,8 @@ namespace Goodreads8.ViewModel.Model
         public List<Review> FriendReviews { get; set; }
         //private Map<String, String> m_onlineStores;
 
+        public Review MyReview { get; set; }
+
         public List<String> Shelves { get; set; }
 
 
