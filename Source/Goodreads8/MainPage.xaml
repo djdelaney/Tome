@@ -73,7 +73,7 @@
                         Margin="10,0,0,10"
                         Text="{Binding Name}" HorizontalAlignment="Left" Foreground="#FF0F0101" FontSize="18" VerticalAlignment="Bottom" FontFamily="Segoe UI"  />
                 </Grid>
-            </Grid>            
+            </Grid>
         </DataTemplate>
     </Page.Resources>
 
@@ -239,13 +239,13 @@
 
                     <UI:AdControl
                         Grid.Row="1"
-                        ApplicationId="testclient"
-                        AdUnitId="ADPT38"
+                        ApplicationId="5b00da83-377e-41bf-8d28-ea61dea08c60"
+                        AdUnitId="10047014"
                         HorizontalAlignment="Left"
                         Height="600"
                         Margin="0,0,0,0"
                         VerticalAlignment="Top"
-                        Width="300"/>
+                        Width="160"/>
                 </Grid>
 
             </StackPanel>
@@ -329,8 +329,8 @@
                 </Button>
 
                 <UI:AdControl
-                        ApplicationId="testclient"
-                        AdUnitId="ADPT33"
+                        ApplicationId="5b00da83-377e-41bf-8d28-ea61dea08c60"
+                        AdUnitId="10047013"
                         HorizontalAlignment="Center"
                         Height="250"
                         Margin="0,5,0,20"

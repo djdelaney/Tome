@@ -54,8 +54,8 @@
                     <Button Content="Book Details..." HorizontalAlignment="Center" Margin="10" Click="More_Click"></Button>
                     <UI:AdControl
                         Grid.Row="1"
-                        ApplicationId="testclient"
-                        AdUnitId="ADPT33"
+                        ApplicationId="5b00da83-377e-41bf-8d28-ea61dea08c60"
+                        AdUnitId="10047013"
                         Height="250"
                         Margin="0,50,0,0"
                         Width="250"/>

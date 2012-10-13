@@ -22,6 +22,7 @@ using Windows.UI.Popups;
 using Chq.OAuth;
 using Chq.OAuth.Credentials;
 using System.Threading.Tasks;
+using Microsoft.Advertising.WinRT.UI;
 
 // The Blank Page item template is documented at http://go.microsoft.com/fwlink/?LinkId=234238
 

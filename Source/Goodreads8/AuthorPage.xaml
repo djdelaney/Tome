@@ -64,8 +64,8 @@
                     <Image Source="{Binding ImageUrl}" Width="250" VerticalAlignment="Top" Margin="0,70,0,0" />
                     <UI:AdControl
                         Grid.Row="1"
-                        ApplicationId="testclient"
-                        AdUnitId="ADPT33"
+                        ApplicationId="5b00da83-377e-41bf-8d28-ea61dea08c60"
+                        AdUnitId="10047013"
                         Height="250"
                         Margin="0,50,0,0"
                         Width="250"/>
@@ -170,7 +170,7 @@
                     <TextBlock Grid.Row="3" Grid.Column="1" Text="{Binding Influences}" Style="{StaticResource DetailValue}" TextWrapping="Wrap" Padding="0,0,20,0" MaxWidth="250" HorizontalAlignment="Left" />
 
                 </Grid>
-                
+
                 <!-- Desc -->
                 <TextBlock Style="{StaticResource DetailValue}"
                                TextWrapping="Wrap"

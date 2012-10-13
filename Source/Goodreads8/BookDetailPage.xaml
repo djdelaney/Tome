@@ -53,11 +53,11 @@
                     <Image Source="{Binding ImageUrl}" Width="250" VerticalAlignment="Top" Margin="0,70,0,0" />
                     <UI:AdControl
                         Grid.Row="1"
-                        ApplicationId="testclient"
-                        AdUnitId="ADPT33"
                         Height="250"
                         Margin="0,50,0,0"
-                        Width="250"/>
+                        Width="250"
+                        ApplicationId="5b00da83-377e-41bf-8d28-ea61dea08c60"
+                        AdUnitId="10047013"/>
                 </StackPanel>
                 <Grid Margin="50,0,0,0">
                     <Grid.RowDefinitions>
