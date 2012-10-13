@@ -15,7 +15,7 @@ namespace Goodreads8.ViewModel.Model
                 if (Reviewer == null)
                     return "Unknown";
 
-                if (ReadAt == null)
+                if (ReadAt == null || ReadAt == DateTime.MinValue)
                     return Reviewer.Name;
 
                 String value =  Reviewer.Name + ", " + ReadAt.ToString("MMM dd, yyyy");
@@ -27,7 +27,7 @@ namespace Goodreads8.ViewModel.Model
         {
             get
             {
-                if (ReadAt == null)
+                if (ReadAt == null || ReadAt == DateTime.MinValue)
                     return "Unknown";
 
                 return ReadAt.ToString("MMM dd, yyyy");

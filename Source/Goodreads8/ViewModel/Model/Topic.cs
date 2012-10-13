@@ -45,7 +45,7 @@ namespace Goodreads8.ViewModel.Model
                 if (String.IsNullOrEmpty(user))
                     user = "Unknown";
 
-                if (LastCommentAt == null)
+                if (LastCommentAt == null || LastCommentAt == DateTime.MinValue)
                     return user;
 
                 return user + ", " + LastCommentAt.ToString("MMMM dd, h:mm tt");

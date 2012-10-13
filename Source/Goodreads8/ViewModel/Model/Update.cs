@@ -37,7 +37,7 @@ namespace Goodreads8.ViewModel.Model
                 if (User == null)
                     return "Unknown User";
 
-                if (UpdateTime == null)
+                if (UpdateTime == null || UpdateTime == DateTime.MinValue)
                     return User.Name;
 
                 return User.Name + ", " + UpdateTime.ToString("MMMM dd, h:mm tt");
