@@ -15,7 +15,7 @@ namespace Goodreads8.ViewModel.Model
                 if (Born == null && Hometown == null)
                     return "Unknown";
 
-                if (Born == null)
+                if (Born == null || Born == DateTime.MinValue)
                     return Hometown;
                 else if (Hometown == null)
                     return Born.ToString("MMMM yyyy");
