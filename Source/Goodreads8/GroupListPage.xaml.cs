@@ -21,7 +21,7 @@ namespace Goodreads8
     /// <summary>
     /// An empty page that can be used on its own or navigated to within a Frame.
     /// </summary>
-    public sealed partial class GroupListPage : Page
+    public sealed partial class GroupListPage : Goodreads8.Common.LayoutAwarePage
     {
         public GroupListPage()
         {
@@ -35,12 +35,14 @@ namespace Goodreads8
         /// property is typically used to configure the page.</param>
         protected override async void OnNavigatedTo(NavigationEventArgs e)
         {
+            base.OnNavigatedTo(e);
             this.busyGrid.Visibility = Windows.UI.Xaml.Visibility.Visible;
             this.busyRing.IsActive = true;
 
             GoodreadsAPI api = GoodreadsAPI.Instance;
             List<Group> groups = await api.GetGroups();
             this.gv.ItemsSource = groups;
+            this.lv.ItemsSource = groups;
 
             if (groups == null)
             {
