@@ -30,12 +30,12 @@
             <ImageBrush ImageSource="Assets/BGBook.jpg" Stretch="UniformToFill"/>
         </Grid.Background>
         <Grid.RowDefinitions>
-            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="120"/>
             <RowDefinition Height="*"/>
         </Grid.RowDefinitions>
 
         <!-- Back button and page title -->
-        <Grid VerticalAlignment="Top" Height="140" Grid.Row="0">
+        <Grid>
             <Grid.ColumnDefinitions>
                 <ColumnDefinition Width="Auto"/>
                 <ColumnDefinition Width="*"/>
@@ -50,10 +50,13 @@
         </Grid>
 
         <ScrollViewer Style="{StaticResource HorizontalScrollViewerStyle}" Grid.Row="1">
-            <StackPanel Orientation="Horizontal" Margin="130,0,0,0">
-                <StackPanel Orientation="Vertical" VerticalAlignment="Top" Margin="0,70,0,0">
-                    <Image Source="{Binding Book.ImageUrl}" Width="250" Tapped="Book_Cover_Tapped" />
-                    <Button Content="More..." HorizontalAlignment="Center" Click="More_Click" Width="250"></Button>
+            <StackPanel Orientation="Horizontal" Margin="120,0,0,0">
+                <StackPanel Orientation="Vertical" VerticalAlignment="Top" Margin="0,60,0,0">
+
+                    <Button Style="{StaticResource ImageButtonStyle}" Tapped="Book_Cover_Tapped" >
+                        <Image Source="{Binding Book.ImageUrl}" Width="250" />
+                    </Button>
+                    
                     <UI:AdControl
                         Grid.Row="1"
                         ApplicationId="5b00da83-377e-41bf-8d28-ea61dea08c60"
@@ -62,7 +65,7 @@
                         Margin="0,50,0,0"
                         Width="250"/>
                 </StackPanel>
-                <Grid Margin="50,0,0,0">
+                <Grid Margin="40,0,0,0">
                     <Grid.RowDefinitions>
                         <RowDefinition Height="Auto" />
                         <RowDefinition Height="Auto" />
