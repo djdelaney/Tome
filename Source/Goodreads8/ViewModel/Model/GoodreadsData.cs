@@ -522,6 +522,8 @@ namespace Goodreads8.ViewModel.Model
                                     PublicationMonth = GetXElementIntValue(b, "original_publication_month"),
                                     PublicationDay = GetXElementIntValue(b, "original_publication_day"),
 
+                                    AvgRating = (double)b.Element("average_rating"),
+
                                     Id = (int)b.Element("best_book").Element("id"),
                                     Title = (string)b.Element("best_book").Element("title"),
                                     ImageUrl = (string)b.Element("best_book").Element("image_url"),

@@ -313,7 +313,6 @@ namespace Goodreads8.ViewModel
                 String response = await m_client.MakeRequest("GET")
                       .ForResource(m_client.AccessToken.Token, new Uri(requestUrl))
                       .WithParameters(new { key = m_consumerKey, format = "xml", q = query })
-                      .Sign(m_client.AccessToken.Secret)
                       .ExecuteRequest();
 
                 return GoodreadsData.ParseSearchResults(response);

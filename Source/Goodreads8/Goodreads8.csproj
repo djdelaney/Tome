@@ -118,6 +118,9 @@
     <Compile Include="BookDetailPage.xaml.cs">
       <DependentUpon>BookDetailPage.xaml</DependentUpon>
     </Compile>
+    <Compile Include="BookSearch.xaml.cs">
+      <DependentUpon>BookSearch.xaml</DependentUpon>
+    </Compile>
     <Compile Include="BrowseAuthorBooks.xaml.cs">
       <DependentUpon>BrowseAuthorBooks.xaml</DependentUpon>
     </Compile>
@@ -192,6 +195,7 @@
     <Compile Include="ViewModel\Model\Profile.cs" />
     <Compile Include="ViewModel\Model\Review.cs" />
     <Compile Include="ViewModel\Model\ReviewSet.cs" />
+    <Compile Include="ViewModel\Model\SearchResult.cs" />
     <Compile Include="ViewModel\Model\Shelf.cs" />
     <Compile Include="ViewModel\Model\Status.cs" />
     <Compile Include="ViewModel\Model\Topic.cs" />
@@ -231,6 +235,10 @@
     <Content Include="Assets\SplashScreen.png" />
     <Content Include="Assets\StoreLogo.png" />
     <Content Include="Assets\TileLogo.png" />
+    <Page Include="BookSearch.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
     <Page Include="NewTopicPage.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
