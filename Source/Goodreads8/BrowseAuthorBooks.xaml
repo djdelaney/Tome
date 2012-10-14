@@ -25,8 +25,12 @@
         <Grid.Background>
             <ImageBrush ImageSource="Assets/BGShelf.jpg"/>
         </Grid.Background>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="120"/>
+            <RowDefinition Height="*"/>
+        </Grid.RowDefinitions>
         <!-- Back button and page title -->
-        <Grid VerticalAlignment="Top" Height="140">
+        <Grid>
             <Grid.ColumnDefinitions>
                 <ColumnDefinition Width="Auto"/>
                 <ColumnDefinition Width="*"/>
@@ -42,8 +46,9 @@
 
 		<!-- Book list -->
         <GridView
+            Grid.Row="1"
             x:Name="gv"
-            Margin="0,140,0,0"
+            Margin="0,0,0,0"
             Padding="110,50,50,50"
             ItemTemplate="{StaticResource BookTemplate}"
             SelectionMode="None"
