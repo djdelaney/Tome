@@ -59,7 +59,7 @@
                     <ColumnDefinition Width="248"/>
                     <ColumnDefinition Width="*"/>
                 </Grid.ColumnDefinitions>
-                <Grid Height="120" Background="#e6e1c3" Grid.Column="1">
+                <Grid Height="120" Background="#e6e1c3" Grid.Column="1" Margin="0,12,0,12">
                     <Grid.RowDefinitions>
                         <RowDefinition Height="40"/>
                         <RowDefinition Height="*"/>
@@ -145,65 +145,10 @@
                     <TextBlock Text="Extras" IsHitTestVisible="false" Style="{StaticResource SubSectionHeader}" Margin="0,0,0,20" Grid.Row="0"/>
 
                     <StackPanel Orientation="Vertical" Grid.Row="1" Margin="0,4,0,0">
-                        <!-- Friends -->
-                        <Button Click="Friend_Click">
-                            <Button.Template>
-                                <ControlTemplate TargetType="Button">
-                                    <ContentPresenter Content="{TemplateBinding Content}"/>
-                                </ControlTemplate>
-                            </Button.Template>
-                            <Grid Width="248" Height="120" Background="#8d3992" Margin="0,20,0,10"  VerticalAlignment="Top">
-                                <Grid.ColumnDefinitions>
-                                    <ColumnDefinition Width="80"/>
-                                    <ColumnDefinition Width="*"/>
-                                    <ColumnDefinition Width="80"/>
-                                </Grid.ColumnDefinitions>
-                                <TextBlock Text="&#xE1E2;" Grid.Column="1"  HorizontalAlignment="Center" Foreground="#FF0F0101" FontSize="48" FontFamily="Segoe UI Symbol" VerticalAlignment="Center" />
-                                <TextBlock
-                            Margin="10,0,0,10"
-                            Text="Friends" HorizontalAlignment="Left" Foreground="#FF0F0101" FontSize="18" VerticalAlignment="Bottom" FontFamily="Segoe UI" />
-                            </Grid>
-                        </Button>
 
-                        <!-- Groups -->
-                        <Button Padding="0"  Margin="0,20,0,30" Click="Group_Click">
-                            <Button.Template>
-                                <ControlTemplate TargetType="Button">
-                                    <ContentPresenter Content="{TemplateBinding Content}"/>
-                                </ControlTemplate>
-                            </Button.Template>
-                            <Grid Width="248" Height="120" Background="#926339"  VerticalAlignment="Top">
-                                <Grid.ColumnDefinitions>
-                                    <ColumnDefinition Width="80"/>
-                                    <ColumnDefinition Width="*"/>
-                                    <ColumnDefinition Width="80"/>
-                                </Grid.ColumnDefinitions>
-                                <TextBlock Text="&#xE205;" Grid.Column="1"  HorizontalAlignment="Center" Foreground="#FF0F0101" FontSize="48" FontFamily="Segoe UI Symbol" VerticalAlignment="Center" />
-                                <TextBlock
-                                Margin="10,0,0,10"
-                                Text="Groups" HorizontalAlignment="Left" Foreground="#FF0F0101" FontSize="18" VerticalAlignment="Bottom" FontFamily="Segoe UI" />
-                            </Grid>
-                        </Button>
-
-                        <!-- Search -->
-                        <Button Click="Search_Click">
-                            <Button.Template>
-                                <ControlTemplate TargetType="Button">
-                                    <ContentPresenter Content="{TemplateBinding Content}"/>
-                                </ControlTemplate>
-                            </Button.Template>
-                            <Grid Width="248" Height="120" Background="#549239" Margin="0"  VerticalAlignment="Top">
-                                <Grid.ColumnDefinitions>
-                                    <ColumnDefinition Width="80"/>
-                                    <ColumnDefinition Width="*"/>
-                                    <ColumnDefinition Width="80"/>
-                                </Grid.ColumnDefinitions>
-                                <TextBlock Text="&#xE1A3;" Grid.Column="1"  HorizontalAlignment="Center" Foreground="#FF0F0101" FontSize="48" FontFamily="Segoe UI Symbol" VerticalAlignment="Center" />
-                                <TextBlock
-                                Margin="10,0,0,10"
-                                Text="Search" HorizontalAlignment="Left" Foreground="#FF0F0101" FontSize="18" VerticalAlignment="Bottom" FontFamily="Segoe UI" />
-                            </Grid>
-                        </Button>
+                        <Button HorizontalAlignment="Center" Style="{StaticResource FriendButtonStyle}" Margin="0,7,0,0" Click="Friend_Click"/>
+                        <Button HorizontalAlignment="Center" Style="{StaticResource GroupButtonStyle}" Margin="0,4,0,0" Click="Group_Click"/>
+                        <Button HorizontalAlignment="Center" Style="{StaticResource SearchButtonStyle}" Margin="0,4,0,0" Click="Search_Click"/>
 
                         <!-- Scan -->
                         <!--<Button Click="Scan_Click" Margin="0,30,0,0">
@@ -237,7 +182,7 @@
 
                     <TextBlock Text="Ads" IsHitTestVisible="false" Style="{StaticResource SubSectionHeader}" Margin="0,0,0,20" Grid.Row="0"/>
 
-                    <UI:AdControl
+                    <!--<UI:AdControl
                         Grid.Row="1"
                         ApplicationId="5b00da83-377e-41bf-8d28-ea61dea08c60"
                         AdUnitId="10047014"
@@ -245,7 +190,7 @@
                         Height="600"
                         Margin="0,0,0,0"
                         VerticalAlignment="Top"
-                        Width="160"/>
+                        Width="160"/>-->
                 </Grid>
 
             </StackPanel>
@@ -254,6 +199,7 @@
         <!-- Snapped Views -->
         <ScrollViewer x:Name="SnappedView" Visibility="Collapsed" Style="{StaticResource VerticalScrollViewerStyle}" Grid.Row="1">
             <StackPanel Orientation="Vertical">
+
                 <!-- Shelves -->
                 <TextBlock Text="Shelves" IsHitTestVisible="false" Style="{StaticResource SubSectionHeader}" Margin="20,10,0,0"/>
                 <ListView
@@ -268,72 +214,16 @@
                 <!-- Extras -->
                 <TextBlock Text="Extras" IsHitTestVisible="false" Style="{StaticResource SubSectionHeader}" Margin="20,10,0,0"/>
 
-                <!-- Friends -->
-                <Button Padding="0" Margin="0,5,0,5" Click="Friend_Click" HorizontalAlignment="Center">
-                    <Button.Template>
-                        <ControlTemplate TargetType="Button">
-                            <ContentPresenter Content="{TemplateBinding Content}"/>
-                        </ControlTemplate>
-                    </Button.Template>
-                    <Grid Width="248" Height="120" Background="#8d3992" VerticalAlignment="Top">
-                        <Grid.ColumnDefinitions>
-                            <ColumnDefinition Width="80"/>
-                            <ColumnDefinition Width="*"/>
-                            <ColumnDefinition Width="80"/>
-                        </Grid.ColumnDefinitions>
-                        <TextBlock Text="&#xE1E2;" Grid.Column="1"  HorizontalAlignment="Center" Foreground="#FF0F0101" FontSize="48" FontFamily="Segoe UI Symbol" VerticalAlignment="Center" />
-                        <TextBlock
-                        Margin="10,0,0,10"
-                        Text="Friends" HorizontalAlignment="Left" Foreground="#FF0F0101" FontSize="18" VerticalAlignment="Bottom" FontFamily="Segoe UI" />
-                    </Grid>
-                </Button>
-
-                <!-- Groups -->
-                <Button Padding="0" Margin="0,5,0,5" Click="Group_Click" HorizontalAlignment="Center">
-                    <Button.Template>
-                        <ControlTemplate TargetType="Button">
-                            <ContentPresenter Content="{TemplateBinding Content}"/>
-                        </ControlTemplate>
-                    </Button.Template>
-                    <Grid Width="248" Height="120" Background="#926339"  VerticalAlignment="Top">
-                        <Grid.ColumnDefinitions>
-                            <ColumnDefinition Width="80"/>
-                            <ColumnDefinition Width="*"/>
-                            <ColumnDefinition Width="80"/>
-                        </Grid.ColumnDefinitions>
-                        <TextBlock Text="&#xE205;" Grid.Column="1"  HorizontalAlignment="Center" Foreground="#FF0F0101" FontSize="48" FontFamily="Segoe UI Symbol" VerticalAlignment="Center" />
-                        <TextBlock
-                            Margin="10,0,0,10"
-                            Text="Groups" HorizontalAlignment="Left" Foreground="#FF0F0101" FontSize="18" VerticalAlignment="Bottom" FontFamily="Segoe UI" />
-                    </Grid>
-                </Button>
-
-                <!-- Search -->
-                <Button Click="Search_Click" HorizontalAlignment="Center" Margin="0,5,0,5">
-                    <Button.Template>
-                        <ControlTemplate TargetType="Button">
-                            <ContentPresenter Content="{TemplateBinding Content}"/>
-                        </ControlTemplate>
-                    </Button.Template>
-                    <Grid Width="248" Height="120" Background="#549239" Margin="0"  VerticalAlignment="Top">
-                        <Grid.ColumnDefinitions>
-                            <ColumnDefinition Width="80"/>
-                            <ColumnDefinition Width="*"/>
-                            <ColumnDefinition Width="80"/>
-                        </Grid.ColumnDefinitions>
-                        <TextBlock Text="&#xE1A3;" Grid.Column="1"  HorizontalAlignment="Center" Foreground="#FF0F0101" FontSize="48" FontFamily="Segoe UI Symbol" VerticalAlignment="Center" />
-                        <TextBlock
-                            Margin="10,0,0,10"
-                            Text="Search" HorizontalAlignment="Left" Foreground="#FF0F0101" FontSize="18" VerticalAlignment="Bottom" FontFamily="Segoe UI" />
-                    </Grid>
-                </Button>
+                <Button HorizontalAlignment="Center" Style="{StaticResource FriendButtonStyle}" Margin="0,7,0,0" Click="Friend_Click"/>
+                <Button HorizontalAlignment="Center" Style="{StaticResource GroupButtonStyle}" Margin="0,4,0,0" Click="Group_Click"/>
+                <Button HorizontalAlignment="Center" Style="{StaticResource SearchButtonStyle}" Margin="0,4,0,0" Click="Search_Click"/>
 
                 <UI:AdControl
                         ApplicationId="5b00da83-377e-41bf-8d28-ea61dea08c60"
                         AdUnitId="10047013"
                         HorizontalAlignment="Center"
                         Height="250"
-                        Margin="0,5,0,20"
+                        Margin="0,10,0,20"
                         Width="250"/>
 
             </StackPanel>
