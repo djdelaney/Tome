@@ -36,7 +36,7 @@
 
         <!--Shelf Template-->
         <DataTemplate x:Key="ShelfTemplate">
-            <Grid Width="248" Height="120" Background="#e6e1c3" Margin="10" HorizontalAlignment="Center">
+            <Grid Width="248" Height="120" Background="{Binding BG}" Margin="10" HorizontalAlignment="Center">
                 <Grid.RowDefinitions>
                     <RowDefinition Height="40"/>
                     <RowDefinition Height="*"/>
@@ -59,7 +59,7 @@
                     <ColumnDefinition Width="248"/>
                     <ColumnDefinition Width="*"/>
                 </Grid.ColumnDefinitions>
-                <Grid Height="120" Background="#e6e1c3" Grid.Column="1" Margin="0,12,0,12">
+                <Grid Height="120" Background="{Binding BG}" Grid.Column="1" Margin="0,12,0,12">
                     <Grid.RowDefinitions>
                         <RowDefinition Height="40"/>
                         <RowDefinition Height="*"/>

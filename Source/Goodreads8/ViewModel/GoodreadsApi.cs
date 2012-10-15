@@ -13,6 +13,8 @@ using System.IO;
 using System.IO.Compression;
 using Goodreads8.ViewModel.Cache;
 using System.Net;
+using Windows.UI.Xaml.Media;
+using Windows.UI;
 
 namespace Goodreads8.ViewModel
 {
@@ -157,7 +159,16 @@ namespace Goodreads8.ViewModel
 
                 Profile data = GoodreadsData.ParseProfile(response);
                 if (data != null)
+                {
+                    //Populate shelf colors and store
+                    int curShelf = 0;
+                    foreach (Shelf s in data.Shelves)
+                    {
+                        s.BG = CreateBG(curShelf, data.Shelves.Count);
+                        curShelf++;
+                    }
                     m_cache.StoreProfile(userId, data);
+                }
 
                 return data;
             }
@@ -838,6 +849,26 @@ namespace Goodreads8.ViewModel
 
         }
 
+        /// <summary>
+        /// Calculate shelf colors. Should not be inside the GR API layer!
+        /// </summary>
+        /// <param name="index"></param>
+        /// <param name="count"></param>
+        /// <returns></returns>
+        private Brush CreateBG(int index, int count)
+        {
+            double[] light = new double[] { 130, 208, 255 };
+            double[] dark = new double[] { 0, 108, 163 };
+
+            double rIncrement = (light[0] - dark[0]) / (count - 1);
+            double gIncrement = (light[1] - dark[1]) / (count - 1);
+            double bIncrement = (light[2] - dark[2]) / (count - 1);
+
+            double r = light[0] - (rIncrement * index);
+            double g = light[1] - (gIncrement * index);
+            double b = light[2] - (bIncrement * index);
+            return new SolidColorBrush(Color.FromArgb(255, (byte)r, (byte)g, (byte)b));
+        }
 
         /*public static string UnZipStr(byte[] input)
         {

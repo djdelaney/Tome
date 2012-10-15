@@ -14,8 +14,6 @@ namespace Goodreads8.ViewModel.Model
         public bool Exclusive { get; set; }
         public int Id { get; set; }
         public String Name { get; set; }
-
-
         public Brush BG { get; set; }
     }
 }

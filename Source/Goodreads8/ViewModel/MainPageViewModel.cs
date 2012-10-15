@@ -86,27 +86,17 @@ namespace Goodreads8.ViewModel
 
                 //Shelves
                 Shelves = new ObservableCollection<Shelf>();
-
                 Profile p = await api.GetProfile(api.AuthenticatedUserId);
-                int curShelf = 0;
-                foreach (Shelf s in p.Shelves)
+                if (p != null)
                 {
-                    s.BG = CreateBG(curShelf, p.Shelves.Count);
-                    Shelves.Add(s);
-                    curShelf++;
+                    foreach (Shelf s in p.Shelves)
+                    {
+                        Shelves.Add(s);
+                    }
                 }
             }
             IsLoading = false;
         }
-
-        private Brush CreateBG(int index, int count)
-        {
-            int max = 255;
-            int min = 80;
-            int increment = (max-min)/count;
-
-            int value = max - (increment*index);
-            return new SolidColorBrush(Color.FromArgb(255, 0, (byte)value, (byte)value));
-        }
     }
 }
+

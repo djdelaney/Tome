@@ -24,7 +24,7 @@
 
         <!--Shelf Template-->
         <DataTemplate x:Key="ShelfTemplate">
-            <Grid Width="248" Height="120" Background="Tan" Margin="10">
+            <Grid Width="248" Height="120" Background="{Binding BG}" Margin="10">
                 <Grid.RowDefinitions>
                     <RowDefinition Height="40"/>
                     <RowDefinition Height="*"/>
