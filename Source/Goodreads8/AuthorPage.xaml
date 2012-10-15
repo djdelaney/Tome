@@ -96,7 +96,7 @@
 
                     <!-- Website -->
                     <TextBlock Grid.Row="3" Grid.Column="0" Text="Website" Style="{StaticResource DetailLabel}"/>
-                    <TextBlock Grid.Row="3" Grid.Column="1" Text="{Binding Link}" x:Name="published" Style="{StaticResource DetailValue}" Tapped="ClickWebsite" Foreground="#FF54ABDC"/>
+                    <Button    Grid.Row="3" Grid.Column="1" Content="{Binding Link}" Tapped="ClickWebsite" Style="{StaticResource TextHoverStyle}" VerticalAlignment="Center"/>
 
                     <!-- influences -->
                     <TextBlock Grid.Row="4" Grid.Column="0" Text="Influences" Style="{StaticResource DetailLabel}"/>
@@ -163,7 +163,7 @@
 
                     <!-- Website -->
                     <TextBlock Grid.Row="2" Grid.Column="0" Text="Website" Style="{StaticResource DetailLabel}"/>
-                    <TextBlock Grid.Row="2" Grid.Column="1" Text="{Binding Link}" Style="{StaticResource DetailValue}" Tapped="ClickWebsite" Foreground="#FF54ABDC"/>
+                    <Button    Grid.Row="2" Grid.Column="1" Content="{Binding Link}" Tapped="ClickWebsite" Style="{StaticResource TextHoverStyle}" VerticalAlignment="Center"/>
 
                     <!-- influences -->
                     <TextBlock Grid.Row="3" Grid.Column="0" Text="Influences" Style="{StaticResource DetailLabel}"/>

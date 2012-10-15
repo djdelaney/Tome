@@ -38,7 +38,8 @@ namespace Goodreads8
             if (ApplicationView.Value == ApplicationViewState.Snapped)
             {
                 Window.Current.SizeChanged -= WindowSizeChanged;
-                this.Frame.GoBack();
+                if (this.Frame.CanGoBack)
+                    this.Frame.GoBack();
             }
         }
 

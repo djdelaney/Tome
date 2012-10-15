@@ -93,7 +93,7 @@
 
                     <!-- link -->
                     <TextBlock Grid.Row="5" Grid.Column="0" Text="Link" Style="{StaticResource DetailLabel}"/>
-                    <TextBlock Grid.Row="5" Grid.Column="1" Text="{Binding Link}" Style="{StaticResource DetailValue}" Foreground="#FF54ABDC" Tapped="ClickWebsite" />
+                    <Button    Grid.Row="5" Grid.Column="1" Content="{Binding Link}" Tapped="ClickWebsite" Style="{StaticResource TextHoverStyle}" VerticalAlignment="Center"/>
 
                     <!-- User count -->
                     <TextBlock Grid.Row="6" Grid.Column="0" Text="Members" Style="{StaticResource DetailLabel}"/>
@@ -168,7 +168,7 @@
 
                     <!-- link -->
                     <TextBlock Grid.Row="5" Grid.Column="0" Text="Link" Style="{StaticResource DetailLabel}"/>
-                    <TextBlock Grid.Row="5" Grid.Column="1" Text="{Binding Link}" Style="{StaticResource DetailValue}" Foreground="#FF54ABDC" Tapped="ClickWebsite" />
+                    <Button    Grid.Row="5" Grid.Column="1" Content="{Binding Link}" Tapped="ClickWebsite" Style="{StaticResource TextHoverStyle}" VerticalAlignment="Center"/>
 
                     <!-- User count -->
                     <TextBlock Grid.Row="6" Grid.Column="0" Text="Members" Style="{StaticResource DetailLabel}"/>

@@ -101,7 +101,7 @@
 
                     <!-- Website -->
                     <TextBlock Grid.Row="4" Grid.Column="0" Text="Website" Style="{StaticResource DetailLabel}"/>
-                    <TextBlock Grid.Row="4" Grid.Column="1" Text="{Binding Website}" x:Name="published" Style="{StaticResource DetailValue}" Tapped="ClickWebsite" Foreground="#FF54ABDC" />
+                    <Button    Grid.Row="4" Grid.Column="1" Content="{Binding Website}" Tapped="ClickWebsite" Style="{StaticResource TextHoverStyle}" VerticalAlignment="Center"/>
 
                     <!-- joined -->
                     <TextBlock Grid.Row="5" Grid.Column="0" Text="Joined" Style="{StaticResource DetailLabel}"/>
@@ -206,7 +206,7 @@
 
                     <!-- Website -->
                     <TextBlock Grid.Row="4" Grid.Column="0" Text="Website" Style="{StaticResource DetailLabel}"/>
-                    <TextBlock Grid.Row="4" Grid.Column="1" Text="{Binding Website}" Style="{StaticResource DetailValue}" Tapped="ClickWebsite" Foreground="#FF54ABDC" />
+                    <Button    Grid.Row="4" Grid.Column="1" Content="{Binding Website}" Tapped="ClickWebsite" Style="{StaticResource TextHoverStyle}" VerticalAlignment="Center"/>
 
                     <!-- joined -->
                     <TextBlock Grid.Row="5" Grid.Column="0" Text="Joined" Style="{StaticResource DetailLabel}"/>

@@ -66,13 +66,8 @@ namespace Goodreads8
                 return;
             }
 
-            if (model.MyReview == null || model.MyReview.Shelves == null || model.MyReview.Shelves.Count == 0)
+            if (model.MyReview != null && model.MyReview.Shelves.Count > 0)
             {
-                shelfLabel.Text = "None";
-            }
-            else
-            {
-                shelfLabel.Text = model.MyReview.ShelfText;
                 if (model.MyReview.Shelves.Contains("currently-reading"))
                     this.ButtonStatus.IsEnabled = true;
                 if (model.MyReview.Shelves.Contains("read"))

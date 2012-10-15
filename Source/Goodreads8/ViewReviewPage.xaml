@@ -83,11 +83,11 @@
 
                     <!-- Author -->
                     <TextBlock Grid.Row="1" Grid.Column="0" Text="Author" Style="{StaticResource DetailLabel}"/>
-                    <TextBlock Grid.Row="1" Grid.Column="1" Text="{Binding Book.PrimaryAuthor}" Style="{StaticResource DetailValue}" TextWrapping="Wrap" Tapped="Author_Tapped" Foreground="#FF54ABDC"/>
+                    <Button    Grid.Row="1" Grid.Column="1" Content="{Binding Book.PrimaryAuthor}" Tapped="Author_Tapped" Style="{StaticResource TextHoverStyle}" VerticalAlignment="Center"/>
 
                     <!-- User -->
                     <TextBlock Grid.Row="2" Grid.Column="0" Text="Reviewer" Style="{StaticResource DetailLabel}"/>
-                    <TextBlock Grid.Row="2" Grid.Column="1" Text="{Binding Reviewer.Name}" Style="{StaticResource DetailValue}" TextWrapping="Wrap" Tapped="Reviewer_Tapped" Foreground="#FF54ABDC"/>
+                    <Button    Grid.Row="2" Grid.Column="1" Content="{Binding Reviewer.Name}" Tapped="Reviewer_Tapped" Style="{StaticResource TextHoverStyle}" VerticalAlignment="Center"/>
 
                     <!-- Rating -->
                     <TextBlock Grid.Row="3" Grid.Column="0" Text="Rating" Style="{StaticResource DetailLabel}"/>

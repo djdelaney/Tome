@@ -142,6 +142,8 @@
                         <RowDefinition Height="*"/>
                     </Grid.RowDefinitions>
 
+                    
+
                     <TextBlock Text="Extras" IsHitTestVisible="false" Style="{StaticResource SubSectionHeader}" Margin="0,0,0,20" Grid.Row="0"/>
 
                     <StackPanel Orientation="Vertical" Grid.Row="1" Margin="0,4,0,0">

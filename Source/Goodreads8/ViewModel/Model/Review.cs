@@ -90,7 +90,7 @@ namespace Goodreads8.ViewModel.Model
             get
             {
                 if (Shelves == null || Shelves.Count == 0)
-                    return "Unknown";
+                    return "None";
 
                 String mainShelf = Shelves[0];
                 return char.ToUpper(mainShelf[0]) + mainShelf.Substring(1);

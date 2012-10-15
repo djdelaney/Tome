@@ -2168,4 +2168,60 @@
         </Setter>
     </Style>
 
+
+    <Style x:Key="TextHoverStyle" TargetType="Button">
+        <Setter Property="Template">
+            <Setter.Value>
+                <ControlTemplate TargetType="Button">
+                    <Grid>
+                        <VisualStateManager.VisualStateGroups>
+                            <VisualStateGroup x:Name="CommonStates">
+                                <VisualState x:Name="Normal"/>
+                                <VisualState x:Name="PointerOver">
+                                    <Storyboard>
+                                        <ColorAnimationUsingKeyFrames BeginTime="00:00:00" 
+                                            Duration="00:00:00.0010000" Storyboard.TargetName="Content" 
+                                            Storyboard.TargetProperty="(ContentPresenter.Foreground).(SolidColorBrush.Color)">
+                                            <SplineColorKeyFrame KeyTime="00:00:00" Value="#FFFFFFFF"/>
+                                        </ColorAnimationUsingKeyFrames>
+                                    </Storyboard>
+                                </VisualState>
+                                <VisualState x:Name="Pressed">
+                                    <Storyboard>
+                                    </Storyboard>
+                                </VisualState>
+                                <VisualState x:Name="Disabled">
+                                    <Storyboard/>
+                                </VisualState>
+                            </VisualStateGroup>
+                            <VisualStateGroup x:Name="FocusStates">
+                                <VisualState x:Name="Focused">
+                                    <Storyboard/>
+                                </VisualState>
+                                <VisualState x:Name="Unfocused"/>
+                            </VisualStateGroup>
+                        </VisualStateManager.VisualStateGroups>
+                        <!--<Border 
+                            Width="{TemplateBinding Width}" 
+                            Height="{TemplateBinding Height}" 
+                            Background="{TemplateBinding Background}" 
+                            CornerRadius="0" BorderBrush="Black" 
+                            BorderThickness="0">-->
+                            <ContentPresenter 
+                                x:Name="Content"
+                                Content="{TemplateBinding Content}" 
+                                Foreground="#FF54ABDC"
+                                HorizontalAlignment="Center"
+                                VerticalAlignment="Center" 
+                                FontSize="17"
+                                FontWeight="Normal"
+                                Margin="0,5,0,5"
+                                />
+                        <!--</Border>-->
+                    </Grid>
+                </ControlTemplate>
+            </Setter.Value>
+        </Setter>
+    </Style>
+
 </ResourceDictionary>
