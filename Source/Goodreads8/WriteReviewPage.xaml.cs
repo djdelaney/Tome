@@ -32,6 +32,18 @@ namespace Goodreads8
             Window.Current.SizeChanged += WindowSizeChanged;
         }
 
+        public class Args
+        {
+            public Args(int book, int rating)
+            {
+                BookId = book;
+                Rating = rating;
+            }
+
+            public int BookId { get; set; }
+            public int Rating { get; set; }
+        }
+
         private void WindowSizeChanged(object sender, Windows.UI.Core.WindowSizeChangedEventArgs e)
         {
             // Obtain view state by explicitly querying for it
@@ -64,13 +76,18 @@ namespace Goodreads8
         protected override void OnNavigatedTo(NavigationEventArgs e)
         {
             base.OnNavigatedTo(e);
-            int? bookId = e.Parameter as int?;
-            if (bookId == null || bookId <= 0)
+
+            Args arg = e.Parameter as Args;
+            if (arg == null || arg.BookId <= 0)
             {
                 this.Frame.GoBack();
                 return;
             }
-            m_bookId = (int)bookId;
+
+            if (arg.Rating > 0)
+                starRating.Value = arg.Rating;
+            
+            m_bookId = arg.BookId;
         }
 
         private async void SaveButton_Click(object sender, RoutedEventArgs e)

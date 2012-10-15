@@ -85,7 +85,7 @@
                     <TextBlock Grid.Row="2" Grid.Column="0" Text="Rating" Style="{StaticResource DetailLabel}"/>
 
                     <StackPanel Orientation="Horizontal" Grid.Row="2" Grid.Column="1" >
-                        <Controls:Rating x:Name="starRating" ItemCount="5" Value="{Binding AvgRating}" Margin="0,0,0,0" IsEnabled="False" Background="#001D1D1D" />
+                        <Controls:Rating x:Name="starRating" ItemCount="5" Value="{Binding AvgRating}" Margin="0,0,0,0" IsEnabled="True" Background="#001D1D1D" Tapped="Rating_Tapped"/>
                         <TextBlock  Text="{Binding AvgRating}" x:Name="rating" Style="{StaticResource DetailValue}" VerticalAlignment="Center"/>
                     </StackPanel>
 
