@@ -2025,6 +2025,9 @@
                                 </VisualState>
                                 <VisualState x:Name="Pressed">
                                     <Storyboard>
+                                        <Storyboard>
+                                            <PointerDownThemeAnimation TargetName="border"/>
+                                        </Storyboard>
                                     </Storyboard>
                                 </VisualState>
                                 <VisualState x:Name="Disabled">
@@ -2076,6 +2079,9 @@
                                 </VisualState>
                                 <VisualState x:Name="Pressed">
                                     <Storyboard>
+                                        <Storyboard>
+                                            <PointerDownThemeAnimation TargetName="border"/>
+                                        </Storyboard>
                                     </Storyboard>
                                 </VisualState>
                                 <VisualState x:Name="Disabled">
@@ -2127,6 +2133,9 @@
                                 </VisualState>
                                 <VisualState x:Name="Pressed">
                                     <Storyboard>
+                                        <Storyboard>
+                                            <PointerDownThemeAnimation TargetName="border"/>
+                                        </Storyboard>
                                     </Storyboard>
                                 </VisualState>
                                 <VisualState x:Name="Disabled">
