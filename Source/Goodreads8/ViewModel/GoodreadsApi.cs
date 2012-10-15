@@ -18,12 +18,12 @@ namespace Goodreads8.ViewModel
 {
     class GoodreadsAPI
     {
-        private string m_consumerKey = "RXBTaDaKuEfeRrFR7XMjRw";
-        private string m_consumerSecretKey = "7pf1F6j5PmN9cy5bzqFJcfhPyQTCRiplMPYNp2mBXQ";
-        private string m_requestTokenUrl = "http://www.goodreads.com/oauth/request_token";
-        private string m_accessTokenUrl = "http://www.goodreads.com/oauth/access_token";
-        private string m_authorizeTokenUrl = "https://www.goodreads.com/oauth/authorize?mobile=1";
-        private string m_callbackUrl = "http://www.hactar.com";
+        private const string m_consumerKey          = "IM5fTW9NU2LEEsNgZ1T03Q";
+        private const string m_consumerSecretKey    = "W8Nf4yqskWBIGEndGQ0re1g7ECsooAxwaO7LfSTpFo";
+        private const string m_requestTokenUrl      = "http://www.goodreads.com/oauth/request_token";
+        private const string m_accessTokenUrl       = "http://www.goodreads.com/oauth/access_token";
+        private const string m_authorizeTokenUrl    = "https://www.goodreads.com/oauth/authorize?mobile=1";
+        private const string m_callbackUrl          = "http://www.hactar.com";
 
         private OAuthContext m_context = null;
         private Client m_client = null;
@@ -34,21 +34,38 @@ namespace Goodreads8.ViewModel
         {
             m_context = new OAuthContext(m_consumerKey, m_consumerSecretKey, m_requestTokenUrl, m_authorizeTokenUrl, m_accessTokenUrl, m_callbackUrl);
             m_client = new Client(m_context);
-
-            //TODO, remove
             m_client.AccessToken = new TokenContainer();
-
-            //GR@hactar.com
-            //m_client.AccessToken.Secret = "9q2uH85GoKg1Hi8UZxfUdaHt43HwNd5ZBgX1vWR381g";
-            //m_client.AccessToken.Token = "acThks95mAhQI0FXaKQCxg";
-            //AuthenticatedUserId = 12725081;
-
-            //Dan@hactar.com
-            //m_client.AccessToken.Secret = "ZBAiSbJQWsOHgASt1EKoigcXFqfozi8pJ5Nqaw";
-            //m_client.AccessToken.Token = "JgNTryl1vDVxh6k3sVGSw";
-            //AuthenticatedUserId = 889496;
-
             m_cache = new APICache();
+        }
+
+        public String GetConsumerKey()
+        {
+            return m_consumerKey;
+        }
+
+        public String GetConsumerSecret()
+        {
+            return m_consumerSecretKey;
+        }
+
+        public String GetRequestUrl()
+        {
+            return m_requestTokenUrl;
+        }
+
+        public String GetAccessUrl()
+        {
+            return m_accessTokenUrl;
+        }
+
+        public String GetAuthorizeUrl()
+        {
+            return m_authorizeTokenUrl;
+        }
+
+        public String GetCallback()
+        {
+            return m_callbackUrl;
         }
 
         public bool IsConfigured()

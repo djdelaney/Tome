@@ -110,17 +110,12 @@ namespace Goodreads8
             }
         }
 
-        private const string _consumerKey = "RXBTaDaKuEfeRrFR7XMjRw";
-        private const string _consumerSecretKey = "7pf1F6j5PmN9cy5bzqFJcfhPyQTCRiplMPYNp2mBXQ";
-        private const string _linkedInRequestTokenUrl = "http://www.goodreads.com/oauth/request_token";
-        private const string _linkedInAccessTokenUrl = "http://www.goodreads.com/oauth/access_token";
-        private const string _linkedInAuthorizeTokenUrl = "https://www.goodreads.com/oauth/authorize?mobile=1";
-        private const string _callbackUrl = "https://www.goodreads.com/oauth/authorize?mobile=1";
         private async Task<bool> DoOAuthLogin()
         {
             try
             {
-            var context = new OAuthContext(_consumerKey, _consumerSecretKey, _linkedInRequestTokenUrl, _linkedInAuthorizeTokenUrl, _linkedInAccessTokenUrl, "http://www.hactar.com");
+            GoodreadsAPI api = GoodreadsAPI.Instance;
+            var context = new OAuthContext(api.GetConsumerKey(), api.GetConsumerSecret(), api.GetRequestUrl(), api.GetAuthorizeUrl(), api.GetAccessUrl(), api.GetCallback());
             var client = new Client(context);
 
             String requestTokenResponse = await client.MakeRequest("GET")
@@ -155,7 +150,6 @@ namespace Goodreads8
 
             client.AccessToken = TokenContainer.Parse(accessTokenResponse);
 
-            GoodreadsAPI api = GoodreadsAPI.Instance;
             String token = client.AccessToken.Token;
             String secret = client.AccessToken.Secret;
             int id = await api.GetAuthenticatedId(token, secret);
@@ -327,7 +321,7 @@ namespace Goodreads8
             //Flush stored credentials
             Windows.Storage.ApplicationData.Current.LocalSettings.Values.Remove(m_keyToken);
             Windows.Storage.ApplicationData.Current.LocalSettings.Values.Remove(m_keySecret);
-            Windows.Storage.ApplicationData.Current.LocalSettings.Values.Remove(m_keyID);            
+            Windows.Storage.ApplicationData.Current.LocalSettings.Values.Remove(m_keyID);
 
             //Try to reconfigure
             await ConfigureApp();
