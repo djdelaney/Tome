@@ -100,9 +100,11 @@
                     <TextBlock Grid.Row="4" Grid.Column="1" Text="{Binding ReviewDate}" Style="{StaticResource DetailValue}"/>
 
                     <!-- Desc -->
-                    <TextBlock Grid.Row="5" Grid.Column="0" Grid.ColumnSpan="2" Style="{StaticResource DetailValue}"
+                    <ScrollViewer Style="{StaticResource VerticalScrollViewerStyle}" Grid.Row="5" Grid.Column="0" Grid.ColumnSpan="2" Padding="0,0,20,0">
+                    <TextBlock  Style="{StaticResource DetailValue}"
                                TextWrapping="Wrap"
                                Text="{Binding BodyText}"/>
+                    </ScrollViewer>
 
                 </Grid>
 

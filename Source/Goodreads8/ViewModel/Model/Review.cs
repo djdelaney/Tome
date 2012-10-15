@@ -76,7 +76,7 @@ namespace Goodreads8.ViewModel.Model
                         return "Marked To-Read";
 
                     if(Rating > 0)
-                        return "No text";
+                        return "";
 
                     return "No review";
                 }
