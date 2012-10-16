@@ -97,6 +97,26 @@ namespace Goodreads8.ViewModel.Model
             }
         }
 
+        public bool HasReview
+        {
+            get
+            {
+                if (Rating <= 0)
+                    return false;
+                return true;
+            }
+        }
+
+        public bool NoReview
+        {
+            get
+            {
+                if (Rating <= 0)
+                    return true;
+                return false;
+            }
+        }
+
         public String Url { get; set; }
         public String Body { get; set; }
         public bool Spoilers { get; set; }

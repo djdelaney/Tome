@@ -139,6 +139,9 @@
     <Compile Include="Common\LayoutAwarePage.cs" />
     <Compile Include="Common\RichTextColumns.cs" />
     <Compile Include="Common\SuspensionManager.cs" />
+    <Compile Include="ComparePage.xaml.cs">
+      <DependentUpon>ComparePage.xaml</DependentUpon>
+    </Compile>
     <Compile Include="GroupListPage.xaml.cs">
       <DependentUpon>GroupListPage.xaml</DependentUpon>
     </Compile>
@@ -188,6 +191,7 @@
     <Compile Include="ViewModel\Model\Author.cs" />
     <Compile Include="ViewModel\Model\Book.cs" />
     <Compile Include="ViewModel\Model\BookSet.cs" />
+    <Compile Include="ViewModel\Model\Comparison.cs" />
     <Compile Include="ViewModel\Model\Event.cs" />
     <Compile Include="ViewModel\Model\FriendSet.cs" />
     <Compile Include="ViewModel\Model\GoodreadsData.cs" />
@@ -232,6 +236,10 @@
     <Content Include="Assets\SmallLogo.png" />
     <Content Include="Assets\SplashScreen.png" />
     <Content Include="Assets\StoreLogo.png" />
+    <Page Include="ComparePage.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
     <Page Include="BookSearch.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>

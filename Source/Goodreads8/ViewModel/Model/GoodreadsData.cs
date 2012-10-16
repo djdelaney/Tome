@@ -739,5 +739,58 @@ namespace Goodreads8.ViewModel.Model
 
             return status;
         }
+
+        public static List<Comparison> ParseComparison(String input)
+        {
+            XDocument doc = XDocument.Parse(input);
+            List<Comparison> comp = (from c in doc.Elements("GoodreadsResponse").Elements("compare").Elements("reviews").Elements("review")
+                                     select new Comparison
+                                     {
+                                         Book = new Book()
+                                         {
+                                             Id = (int)c.Element("book").Element("id"),
+                                             Title = (string)c.Element("book").Element("title"),
+                                         },
+
+                                         MyReview = new Review()
+                                         {
+                                             Rating = ParseComparisonRating((string)c.Elements("your_review").Elements("rating").FirstOrDefault()),
+                                             Shelves = ParseComparisonShelf((string)c.Elements("your_review").Elements("rating").FirstOrDefault()),
+                                         },
+
+                                         TheirReview = new Review()
+                                         {
+                                             Rating = ParseComparisonRating((string)c.Elements("their_review").Elements("rating").FirstOrDefault()),
+                                             Shelves = ParseComparisonShelf((string)c.Elements("their_review").Elements("rating").FirstOrDefault())
+                                         }
+
+
+                                     }).ToList();
+
+            return comp;
+        }
+
+        private static int ParseComparisonRating(String input)
+        {
+            int number;
+            if (Int32.TryParse(input, out number))
+                return number;
+
+            return 0;
+        }
+
+        private static List<String> ParseComparisonShelf(String input)
+        {
+            if (string.IsNullOrEmpty(input))
+                return null;
+
+            int number;
+            if (Int32.TryParse(input, out number))
+                return null;
+
+            List<String> shelves = new List<string>();
+            shelves.Add(input);
+            return shelves;
+        }
     }
 }

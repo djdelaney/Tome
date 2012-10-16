@@ -18,6 +18,7 @@ namespace Goodreads8.ViewModel.Cache
         private Dictionary<int, CacheEntry> m_groupCache;
         private Dictionary<int, CacheEntry> m_topicCache;
         private Dictionary<int, CacheEntry> m_statusCache;
+        private Dictionary<int, CacheEntry> m_compareCache;
         private Dictionary<FriendCache, FriendSet> m_friendsCache;
         private Dictionary<UserReviewCache, Review> m_userReviewCache;
         private Dictionary<TopicSetCache, TopicSet> m_topicListCache;
@@ -39,6 +40,7 @@ namespace Goodreads8.ViewModel.Cache
             m_groupCache 		= new Dictionary<int, CacheEntry>();
             m_topicCache 		= new Dictionary<int, CacheEntry>();
             m_statusCache 		= new Dictionary<int, CacheEntry>();
+            m_compareCache      = new Dictionary<int, CacheEntry>();
             m_friendsCache 		= new Dictionary<FriendCache, FriendSet>();
             m_userReviewCache 	= new Dictionary<UserReviewCache, Review>();
             m_topicListCache 	= new Dictionary<TopicSetCache, TopicSet>();
@@ -58,6 +60,7 @@ namespace Goodreads8.ViewModel.Cache
             m_friendsCache.Clear();
             m_userReviewCache.Clear();
             m_topicListCache.Clear();
+            m_compareCache.Clear();
 
             m_updates = null;
             m_updateExpiration = DateTime.MinValue;
@@ -188,6 +191,18 @@ namespace Goodreads8.ViewModel.Cache
             foreach (int key in statusKeys)
             {
                 m_statusCache.Remove(key);
+            }
+
+            //Compare
+            List<int> compareKeys = new List<int>();
+            foreach (KeyValuePair<int, CacheEntry> pair in m_compareCache)
+            {
+                if (pair.Value.IsExpired())
+                    compareKeys.Add(pair.Key);
+            }
+            foreach (int key in compareKeys)
+            {
+                m_compareCache.Remove(key);
             }
 
             //pages of friends (invalidate all if any are expired)
@@ -602,6 +617,25 @@ namespace Goodreads8.ViewModel.Cache
         {
             if (m_statusCache.ContainsKey(statusId))
                 m_statusCache.Remove(statusId);
+        }
+
+        /** -----------------------
+         *
+         *       Compare
+         *
+         * ----------------------- */
+        public List<Comparison> GetComparison(int userId)
+        {
+            PruneCache();
+
+            if (m_compareCache.ContainsKey(userId))
+                return m_compareCache[userId].Object as List<Comparison>;
+            return null;
+        }
+
+        public void StoreComparison(int userId, List<Comparison> data)
+        {
+            m_compareCache.Add(userId, new CacheEntry(data));
         }
     }
 }

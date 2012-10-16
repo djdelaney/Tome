@@ -115,6 +115,32 @@ namespace Goodreads8.ViewModel
             }
         }
 
+        public async Task<List<Comparison>> CompareUserBooks(int userId)
+        {
+            try
+            {
+                List<Comparison> cached = m_cache.GetComparison(userId);
+                if (cached != null)
+                    return cached;
+
+                String requestUrl = "http://www.goodreads.com/user/compare/" + userId + ".xml ";
+                String response = await m_client.MakeRequest("GET")
+                      .ForResource(m_client.AccessToken.Token, new Uri(requestUrl))
+                      .Sign(m_client.AccessToken.Secret)
+                      .ExecuteRequest();
+
+                List<Comparison> data = GoodreadsData.ParseComparison(response);
+                if (data != null)
+                    m_cache.StoreComparison(userId, data);
+
+                return data;
+            }
+            catch (Exception e)
+            {
+                return null;
+            }
+        }
+
         public async Task<List<Update>> GetUpdates()
         {
             try
