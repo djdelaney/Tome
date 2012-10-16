@@ -82,22 +82,26 @@
                     <TextBlock Text="Review" Grid.Column="0" Grid.ColumnSpan="2" IsHitTestVisible="false" Style="{StaticResource SubSectionHeader}" Margin="0,0,0,20"/>
 
                     <!-- Author -->
-                    <TextBlock Grid.Row="1" Grid.Column="0" Text="Author" Style="{StaticResource DetailLabel}"/>
+                    <TextBlock Grid.Row="1" Grid.Column="0" Text="Author" Style="{StaticResource DetailLabel}" VerticalAlignment="Center"/>
                     <Button    Grid.Row="1" Grid.Column="1" Content="{Binding Book.PrimaryAuthor}" Tapped="Author_Tapped" Style="{StaticResource TextHoverStyle}" VerticalAlignment="Center"/>
 
                     <!-- User -->
-                    <TextBlock Grid.Row="2" Grid.Column="0" Text="Reviewer" Style="{StaticResource DetailLabel}"/>
+                    <TextBlock Grid.Row="2" Grid.Column="0" Text="Reviewer" Style="{StaticResource DetailLabel}" VerticalAlignment="Center"/>
                     <Button    Grid.Row="2" Grid.Column="1" Content="{Binding Reviewer.Name}" Tapped="Reviewer_Tapped" Style="{StaticResource TextHoverStyle}" VerticalAlignment="Center"/>
 
                     <!-- Rating -->
-                    <TextBlock Grid.Row="3" Grid.Column="0" Text="Rating" Style="{StaticResource DetailLabel}"/>
-                    <StackPanel Orientation="Horizontal" Grid.Row="3" Grid.Column="1">
-                        <Controls:Rating  ItemCount="5" Value="{Binding Rating}" Margin="0,0,0,0" IsEnabled="False" Background="#001D1D1D" />
+                    <TextBlock Grid.Row="3" Grid.Column="0" Text="Rating" Style="{StaticResource DetailLabel}" VerticalAlignment="Center"/>
+                    <StackPanel Orientation="Horizontal" Grid.Row="3" Grid.Column="1" Margin="-2,0,0,0" VerticalAlignment="Center">
+                        <Controls:Rating  ItemCount="5" Value="{Binding Rating}" IsEnabled="False" Background="#001D1D1D" Margin="0,4,0,0">
+                            <Controls:Rating.RenderTransform>
+                                <CompositeTransform ScaleX="0.75" ScaleY="0.75"/>
+                            </Controls:Rating.RenderTransform>
+                        </Controls:Rating>
                     </StackPanel>
 
                     <!-- Date Read -->
-                    <TextBlock Grid.Row="4" Grid.Column="0" Text="{Binding DateLabel}" Style="{StaticResource DetailLabel}"/>
-                    <TextBlock Grid.Row="4" Grid.Column="1" Text="{Binding ReviewDate}" Style="{StaticResource DetailValue}"/>
+                    <TextBlock Grid.Row="4" Grid.Column="0" Text="{Binding DateLabel}" Style="{StaticResource DetailLabel}" VerticalAlignment="Center"/>
+                    <TextBlock Grid.Row="4" Grid.Column="1" Text="{Binding ReviewDate}" Style="{StaticResource DetailValue}" VerticalAlignment="Center"/>
 
                     <!-- Desc -->
                     <ScrollViewer Style="{StaticResource VerticalScrollViewerStyle}" Grid.Row="5" Grid.Column="0" Grid.ColumnSpan="2" Padding="0,0,20,0">

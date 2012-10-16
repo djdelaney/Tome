@@ -15,7 +15,10 @@
         <DataTemplate x:Key="ReviewTemplate">
             <StackPanel Orientation="Vertical" HorizontalAlignment="Left" Margin="0,0,0,30">
                 <!-- Rating -->
-                <Controls:Rating ItemCount="5" Value="{Binding Rating}"  IsEnabled="False" RenderTransformOrigin="0.5,0.5" VerticalAlignment="Center" HorizontalAlignment="Left" Margin="0,0,0,0" Padding="0" Background="#001D1D1D" >
+                <Controls:Rating ItemCount="5" Value="{Binding Rating}"  IsEnabled="False" RenderTransformOrigin="0.5,0.5" VerticalAlignment="Center" HorizontalAlignment="Left" Margin="-14,0,-10,0" Padding="0" Background="#001D1D1D" >
+                    <Controls:Rating.RenderTransform>
+                        <CompositeTransform ScaleX="0.75" ScaleY="0.75"/>
+                    </Controls:Rating.RenderTransform>
                 </Controls:Rating>
 				<!-- Reviewer Name -->
                 <TextBlock Text="{Binding ReviewerText}" MaxWidth="400" TextTrimming="WordEllipsis" HorizontalAlignment="Left" Foreground="White" FontSize="18" />
@@ -78,23 +81,27 @@
                     <TextBlock Text="Details" Grid.Column="0" Grid.ColumnSpan="2" IsHitTestVisible="false" Style="{StaticResource SubSectionHeader}" Margin="0,0,0,20"/>
 
                     <!-- Author -->
-                    <TextBlock Grid.Row="1" Grid.Column="0" Text="Author" Style="{StaticResource DetailLabel}"/>
+                    <TextBlock Grid.Row="1" Grid.Column="0" Text="Author" Style="{StaticResource DetailLabel}" VerticalAlignment="Center"/>
                     <Button    Grid.Row="1" Grid.Column="1" Content="{Binding PrimaryAuthor}" Tapped="Author_Tapped" Style="{StaticResource TextHoverStyle}" VerticalAlignment="Center"/>
 
                     <!-- Rating -->
-                    <TextBlock Grid.Row="2" Grid.Column="0" Text="Rating" Style="{StaticResource DetailLabel}"/>
+                    <TextBlock Grid.Row="2" Grid.Column="0" Text="Rating" Style="{StaticResource DetailLabel}" VerticalAlignment="Center"/>
 
                     <StackPanel Orientation="Horizontal" Grid.Row="2" Grid.Column="1" VerticalAlignment="Center">
-                        <Controls:Rating x:Name="starRating" ItemCount="5" Value="{Binding AvgRating}" Margin="0,0,0,0" IsEnabled="True" Background="#001D1D1D" Tapped="Rating_Tapped"/>
+                        <Controls:Rating x:Name="starRating" ItemCount="5" Value="{Binding AvgRating}" Margin="-14,0,-10,0" Padding="0" IsEnabled="True" Background="#001D1D1D" Tapped="Rating_Tapped" RenderTransformOrigin="0.5,0.5">
+                            <Controls:Rating.RenderTransform>
+                                <CompositeTransform ScaleX="0.75" ScaleY="0.75"/>
+                            </Controls:Rating.RenderTransform>
+                        </Controls:Rating>
                         <TextBlock  Text="{Binding AvgRating}" x:Name="rating" Style="{StaticResource DetailValue}" VerticalAlignment="Center"/>
                     </StackPanel>
 
                     <!-- Published -->
-                    <TextBlock Grid.Row="3" Grid.Column="0" Text="Published" Style="{StaticResource DetailLabel}"/>
+                    <TextBlock Grid.Row="3" Grid.Column="0" Text="Published" Style="{StaticResource DetailLabel}" VerticalAlignment="Center"/>
                     <TextBlock Grid.Row="3" Grid.Column="1" Text="{Binding PublishedText}" x:Name="published" Style="{StaticResource DetailValue}" VerticalAlignment="Center"/>
 
                     <!-- ISBN -->
-                    <TextBlock Grid.Row="4" Grid.Column="0" Text="ISBN" Style="{StaticResource DetailLabel}"/>
+                    <TextBlock Grid.Row="4" Grid.Column="0" Text="ISBN" Style="{StaticResource DetailLabel}" VerticalAlignment="Center"/>
                     <TextBlock Grid.Row="4" Grid.Column="1" Text="{Binding ISBN}" x:Name="isbn" Style="{StaticResource DetailValue}" VerticalAlignment="Center"/>
 
                     <!-- Shelf -->
@@ -102,7 +109,7 @@
                     <Button    Grid.Row="5" Grid.Column="1" Content="{Binding MyReview.ShelfText}" Tapped="Shelf_Click" Style="{StaticResource TextHoverStyle}" VerticalAlignment="Center"/>
 
                     <!-- Review Date -->
-                    <TextBlock Grid.Row="6" Grid.Column="0" Text="{Binding MyReview.DateLabel}" Style="{StaticResource DetailLabel}"/>
+                    <TextBlock Grid.Row="6" Grid.Column="0" Text="{Binding MyReview.DateLabel}" Style="{StaticResource DetailLabel}" VerticalAlignment="Center"/>
                     <TextBlock Grid.Row="6" Grid.Column="1" Text="{Binding MyReview.ReviewDate}" Style="{StaticResource DetailValue}" VerticalAlignment="Center"/>
 
                     <!-- Desc -->
