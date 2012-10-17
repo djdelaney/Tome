@@ -99,7 +99,7 @@ namespace Goodreads8
 
         private void Review_Click(object sender, RoutedEventArgs e)
         {
-            this.Frame.Navigate(typeof(WriteReviewPage), new WriteReviewPage.Args(model.Id, 0));
+            this.Frame.Navigate(typeof(WriteReviewPage), new WriteReviewPage.Args(model.Id, 0, model.Title));
         }
 
         private void Status_Click(object sender, RoutedEventArgs e)
@@ -176,7 +176,7 @@ namespace Goodreads8
             else
             {
                 int rating = (int)starRating.Value;
-                this.Frame.Navigate(typeof(WriteReviewPage), new WriteReviewPage.Args(model.Id, rating));
+                this.Frame.Navigate(typeof(WriteReviewPage), new WriteReviewPage.Args(model.Id, rating, model.Title));
             }
         }
     }

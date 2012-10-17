@@ -34,12 +34,14 @@ namespace Goodreads8
 
         public class Args
         {
-            public Args(int book, int rating)
+            public Args(int book, int rating, String title)
             {
                 BookId = book;
                 Rating = rating;
+                Title = title;
             }
 
+            public String Title { get; set; }
             public int BookId { get; set; }
             public int Rating { get; set; }
         }
@@ -84,6 +86,8 @@ namespace Goodreads8
                 this.Frame.GoBack();
                 return;
             }
+
+            pageTitle.Text = "Review: " + arg.Title;
 
             if (arg.Rating > 0)
                 starRating.Value = arg.Rating;
