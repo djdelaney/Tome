@@ -126,6 +126,7 @@ namespace Goodreads8.ViewModel
                 String requestUrl = "http://www.goodreads.com/user/compare/" + userId + ".xml ";
                 String response = await m_client.MakeRequest("GET")
                       .ForResource(m_client.AccessToken.Token, new Uri(requestUrl))
+                      .WithCompression()
                       .Sign(m_client.AccessToken.Secret)
                       .ExecuteRequest();
 
@@ -152,6 +153,7 @@ namespace Goodreads8.ViewModel
 
                 String response = await m_client.MakeRequest("GET")
                         .ForResource(m_client.AccessToken.Token, new Uri("http://www.goodreads.com/updates/friends.xml"))
+                        .WithCompression()
                         .Sign(m_client.AccessToken.Secret)
                         .ExecuteRequest();
 
@@ -180,6 +182,7 @@ namespace Goodreads8.ViewModel
                 String response = await m_client.MakeRequest("GET")
                       .ForResource(m_client.AccessToken.Token, new Uri(requestUrl))
                       .WithParameters(new { key = m_consumerKey }) //it's important to add the prameters after the resource, internal paramerters reset on ForResource calls
+                      .WithCompression()
                       .Sign(m_client.AccessToken.Secret)
                       .ExecuteRequest();
 
@@ -228,6 +231,7 @@ namespace Goodreads8.ViewModel
                 String response = await m_client.MakeRequest("GET")
                       .ForResource(m_client.AccessToken.Token, new Uri(requestUrl))
                       .WithParameters(new { key = m_consumerKey, shelf = shelf, page = page, order = order, per_page = perBooksPage, v = "2", sort = sort }) //it's important to add the prameters after the resource, internal paramerters reset on ForResource calls
+                      .WithCompression()
                       .Sign(m_client.AccessToken.Secret)
                       .ExecuteRequest();
 
@@ -257,6 +261,7 @@ namespace Goodreads8.ViewModel
                 String response = await m_client.MakeRequest("GET")
                       .ForResource(m_client.AccessToken.Token, new Uri(requestUrl))
                       .WithParameters(new { key = m_consumerKey, format = "xml" })
+                      .WithCompression()
                       .Sign(m_client.AccessToken.Secret)
                       .ExecuteRequest();
 
@@ -286,6 +291,7 @@ namespace Goodreads8.ViewModel
                 String response = await m_client.MakeRequest("GET")
                       .ForResource(m_client.AccessToken.Token, new Uri(requestUrl))
                       .WithParameters(new { key = m_consumerKey })
+                      .WithCompression()
                       .Sign(m_client.AccessToken.Secret)
                       .ExecuteRequest();
 
@@ -314,6 +320,7 @@ namespace Goodreads8.ViewModel
                 String response = await m_client.MakeRequest("GET")
                       .ForResource(m_client.AccessToken.Token, new Uri(requestUrl))
                       .WithParameters(new { key = m_consumerKey, format = "xml", page = page }) //it's important to add the prameters after the resource, internal paramerters reset on ForResource calls
+                      .WithCompression()
                       .Sign(m_client.AccessToken.Secret)
                       .ExecuteRequest();
 
@@ -342,6 +349,7 @@ namespace Goodreads8.ViewModel
                 String response = await m_client.MakeRequest("GET")
                       .ForResource(m_client.AccessToken.Token, new Uri(requestUrl))
                       .WithParameters(new { key = m_consumerKey })
+                      .WithCompression()
                       .Sign(m_client.AccessToken.Secret)
                       .ExecuteRequest();
 
@@ -367,6 +375,7 @@ namespace Goodreads8.ViewModel
                 String response = await m_client.MakeRequest("GET")
                       .ForResource(m_client.AccessToken.Token, new Uri(requestUrl))
                       .WithParameters(new { key = m_consumerKey, format = "xml", q = query })
+                      .WithCompression()
                       .ExecuteRequest();
 
                 return GoodreadsData.ParseSearchResults(response);
@@ -390,6 +399,7 @@ namespace Goodreads8.ViewModel
                 String response = await m_client.MakeRequest("GET")
                       .ForResource(m_client.AccessToken.Token, new Uri(requestUrl))
                       .WithParameters(new { key = m_consumerKey, user_id = userId, book_id = bookId })
+                      .WithCompression()
                       .Sign(m_client.AccessToken.Secret)
                       .ExecuteRequest();
 
@@ -419,6 +429,7 @@ namespace Goodreads8.ViewModel
                 String response = await m_client.MakeRequest("GET")
                       .ForResource(m_client.AccessToken.Token, new Uri(requestUrl))
                       .WithParameters(new { key = m_consumerKey })
+                      .WithCompression()
                       .Sign(m_client.AccessToken.Secret)
                       .ExecuteRequest();
 
@@ -447,6 +458,7 @@ namespace Goodreads8.ViewModel
                 String response = await m_client.MakeRequest("GET")
                       .ForResource(m_client.AccessToken.Token, new Uri(requestUrl))
                       .WithParameters(new { key = m_consumerKey })
+                      .WithCompression()
                       .Sign(m_client.AccessToken.Secret)
                       .ExecuteRequest();
 
@@ -479,6 +491,7 @@ namespace Goodreads8.ViewModel
                 String response = await m_client.MakeRequest("GET")
                       .ForResource(m_client.AccessToken.Token, new Uri(requestUrl))
                       .WithParameters(new { key = m_consumerKey, group_id = groupId, page = page })
+                      .WithCompression()
                       .Sign(m_client.AccessToken.Secret)
                       .ExecuteRequest();
 
@@ -508,6 +521,7 @@ namespace Goodreads8.ViewModel
                 String response = await m_client.MakeRequest("GET")
                       .ForResource(m_client.AccessToken.Token, new Uri(requestUrl))
                       .WithParameters(new { key = m_consumerKey })
+                      .WithCompression()
                       .Sign(m_client.AccessToken.Secret)
                       .ExecuteRequest();
 
@@ -536,6 +550,7 @@ namespace Goodreads8.ViewModel
                 String response = await m_client.MakeRequest("GET")
                       .ForResource(m_client.AccessToken.Token, new Uri(requestUrl))
                       .WithParameters(new { key = m_consumerKey, id = authorId, page = page })
+                      .WithCompression()
                       .Sign(m_client.AccessToken.Secret)
                       .ExecuteRequest();
 
@@ -565,6 +580,7 @@ namespace Goodreads8.ViewModel
                 String response = await m_client.MakeRequest("GET")
                       .ForResource(m_client.AccessToken.Token, new Uri(requestUrl))
                       .WithParameters(new { key = m_consumerKey, format = "xml" })
+                      .WithCompression()
                       .Sign(m_client.AccessToken.Secret)
                       .ExecuteRequest();
 

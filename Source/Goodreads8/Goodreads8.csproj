@@ -328,8 +328,9 @@
     </Page>
   </ItemGroup>
   <ItemGroup>
-    <Reference Include="Chq.OAuth">
-      <HintPath>..\packages\Chq.OAuth.dll.0.8.3\lib\winrt45\Chq.OAuth.winmd</HintPath>
+    <Reference Include="Chq.OAuth, Version=0.0.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>Lib\Chq.OAuth.winmd</HintPath>
     </Reference>
   </ItemGroup>
   <PropertyGroup Condition=" '$(VisualStudioVersion)' == '' or '$(VisualStudioVersion)' &lt; '11.0' ">
