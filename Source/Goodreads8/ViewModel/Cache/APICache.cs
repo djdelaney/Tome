@@ -290,6 +290,21 @@ namespace Goodreads8.ViewModel.Cache
             m_shelfCache.Add(cache, data);
         }
 
+        public void InvalidateShelfContents(int userId, String shelf)
+        {
+            //Shelf
+            List<ShelfCache> shelfKeys = new List<ShelfCache>();
+            foreach (KeyValuePair<ShelfCache, ReviewSet> pair in m_shelfCache)
+            {
+                if (pair.Key.UserId == userId && pair.Key.Shelf == shelf)
+                    shelfKeys.Add(pair.Key);
+            }
+            foreach (ShelfCache key in shelfKeys)
+            {
+                m_shelfCache.Remove(key);
+            }
+        }
+
         /** -----------------------
          *
          *       Books
@@ -307,6 +322,12 @@ namespace Goodreads8.ViewModel.Cache
         public void StoreBook(int bookId, Book data)
         {
             m_bookCache.Add(bookId, new CacheEntry(data));
+        }
+
+        public void InvalidateBook(int bookId)
+        {
+            if (m_bookCache.ContainsKey(bookId))
+                m_bookCache.Remove(bookId);
         }
 
         /** -----------------------

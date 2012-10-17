@@ -41,7 +41,7 @@
             </Grid>
 
             <!-- Text Review -->
-            <TextBox Grid.Column="0" Grid.Row="2" Grid.ColumnSpan="2" Text="My review"  AcceptsReturn="True" Height="300" Margin="10" x:Name="body"/>
+            <TextBox Grid.Column="0" Grid.Row="2" Grid.ColumnSpan="2" Text=""  AcceptsReturn="True" Height="300" Margin="10" x:Name="body"/>
 
             <!-- Save -->
             <Button Grid.Column="0" Grid.Row="3" Grid.ColumnSpan="2" Content="Save" Height="75" FontSize="24" Margin="10" Width="780" x:Name="SaveButton" Click="SaveButton_Click" />

@@ -171,7 +171,7 @@ namespace Goodreads8
             if (model == null)
                 return;
 
-            if (model.MyReview.Id > 0)
+            if (model.MyReview.Id > 0 && model.MyReview.Shelves != null && model.MyReview.Shelves.Contains("read"))
                 this.Frame.Navigate(typeof(ViewReviewPage), model.MyReview.Id);
             else
             {

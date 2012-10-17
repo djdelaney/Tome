@@ -42,12 +42,12 @@
             </StackPanel>
 
             <!-- Progress Ring -->
-            <Grid Grid.Row="0" Grid.RowSpan="2" Grid.ColumnSpan="2" Visibility="Collapsed" x:Name="busyGrid">
+            <Grid Grid.Row="2" Grid.RowSpan="2" Grid.ColumnSpan="2" Visibility="Collapsed" x:Name="busyGrid">
                 <ProgressRing IsActive="False" HorizontalAlignment="Center" VerticalAlignment="Center" Height="150" Width="150" x:Name="busyRing"/>
             </Grid>
 
             <!-- Text Review -->
-            <TextBox Grid.Column="0" Grid.Row="3" Grid.ColumnSpan="2" Text="My status"  AcceptsReturn="True" Height="300" Margin="10" x:Name="StatusText"/>
+            <TextBox Grid.Column="0" Grid.Row="3" Grid.ColumnSpan="2" Text=""  AcceptsReturn="True" Height="300" Margin="10" x:Name="StatusText"/>
 
             <!-- Save -->
             <Button Grid.Column="0" Grid.Row="4" Grid.ColumnSpan="2" Content="Save" Height="75" FontSize="24" Margin="10" Width="780" x:Name="SaveButton" Click="SaveButton_Click" />

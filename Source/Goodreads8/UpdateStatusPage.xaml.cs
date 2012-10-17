@@ -146,10 +146,16 @@ namespace Goodreads8
                 return;
             }
 
+            this.busyGrid.Visibility = Windows.UI.Xaml.Visibility.Visible;
+            this.busyRing.IsActive = true;
+
             bool success = await api.PostStatusUpdate(m_book.Id,
                 StatusText.Text,
                 usePercent ? 0 : number,
                 usePercent ? number : 0);
+
+            this.busyGrid.Visibility = Windows.UI.Xaml.Visibility.Collapsed;
+            this.busyRing.IsActive = false;
 
             if (success)
                 Frame.GoBack();

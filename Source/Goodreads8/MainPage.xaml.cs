@@ -60,14 +60,14 @@ namespace Goodreads8
             GoodreadsAPI api = GoodreadsAPI.Instance;
             if (!api.IsConfigured())
             {
-                if (Windows.Storage.ApplicationData.Current.LocalSettings.Values.ContainsKey(m_keyToken) &&
-                    Windows.Storage.ApplicationData.Current.LocalSettings.Values.ContainsKey(m_keySecret) &&
-                    Windows.Storage.ApplicationData.Current.LocalSettings.Values.ContainsKey(m_keyID))
+                if (Windows.Storage.ApplicationData.Current.RoamingSettings.Values.ContainsKey(m_keyToken) &&
+                    Windows.Storage.ApplicationData.Current.RoamingSettings.Values.ContainsKey(m_keySecret) &&
+                    Windows.Storage.ApplicationData.Current.RoamingSettings.Values.ContainsKey(m_keyID))
                 {
                     //Load config
-                    String token = (string)Windows.Storage.ApplicationData.Current.LocalSettings.Values[m_keyToken];
-                    String secret = (string)Windows.Storage.ApplicationData.Current.LocalSettings.Values[m_keySecret];
-                    int UserId = (int)Windows.Storage.ApplicationData.Current.LocalSettings.Values[m_keyID];
+                    String token = (string)Windows.Storage.ApplicationData.Current.RoamingSettings.Values[m_keyToken];
+                    String secret = (string)Windows.Storage.ApplicationData.Current.RoamingSettings.Values[m_keySecret];
+                    int UserId = (int)Windows.Storage.ApplicationData.Current.RoamingSettings.Values[m_keyID];
                     api.ConfigureApi(token, secret, UserId);
                 }
                 else
@@ -159,9 +159,9 @@ namespace Goodreads8
                 id <= 0)
                 return false;
 
-            Windows.Storage.ApplicationData.Current.LocalSettings.Values[m_keyToken] = token;
-            Windows.Storage.ApplicationData.Current.LocalSettings.Values[m_keySecret] = secret;
-            Windows.Storage.ApplicationData.Current.LocalSettings.Values[m_keyID] = id;
+            Windows.Storage.ApplicationData.Current.RoamingSettings.Values[m_keyToken] = token;
+            Windows.Storage.ApplicationData.Current.RoamingSettings.Values[m_keySecret] = secret;
+            Windows.Storage.ApplicationData.Current.RoamingSettings.Values[m_keyID] = id;
 
             api.ConfigureApi(token, secret, id);
 
@@ -319,9 +319,9 @@ namespace Goodreads8
             Windows.Storage.ApplicationData.Current.LocalSettings.Values.Remove(m_updatesKey);
 
             //Flush stored credentials
-            Windows.Storage.ApplicationData.Current.LocalSettings.Values.Remove(m_keyToken);
-            Windows.Storage.ApplicationData.Current.LocalSettings.Values.Remove(m_keySecret);
-            Windows.Storage.ApplicationData.Current.LocalSettings.Values.Remove(m_keyID);
+            Windows.Storage.ApplicationData.Current.RoamingSettings.Values.Remove(m_keyToken);
+            Windows.Storage.ApplicationData.Current.RoamingSettings.Values.Remove(m_keySecret);
+            Windows.Storage.ApplicationData.Current.RoamingSettings.Values.Remove(m_keyID);
 
             //Try to reconfigure
             await ConfigureApp();

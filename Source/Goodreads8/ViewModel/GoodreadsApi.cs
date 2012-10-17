@@ -616,6 +616,8 @@ namespace Goodreads8.ViewModel
                 if (string.IsNullOrEmpty(response) || !response.Contains("<shelf>"))
                     return false;
 
+                m_cache.InvalidateShelfContents(AuthenticatedUserId, shelfName);
+                m_cache.InvalidateBook(bookId);
                 m_cache.InvalidateMyReview(AuthenticatedUserId, bookId);
                 return true;
             }
@@ -643,6 +645,8 @@ namespace Goodreads8.ViewModel
                 if (!response.Contains("removed") && !response.Contains("<shelf>"))
                     return false;
 
+                m_cache.InvalidateShelfContents(AuthenticatedUserId, shelfName);
+                m_cache.InvalidateBook(bookId);
                 m_cache.InvalidateMyReview(AuthenticatedUserId, bookId);
                 return true;
             }
@@ -794,7 +798,10 @@ namespace Goodreads8.ViewModel
                 StreamReader ResponseDataStream = new StreamReader(Response.GetResponseStream());
                 String response = ResponseDataStream.ReadToEnd();
                 if (response != null && response.Contains("review"))
+                {
+                    m_cache.InvalidateBook(bookId);
                     return true;
+                }
 
                 return false;
             }
