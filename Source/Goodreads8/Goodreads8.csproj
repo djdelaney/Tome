@@ -12,7 +12,8 @@
     <DefaultLanguage>en-US</DefaultLanguage>
     <FileAlignment>512</FileAlignment>
     <ProjectTypeGuids>{BC8A1FFA-BEE3-4634-8014-F334798102B3};{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}</ProjectTypeGuids>
-    <PackageCertificateKeyFile>Goodreads8_TemporaryKey.pfx</PackageCertificateKeyFile>
+    <PackageCertificateKeyFile>Goodreads8_StoreKey.pfx</PackageCertificateKeyFile>
+    <PackageCertificateThumbprint>476DE54324E841F8F03FE287826113646547D511</PackageCertificateThumbprint>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
     <PlatformTarget>AnyCPU</PlatformTarget>
@@ -222,6 +223,7 @@
     <AppxManifest Include="Package.appxmanifest">
       <SubType>Designer</SubType>
     </AppxManifest>
+    <None Include="Goodreads8_StoreKey.pfx" />
     <None Include="Goodreads8_TemporaryKey.pfx" />
     <None Include="packages.config" />
   </ItemGroup>
@@ -236,6 +238,7 @@
     <Content Include="Assets\SmallLogo.png" />
     <Content Include="Assets\SplashScreen.png" />
     <Content Include="Assets\StoreLogo.png" />
+    <None Include="Package.StoreAssociation.xml" />
     <Page Include="ComparePage.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
