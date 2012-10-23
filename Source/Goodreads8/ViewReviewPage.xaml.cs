@@ -52,6 +52,16 @@ namespace Goodreads8
         }
 
         /// <summary>
+        /// Leaving, unregister event handlers
+        /// </summary>
+        /// <param name="e"></param>
+        protected override void OnNavigatedFrom(NavigationEventArgs e)
+        {
+            Window.Current.SizeChanged -= WindowSizeChanged;
+            base.OnNavigatedFrom(e);
+        }
+
+        /// <summary>
         /// Invoked when this page is about to be displayed in a Frame.
         /// </summary>
         /// <param name="e">Event data that describes how this page was reached.  The Parameter
@@ -99,18 +109,22 @@ namespace Goodreads8
 
         private void More_Click(object sender, RoutedEventArgs e)
         {
-            this.Frame.Navigate(typeof(BookDetailPage), model.Book.Id);
+            if(model != null && model.Book.Id > 0)
+                this.Frame.Navigate(typeof(BookDetailPage), model.Book.Id);
         }
 
         private void Reviewer_Tapped(object sender, TappedRoutedEventArgs e)
         {
-            this.Frame.Navigate(typeof(UserPage), model.Reviewer.Id);
+            if (model != null && model.Reviewer.Id > 0)
+                this.Frame.Navigate(typeof(UserPage), model.Reviewer.Id);
         }
 
         private void Comment_Click(object sender, ItemClickEventArgs e)
         {
             Review.Comment c = e.ClickedItem as Review.Comment;
-            this.Frame.Navigate(typeof(UserPage), c.User.Id);
+
+            if(c != null && c.User != null && c.User.Id > 0)
+                this.Frame.Navigate(typeof(UserPage), c.User.Id);
         }
 
         private async void PostButton_Click(object sender, RoutedEventArgs e)

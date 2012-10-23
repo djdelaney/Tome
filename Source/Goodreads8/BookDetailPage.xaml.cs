@@ -99,17 +99,19 @@ namespace Goodreads8
 
         private void Review_Click(object sender, RoutedEventArgs e)
         {
-            this.Frame.Navigate(typeof(WriteReviewPage), new WriteReviewPage.Args(model.Id, 0, model.Title));
+            if (model != null && model.Id > 0)
+                this.Frame.Navigate(typeof(WriteReviewPage), new WriteReviewPage.Args(model.Id, 0, model.Title));
         }
 
         private void Status_Click(object sender, RoutedEventArgs e)
         {
-            this.Frame.Navigate(typeof(UpdateStatusPage), model.Id);
+            if (model != null && model.Id > 0)
+                this.Frame.Navigate(typeof(UpdateStatusPage), model.Id);
         }
 
         private async void Author_Click(object sender, RoutedEventArgs e)
         {
-            if (model.Authors == null)
+            if (model == null || model.Authors == null)
                 return;
 
             if (model.Authors.Count == 1)
@@ -143,7 +145,7 @@ namespace Goodreads8
 
         private void Shelf_Click(object sender, RoutedEventArgs e)
         {
-            if(model != null)
+            if(model != null && model.Id > 0)
                 this.Frame.Navigate(typeof(ManageShelvesPage), model.Id);
         }
 

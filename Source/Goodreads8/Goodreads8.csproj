@@ -103,7 +103,7 @@
   </PropertyGroup>
   <ItemGroup>
     <!-- A reference to the entire .Net Framework and Windows SDK are automatically included -->
-    <SDKReference Include="Callisto, Version=1.2.3">
+    <SDKReference Include="Callisto, Version=1.2.4">
       <Name>Callisto</Name>
     </SDKReference>
     <SDKReference Include="MSAdvertisingXaml, Version=6.1">

@@ -144,7 +144,8 @@ namespace Goodreads8
 
         private void Compare_Tapped(object sender, TappedRoutedEventArgs e)
         {
-            this.Frame.Navigate(typeof(ComparePage), model.Id);
+            if (model != null && model.Id > 0)
+                this.Frame.Navigate(typeof(ComparePage), model.Id);
         }
     }
 }

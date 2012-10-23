@@ -23,6 +23,7 @@ using Chq.OAuth;
 using Chq.OAuth.Credentials;
 using System.Threading.Tasks;
 using Microsoft.Advertising.WinRT.UI;
+using Windows.UI.ApplicationSettings;
 
 // The Blank Page item template is documented at http://go.microsoft.com/fwlink/?LinkId=234238
 
@@ -52,6 +53,7 @@ namespace Goodreads8
         protected override async void OnNavigatedTo(NavigationEventArgs e)
         {
             base.OnNavigatedTo(e);
+            SettingsPane.GetForCurrentView().CommandsRequested += MainPage_CommandsRequested;
             await ConfigureApp();
         }
 
@@ -200,14 +202,6 @@ namespace Goodreads8
             this.Frame.Navigate(typeof(SearchPage));
         }
 
-        private void Scan_Click(object sender, RoutedEventArgs e)
-        {
-            this.Frame.Navigate(typeof(ViewStatusPage), 18330707);
-            //GoodreadsAPI api = GoodreadsAPI.Instance;
-            //api.PostComment(422858193, GoodreadsAPI.CommentType.review, "comment1");
-            //api.PostStatusUpdate(3642452, "body", 161, 0);
-        }
-
         private void Update_Click(object sender, ItemClickEventArgs e)
         {
             Update u = e.ClickedItem as Update;
@@ -325,6 +319,24 @@ namespace Goodreads8
 
             //Try to reconfigure
             await ConfigureApp();
+        }
+
+        //Privacy Policy crap
+        private void MainPage_CommandsRequested(SettingsPane sender, SettingsPaneCommandsRequestedEventArgs args)
+        {
+            var cmd = new SettingsCommand("PrivacyPolicy", "Privacy Policy", new Windows.UI.Popups.UICommandInvokedHandler(x =>
+            {
+                ShowSettingPanel();
+            }));
+
+            args.Request.ApplicationCommands.Clear();
+            args.Request.ApplicationCommands.Add(cmd);
+        }
+
+        private void ShowSettingPanel()
+        {
+            Uri uri = new Uri("http://hactar.com/GoodreadsRTPrivacy.html");
+            Windows.System.Launcher.LaunchUriAsync(uri);
         }
     }
 }

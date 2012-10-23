@@ -44,6 +44,16 @@ namespace Goodreads8
             }
         }
 
+        /// <summary>
+        /// Leaving, unregister event handlers
+        /// </summary>
+        /// <param name="e"></param>
+        protected override void OnNavigatedFrom(NavigationEventArgs e)
+        {
+            Window.Current.SizeChanged -= WindowSizeChanged;
+            base.OnNavigatedFrom(e);
+        }
+
         Review myReview = null;
         Profile me = null;
         int ReviewingBookId = 0;

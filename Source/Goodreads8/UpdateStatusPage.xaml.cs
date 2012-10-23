@@ -45,6 +45,16 @@ namespace Goodreads8
         }
 
         /// <summary>
+        /// Leaving, unregister event handlers
+        /// </summary>
+        /// <param name="e"></param>
+        protected override void OnNavigatedFrom(NavigationEventArgs e)
+        {
+            Window.Current.SizeChanged -= WindowSizeChanged;
+            base.OnNavigatedFrom(e);
+        }
+
+        /// <summary>
         /// Invoked as an event handler to navigate backward in the navigation stack
         /// associated with this page's <see cref="Frame"/>.
         /// </summary>
