@@ -36,7 +36,7 @@
 
         <!--Shelf Template-->
         <DataTemplate x:Key="ShelfTemplate">
-            <Grid Width="248" Height="120" Background="{Binding BG}" Margin="10" HorizontalAlignment="Center">
+            <Grid Width="310" Height="150" Background="{Binding BG}" Margin="1" HorizontalAlignment="Center">
                 <Grid.RowDefinitions>
                     <RowDefinition Height="40"/>
                     <RowDefinition Height="*"/>
@@ -48,7 +48,7 @@
                 <TextBlock
                         Grid.Row="2"
                         Margin="10,0,0,10"
-                        Text="{Binding Name}" HorizontalAlignment="Left" Foreground="#FF0F0101" FontSize="18" VerticalAlignment="Bottom" FontFamily="Segoe UI"  />
+                        Text="{Binding Name}" HorizontalAlignment="Left" Foreground="#FF0F0101" FontSize="20" VerticalAlignment="Bottom" FontFamily="Segoe UI"  />
             </Grid>
         </DataTemplate>
         <!--Snapped Shelf Template-->
@@ -59,7 +59,7 @@
                     <ColumnDefinition Width="248"/>
                     <ColumnDefinition Width="*"/>
                 </Grid.ColumnDefinitions>
-                <Grid Height="120" Background="{Binding BG}" Grid.Column="1" Margin="0,12,0,12">
+                <Grid Height="120" Background="{Binding BG}" Grid.Column="1" Margin="0,6,0,6">
                     <Grid.RowDefinitions>
                         <RowDefinition Height="40"/>
                         <RowDefinition Height="*"/>
@@ -117,7 +117,7 @@
                 </Grid>
 
                 <!-- Shelves -->
-                <Grid Margin="60,0,0,0">
+                <Grid Margin="40,0,0,0">
                     <Grid.RowDefinitions>
                         <RowDefinition Height="Auto"/>
                         <RowDefinition Height="*"/>
@@ -125,7 +125,7 @@
 
                     <TextBlock Text="Shelves" IsHitTestVisible="false" Style="{StaticResource SubSectionHeader}" Margin="20,0,0,20" Grid.Row="0"/>
                     <ListView
-                            Width="305"
+                            MinWidth="350"
                             Grid.Row="1"
                             Padding="10"
                             IsItemClickEnabled="True"
@@ -136,7 +136,7 @@
                 </Grid>
 
                 <!-- Extras -->
-                <Grid Margin="80,0,0,0">
+                <Grid Margin="40,0,0,0">
                     <Grid.RowDefinitions>
                         <RowDefinition Height="Auto"/>
                         <RowDefinition Height="*"/>
@@ -176,7 +176,7 @@
 
 
                 <!-- Ads -->
-                <Grid Margin="80,0,0,0">
+                <Grid Margin="60,0,0,0">
                     <Grid.RowDefinitions>
                         <RowDefinition Height="Auto"/>
                         <RowDefinition Height="*"/>
@@ -224,9 +224,9 @@
                 <!-- Extras -->
                 <TextBlock Text="Extras" IsHitTestVisible="false" Style="{StaticResource SubSectionHeader}" Margin="20,10,0,0"/>
 
-                <Button HorizontalAlignment="Center" Style="{StaticResource FriendButtonStyle}" Margin="0,7,0,0" Click="Friend_Click"/>
-                <Button HorizontalAlignment="Center" Style="{StaticResource GroupButtonStyle}" Margin="0,4,0,0" Click="Group_Click"/>
-                <Button HorizontalAlignment="Center" Style="{StaticResource SearchButtonStyle}" Margin="0,4,0,0" Click="Search_Click"/>
+                <Button HorizontalAlignment="Center" Style="{StaticResource SmallFriendButtonStyle}" Margin="0,7,0,0" Click="Friend_Click"/>
+                <Button HorizontalAlignment="Center" Style="{StaticResource SmallGroupButtonStyle}" Margin="0,4,0,0" Click="Group_Click"/>
+                <Button HorizontalAlignment="Center" Style="{StaticResource SmallSearchButtonStyle}" Margin="0,4,0,0" Click="Search_Click"/>
 
             </StackPanel>
         </ScrollViewer>

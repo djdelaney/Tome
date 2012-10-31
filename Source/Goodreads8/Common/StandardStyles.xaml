@@ -2006,6 +2006,170 @@
     </Style>
     
 
+    <Style x:Key="SmallGroupButtonStyle" TargetType="Button">
+        <Setter Property="Template">
+            <Setter.Value>
+                <ControlTemplate TargetType="Button">
+                    <Grid>
+                        <VisualStateManager.VisualStateGroups>
+                            <VisualStateGroup x:Name="CommonStates">
+                                <VisualState x:Name="Normal"/>
+                                <VisualState x:Name="PointerOver">
+                                    <Storyboard>
+                                        <ColorAnimationUsingKeyFrames BeginTime="00:00:00" 
+                                            Duration="00:00:00.0010000" Storyboard.TargetName="border" 
+                                            Storyboard.TargetProperty="(Border.BorderBrush).(SolidColorBrush.Color)">
+                                            <SplineColorKeyFrame KeyTime="00:00:00" Value="#49FFFFFF"/>
+                                        </ColorAnimationUsingKeyFrames>
+                                    </Storyboard>
+                                </VisualState>
+                                <VisualState x:Name="Pressed">
+                                    <Storyboard>
+                                        <Storyboard>
+                                            <PointerDownThemeAnimation TargetName="border"/>
+                                        </Storyboard>
+                                    </Storyboard>
+                                </VisualState>
+                                <VisualState x:Name="Disabled">
+                                    <Storyboard/>
+                                </VisualState>
+                            </VisualStateGroup>
+                            <VisualStateGroup x:Name="FocusStates">
+                                <VisualState x:Name="Focused">
+                                    <Storyboard/>
+                                </VisualState>
+                                <VisualState x:Name="Unfocused"/>
+                            </VisualStateGroup>
+                        </VisualStateManager.VisualStateGroups>
+                        <Border BorderBrush="#00000000" BorderThickness="6,6,6,6" x:Name="border" >
+                            <Grid Width="248" Height="120" Background="#926339"  VerticalAlignment="Top">
+                                <Grid.ColumnDefinitions>
+                                    <ColumnDefinition Width="80"/>
+                                    <ColumnDefinition Width="*"/>
+                                    <ColumnDefinition Width="80"/>
+                                </Grid.ColumnDefinitions>
+                                <TextBlock Text="&#xE205;" Grid.Column="1"  HorizontalAlignment="Center" Foreground="#FF0F0101" FontSize="48" FontFamily="Segoe UI Symbol" VerticalAlignment="Center" />
+                                <TextBlock
+                                Margin="10,0,0,10"
+                                Text="Groups" HorizontalAlignment="Left" Foreground="#FF0F0101" FontSize="18" VerticalAlignment="Bottom" FontFamily="Segoe UI" />
+                            </Grid>
+                        </Border>
+                    </Grid>
+                </ControlTemplate>
+            </Setter.Value>
+        </Setter>
+    </Style>
+
+    <Style x:Key="SmallFriendButtonStyle" TargetType="Button">
+        <Setter Property="Template">
+            <Setter.Value>
+                <ControlTemplate TargetType="Button">
+                    <Grid>
+                        <VisualStateManager.VisualStateGroups>
+                            <VisualStateGroup x:Name="CommonStates">
+                                <VisualState x:Name="Normal"/>
+                                <VisualState x:Name="PointerOver">
+                                    <Storyboard>
+                                        <ColorAnimationUsingKeyFrames BeginTime="00:00:00" 
+                                            Duration="00:00:00.0010000" Storyboard.TargetName="border" 
+                                            Storyboard.TargetProperty="(Border.BorderBrush).(SolidColorBrush.Color)">
+                                            <SplineColorKeyFrame KeyTime="00:00:00" Value="#49FFFFFF"/>
+                                        </ColorAnimationUsingKeyFrames>
+                                    </Storyboard>
+                                </VisualState>
+                                <VisualState x:Name="Pressed">
+                                    <Storyboard>
+                                        <Storyboard>
+                                            <PointerDownThemeAnimation TargetName="border"/>
+                                        </Storyboard>
+                                    </Storyboard>
+                                </VisualState>
+                                <VisualState x:Name="Disabled">
+                                    <Storyboard/>
+                                </VisualState>
+                            </VisualStateGroup>
+                            <VisualStateGroup x:Name="FocusStates">
+                                <VisualState x:Name="Focused">
+                                    <Storyboard/>
+                                </VisualState>
+                                <VisualState x:Name="Unfocused"/>
+                            </VisualStateGroup>
+                        </VisualStateManager.VisualStateGroups>
+                        <Border BorderBrush="#00000000" BorderThickness="6,6,6,6" x:Name="border" >
+                            <Grid Width="248" Height="120" Background="#8d3992"  VerticalAlignment="Top">
+                                <Grid.ColumnDefinitions>
+                                    <ColumnDefinition Width="80"/>
+                                    <ColumnDefinition Width="*"/>
+                                    <ColumnDefinition Width="80"/>
+                                </Grid.ColumnDefinitions>
+                                <TextBlock Text="&#xE1E2;" Grid.Column="1"  HorizontalAlignment="Center" Foreground="#FF0F0101" FontSize="48" FontFamily="Segoe UI Symbol" VerticalAlignment="Center" />
+                                <TextBlock
+                                Margin="10,0,0,10"
+                                Text="Friends" HorizontalAlignment="Left" Foreground="#FF0F0101" FontSize="18" VerticalAlignment="Bottom" FontFamily="Segoe UI" />
+                            </Grid>
+                        </Border>
+                    </Grid>
+                </ControlTemplate>
+            </Setter.Value>
+        </Setter>
+    </Style>
+
+    <Style x:Key="SmallSearchButtonStyle" TargetType="Button">
+        <Setter Property="Template">
+            <Setter.Value>
+                <ControlTemplate TargetType="Button">
+                    <Grid>
+                        <VisualStateManager.VisualStateGroups>
+                            <VisualStateGroup x:Name="CommonStates">
+                                <VisualState x:Name="Normal"/>
+                                <VisualState x:Name="PointerOver">
+                                    <Storyboard>
+                                        <ColorAnimationUsingKeyFrames BeginTime="00:00:00" 
+                                            Duration="00:00:00.0010000" Storyboard.TargetName="border" 
+                                            Storyboard.TargetProperty="(Border.BorderBrush).(SolidColorBrush.Color)">
+                                            <SplineColorKeyFrame KeyTime="00:00:00" Value="#49FFFFFF"/>
+                                        </ColorAnimationUsingKeyFrames>
+                                    </Storyboard>
+                                </VisualState>
+                                <VisualState x:Name="Pressed">
+                                    <Storyboard>
+                                        <Storyboard>
+                                            <PointerDownThemeAnimation TargetName="border"/>
+                                        </Storyboard>
+                                    </Storyboard>
+                                </VisualState>
+                                <VisualState x:Name="Disabled">
+                                    <Storyboard/>
+                                </VisualState>
+                            </VisualStateGroup>
+                            <VisualStateGroup x:Name="FocusStates">
+                                <VisualState x:Name="Focused">
+                                    <Storyboard/>
+                                </VisualState>
+                                <VisualState x:Name="Unfocused"/>
+                            </VisualStateGroup>
+                        </VisualStateManager.VisualStateGroups>
+                        <Border BorderBrush="#00000000" BorderThickness="6,6,6,6" x:Name="border" >
+                            <Grid Width="248" Height="120" Background="#549239"  VerticalAlignment="Top">
+                                <Grid.ColumnDefinitions>
+                                    <ColumnDefinition Width="80"/>
+                                    <ColumnDefinition Width="*"/>
+                                    <ColumnDefinition Width="80"/>
+                                </Grid.ColumnDefinitions>
+                                <TextBlock Text="&#xE1A3;" Grid.Column="1"  HorizontalAlignment="Center" Foreground="#FF0F0101" FontSize="48" FontFamily="Segoe UI Symbol" VerticalAlignment="Center" />
+                                <TextBlock
+                                Margin="10,0,0,10"
+                                Text="Search" HorizontalAlignment="Left" Foreground="#FF0F0101" FontSize="18" VerticalAlignment="Bottom" FontFamily="Segoe UI" />
+                            </Grid>
+                        </Border>
+                    </Grid>
+                </ControlTemplate>
+            </Setter.Value>
+        </Setter>
+    </Style>
+    
+    <!-- Large tiles -->
+
     <Style x:Key="GroupButtonStyle" TargetType="Button">
         <Setter Property="Template">
             <Setter.Value>
@@ -2041,8 +2205,8 @@
                                 <VisualState x:Name="Unfocused"/>
                             </VisualStateGroup>
                         </VisualStateManager.VisualStateGroups>
-                        <Border BorderBrush="#00000000" BorderThickness="12,13,12,13" x:Name="border" >
-                            <Grid Width="248" Height="120" Background="#926339"  VerticalAlignment="Top">
+                        <Border BorderBrush="#00000000" BorderThickness="4" x:Name="border" >
+                            <Grid Width="310" Height="150" Background="#926339"  VerticalAlignment="Top">
                                 <Grid.ColumnDefinitions>
                                     <ColumnDefinition Width="80"/>
                                     <ColumnDefinition Width="*"/>
@@ -2095,8 +2259,8 @@
                                 <VisualState x:Name="Unfocused"/>
                             </VisualStateGroup>
                         </VisualStateManager.VisualStateGroups>
-                        <Border BorderBrush="#00000000" BorderThickness="12,13,12,13" x:Name="border" >
-                            <Grid Width="248" Height="120" Background="#8d3992"  VerticalAlignment="Top">
+                        <Border BorderBrush="#00000000" BorderThickness="4" x:Name="border" >
+                            <Grid Width="310" Height="150" Background="#8d3992"  VerticalAlignment="Top">
                                 <Grid.ColumnDefinitions>
                                     <ColumnDefinition Width="80"/>
                                     <ColumnDefinition Width="*"/>
@@ -2149,8 +2313,8 @@
                                 <VisualState x:Name="Unfocused"/>
                             </VisualStateGroup>
                         </VisualStateManager.VisualStateGroups>
-                        <Border BorderBrush="#00000000" BorderThickness="12,13,12,13" x:Name="border" >
-                            <Grid Width="248" Height="120" Background="#549239"  VerticalAlignment="Top">
+                        <Border BorderBrush="#00000000" BorderThickness="4" x:Name="border" >
+                            <Grid Width="310" Height="150" Background="#549239"  VerticalAlignment="Top">
                                 <Grid.ColumnDefinitions>
                                     <ColumnDefinition Width="80"/>
                                     <ColumnDefinition Width="*"/>
@@ -2167,6 +2331,7 @@
             </Setter.Value>
         </Setter>
     </Style>
+
 
 
     <Style x:Key="TextHoverStyle" TargetType="Button">

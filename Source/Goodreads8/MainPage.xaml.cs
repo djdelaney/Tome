@@ -74,7 +74,7 @@ namespace Goodreads8
                 }
                 else
                 {
-                    MessageDialog dialog = new MessageDialog("To use Goodreads RT you must first login to you must first login to your Goodreads account");
+                    MessageDialog dialog = new MessageDialog("To use Goodreads RT you must first login to your Goodreads account\n\nFacebook login is not supported due to authentication issues. Please use your Goodreads username and password to login.");
                     UICommandInvokedHandler cmdHandler = new UICommandInvokedHandler(cmd =>
                     {
                         Debug.WriteLine("id:{0} label:{1}", cmd.Id, cmd.Label);

@@ -153,7 +153,6 @@ namespace Goodreads8.ViewModel
 
                 String response = await m_client.MakeRequest("GET")
                         .ForResource(m_client.AccessToken.Token, new Uri("http://www.goodreads.com/updates/friends.xml"))
-                        .WithCompression()
                         .Sign(m_client.AccessToken.Secret)
                         .ExecuteRequest();
 
@@ -182,7 +181,6 @@ namespace Goodreads8.ViewModel
                 String response = await m_client.MakeRequest("GET")
                       .ForResource(m_client.AccessToken.Token, new Uri(requestUrl))
                       .WithParameters(new { key = m_consumerKey }) //it's important to add the prameters after the resource, internal paramerters reset on ForResource calls
-                      .WithCompression()
                       .Sign(m_client.AccessToken.Secret)
                       .ExecuteRequest();
 
