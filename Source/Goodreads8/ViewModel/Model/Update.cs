@@ -24,9 +24,21 @@ namespace Goodreads8.ViewModel.Model
         {
             get
             {
+                String update = UserName + "\n";
                 if (Type == Actions.userstatus || Type == Actions.userquote)
-                    return Body;
-                return Text;
+                    return update + Body;
+                return update + Text;
+            }
+        }
+
+        public String UserName
+        {
+            get
+            {
+                if (User == null || User.Name == null)
+                    return "Unknown User";
+
+                return User.Name;
             }
         }
 

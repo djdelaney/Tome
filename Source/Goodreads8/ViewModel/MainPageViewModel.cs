@@ -78,7 +78,8 @@ namespace Goodreads8.ViewModel
                 List<Update> updateList = await api.GetUpdates();
                 foreach (Update u in updateList)
                 {
-                    Updates.Add(u);
+                    if(Updates.Count < 10)
+                        Updates.Add(u);
                 }
 
                 //Update tiles

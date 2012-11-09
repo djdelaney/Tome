@@ -22,16 +22,20 @@
         </Style>
 
         <!--Updates Template-->
-        <DataTemplate x:Key="UpdateTemplate">
-            <StackPanel Orientation="Horizontal" HorizontalAlignment="Left">
-                <Image Source="{Binding ImageUrl}" Height="80" Width="50" VerticalAlignment="Top" Stretch="UniformToFill" />
-                <StackPanel Orientation="Vertical" HorizontalAlignment="Left" Margin="20,0,0,30" VerticalAlignment="Center" Width="400">
-                    <!-- Book title-->
-                    <TextBlock Text="{Binding UserText}" TextTrimming="WordEllipsis" HorizontalAlignment="Left" Foreground="White" FontSize="18" />
-                    <!-- Published-->
-                    <TextBlock TextWrapping="Wrap" Text="{Binding UpdateText}" FontSize="18"/>
-                </StackPanel>
-            </StackPanel>
+        <DataTemplate x:Key="UpdateTile">
+            <Grid Width="330" Height="150" Background="#BEF5F5DC" Margin="1">
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="Auto"/>
+                </Grid.RowDefinitions>
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="Auto"/>
+                    <ColumnDefinition Width="*"/>
+                </Grid.ColumnDefinitions>
+
+                <Image Source="{Binding ImageUrl}" Height="130" Width="90" VerticalAlignment="Center" Stretch="UniformToFill" Margin="10" HorizontalAlignment="Left" />
+
+                <TextBlock Grid.Column="1" Padding="10" Height="130" VerticalAlignment="Top" HorizontalAlignment="Left" Foreground="Black" TextWrapping="Wrap" Text="{Binding UpdateText}" FontSize="18"/>
+            </Grid>
         </DataTemplate>
 
         <!--Shelf Template-->
@@ -104,12 +108,12 @@
                     </Grid.RowDefinitions>
 
                     <TextBlock Text="Updates" IsHitTestVisible="false" Style="{StaticResource SubSectionHeader}" Margin="15,0,0,20" Grid.Row="0"/>
-                    <ListView
-                            Margin="0,10,0,0"
-                            Width="520"
+                    <GridView
+                            Margin="0,0,0,0"
+                            MinWidth="520"
                             Grid.Row="1"
                             Padding="10"
-                            ItemTemplate="{StaticResource UpdateTemplate}"
+                            ItemTemplate="{StaticResource UpdateTile}"
                             ItemsSource="{Binding Updates}"
                             SelectionMode="None"
                             IsItemClickEnabled="True"
@@ -136,7 +140,7 @@
                 </Grid>
 
                 <!-- Extras -->
-                <Grid Margin="40,0,0,0">
+                <Grid Margin="25,0,0,0">
                     <Grid.RowDefinitions>
                         <RowDefinition Height="Auto"/>
                         <RowDefinition Height="*"/>
