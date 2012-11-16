@@ -1,8 +1,8 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <Package xmlns="http://schemas.microsoft.com/appx/2010/manifest">
-  <Identity Name="29672HactarSoftware.GoodreadsRT" Publisher="CN=83265F06-86A2-4BCA-8797-9790954637C7" Version="1.1.0.2" />
+  <Identity Name="29672HactarSoftware.Tome" Publisher="CN=83265F06-86A2-4BCA-8797-9790954637C7" Version="1.1.0.2" />
   <Properties>
-    <DisplayName>Goodreads RT</DisplayName>
+    <DisplayName>Tome</DisplayName>
     <PublisherDisplayName>Hactar Software</PublisherDisplayName>
     <Logo>Assets\StoreLogo.png</Logo>
   </Properties>

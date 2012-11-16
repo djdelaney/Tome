@@ -350,16 +350,13 @@
     <Language Code="zu-za" InMinimumRequirementSet="false" />
   </SupportedLocales>
   <ProductReservedInfo>
-    <MainPackageIdentityName>29672HactarSoftware.GoodreadsRT</MainPackageIdentityName>
+    <MainPackageIdentityName>29672HactarSoftware.Tome</MainPackageIdentityName>
     <ReservedNames>
-      <ReservedName>Goodreads RT</ReservedName>
+      <ReservedName>Tome</ReservedName>
     </ReservedNames>
   </ProductReservedInfo>
-  <AccountPackageIdentityNames />
-  <PackageInfoList LandingUrl="https://appdev.microsoft.com:443/StorePortals/Developer/Catalog/ReleaseAnchor/021bf155-dcf1-4755-a1b5-9ffa1ead9a90">
-    <PackageInfo>
-      <PackageArchitecture>neutral</PackageArchitecture>
-      <PackageMaxArchitectureVersion>1.0.0.1</PackageMaxArchitectureVersion>
-    </PackageInfo>
-  </PackageInfoList>
+  <AccountPackageIdentityNames>
+    <MainPackageIdentityName>29672HactarSoftware.GoodreadsRT</MainPackageIdentityName>
+  </AccountPackageIdentityNames>
+  <PackageInfoList LandingUrl="https://appdev.microsoft.com:443/StorePortals/Developer/Catalog/ReleaseAnchor/8194c239-dfde-4c89-be7a-a89bae59a33a" />
 </StoreAssociation>
