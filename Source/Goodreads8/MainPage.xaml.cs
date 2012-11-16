@@ -74,7 +74,7 @@ namespace Goodreads8
                 }
                 else
                 {
-                    MessageDialog dialog = new MessageDialog("To use Tome you must first login to your Goodreads account\n\n*Facebook login is not supported due to Windows authentication issues*");
+                    MessageDialog dialog = new MessageDialog("To use Tome you must first login to your Goodreads account.");
                     UICommandInvokedHandler cmdHandler = new UICommandInvokedHandler(cmd =>
                     {
                         Debug.WriteLine("id:{0} label:{1}", cmd.Id, cmd.Label);
@@ -335,7 +335,7 @@ namespace Goodreads8
 
         private void ShowSettingPanel()
         {
-            Uri uri = new Uri("http://hactar.com/GoodreadsRTPrivacy.html");
+            Uri uri = new Uri("http://hactar.com/TomePrivacy.html");
             Windows.System.Launcher.LaunchUriAsync(uri);
         }
     }
