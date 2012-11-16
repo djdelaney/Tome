@@ -59,8 +59,8 @@
                     
                     <UI:AdControl
                         Grid.Row="1"
-                        ApplicationId="5b00da83-377e-41bf-8d28-ea61dea08c60"
-                        AdUnitId="10047013"
+                        ApplicationId="4c654b98-4756-4015-b8f0-3ed095a482f3"
+                        AdUnitId="10049908"
                         Height="250"
                         Margin="0,50,0,0"
                         Width="250"/>

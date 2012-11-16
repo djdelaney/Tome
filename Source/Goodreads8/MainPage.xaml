@@ -90,7 +90,7 @@
             <RowDefinition Height="*"/>
         </Grid.RowDefinitions>
 
-        <TextBlock x:Name="pageTitle" Text="Goodreads" IsHitTestVisible="false" Style="{StaticResource PageHeaderTextStyle}" Margin="40"/>
+        <TextBlock x:Name="pageTitle" Text="Tome for Goodreads" IsHitTestVisible="false" Style="{StaticResource PageHeaderTextStyle}" Margin="40"/>
 
 		<!-- Progress Ring -->
         <Grid Grid.RowSpan="2" Visibility="{Binding Path=IsLoading, Converter={StaticResource BooleanToVisibilityConverter}}">
@@ -128,7 +128,7 @@
                     </Grid.RowDefinitions>
 
                     <TextBlock Text="Shelves" IsHitTestVisible="false" Style="{StaticResource SubSectionHeader}" Margin="20,0,0,20" Grid.Row="0"/>
-                    <ListView
+                    <GridView
                             MinWidth="350"
                             Grid.Row="1"
                             Padding="10"
@@ -146,7 +146,7 @@
                         <RowDefinition Height="*"/>
                     </Grid.RowDefinitions>
 
-                    
+
 
                     <TextBlock Text="Extras" IsHitTestVisible="false" Style="{StaticResource SubSectionHeader}" Margin="0,0,0,20" Grid.Row="0"/>
 
@@ -180,7 +180,7 @@
 
 
                 <!-- Ads -->
-                <Grid Margin="60,0,0,0">
+                <Grid Margin="60,0,60,0">
                     <Grid.RowDefinitions>
                         <RowDefinition Height="Auto"/>
                         <RowDefinition Height="*"/>
@@ -190,8 +190,8 @@
 
                     <UI:AdControl
                         Grid.Row="1"
-                        ApplicationId="5b00da83-377e-41bf-8d28-ea61dea08c60"
-                        AdUnitId="10047014"
+                        ApplicationId="4c654b98-4756-4015-b8f0-3ed095a482f3"
+                        AdUnitId="10049904"
                         HorizontalAlignment="Left"
                         Height="600"
                         Margin="0,0,0,0"
@@ -218,8 +218,8 @@
                     ItemTemplate="{StaticResource SnappedShelfTemplate}"/>
 
                 <UI:AdControl
-                        ApplicationId="5b00da83-377e-41bf-8d28-ea61dea08c60"
-                        AdUnitId="10047092"
+                        ApplicationId="4c654b98-4756-4015-b8f0-3ed095a482f3"
+                        AdUnitId="10049907"
                         HorizontalAlignment="Center"
                         Height="125"
                         Margin="0,10,0,20"

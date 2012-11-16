@@ -15,7 +15,7 @@
   </Resources>
   <Applications>
     <Application Id="App" Executable="$targetnametoken$.exe" EntryPoint="Goodreads8.App">
-      <VisualElements DisplayName="Goodreads RT" Logo="Assets\Logo.png" SmallLogo="Assets\SmallLogo.png" Description="Goodreads RT is a fully featured client for the social book website Goodreads.com" ForegroundText="light" BackgroundColor="#bd1e1e" ToastCapable="true">
+      <VisualElements DisplayName="Tome" Logo="Assets\Logo.png" SmallLogo="Assets\SmallLogo.png" Description="Tome is a fully featured client for the social book website Goodreads.com" ForegroundText="light" BackgroundColor="#bd1e1e" ToastCapable="true">
         <DefaultTile ShowName="noLogos" WideLogo="Assets\LogoLarge.png" />
         <SplashScreen Image="Assets\SplashScreen.png" BackgroundColor="#bd1e1e" />
         <InitialRotationPreference>
