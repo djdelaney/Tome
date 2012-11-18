@@ -194,7 +194,7 @@
                         AdUnitId="10049904"
                         HorizontalAlignment="Left"
                         Height="600"
-                        Margin="0,0,0,0"
+                        Margin="0,15,0,0"
                         VerticalAlignment="Top"
                         Width="160"/>
                 </Grid>
