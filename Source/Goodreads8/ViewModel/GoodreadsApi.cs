@@ -150,7 +150,6 @@ namespace Goodreads8.ViewModel
                 if (cached != null)
                     return cached;
 
-
                 String response = await m_client.MakeRequest("GET")
                         .ForResource(m_client.AccessToken.Token, new Uri("http://www.goodreads.com/updates/friends.xml"))
                         .Sign(m_client.AccessToken.Secret)

@@ -76,10 +76,13 @@ namespace Goodreads8.ViewModel
                 Updates = new ObservableCollection<Update>();
                 GoodreadsAPI api = GoodreadsAPI.Instance;
                 List<Update> updateList = await api.GetUpdates();
-                foreach (Update u in updateList)
+                if (updateList != null)
                 {
-                    if(Updates.Count < 10)
-                        Updates.Add(u);
+                    foreach (Update u in updateList)
+                    {
+                        if (Updates.Count < 10)
+                            Updates.Add(u);
+                    }
                 }
 
                 //Update tiles
