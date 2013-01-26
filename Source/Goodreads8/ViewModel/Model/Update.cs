@@ -8,7 +8,7 @@ namespace Goodreads8.ViewModel.Model
 {
     public class Update
     {
-        public enum Actions { review, userstatus, comment, rating, other, eventresponse, userquote, userlistvote }
+        public enum Actions { review, userstatus, comment, rating, other, eventresponse, userquote, userlistvote, quizscore, unknown }
 
         public Actions Type { get; set; }
         public String Text { get; set; }

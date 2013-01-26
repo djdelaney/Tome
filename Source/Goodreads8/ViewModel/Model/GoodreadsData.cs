@@ -111,6 +111,28 @@ namespace Goodreads8.ViewModel.Model
             return DateTime.ParseExact(value, "ddd MMM d HH:mm:ss zzzz yyyy", provider);
         }
 
+        public static DateTime ParseCreatedAtDate(String value)
+        {
+            if (value == null || value.Length == 0)
+                return DateTime.MinValue;
+
+            CultureInfo provider = CultureInfo.InvariantCulture;
+
+            //2013-01-24 T10:09:44-08:00
+            return DateTime.ParseExact(value, "yyyy-MM-dd\\THH:mm:sszzz", provider);
+        }
+
+        public static Update.Actions ParseUpdateType(String value)
+        {
+            try
+            {
+                return (Update.Actions)Enum.Parse(typeof(Update.Actions), value, true);
+            }
+            catch (Exception e)
+            {
+                return Update.Actions.unknown;
+            }
+        }
 
         public static ReviewSet ParseShelf(String input)
         {
@@ -421,7 +443,7 @@ namespace Goodreads8.ViewModel.Model
             List<Update> updates = (from u in doc.Elements("GoodreadsResponse").Elements("updates").Elements("update")
                                     select new Update
                                     {
-                                        Type = (Update.Actions)Enum.Parse(typeof(Update.Actions), (string)u.Attribute("type"), true),
+                                        Type = ParseUpdateType((string)u.Attribute("type")),
                                         Text = HtmlUtilities.ConvertToText((string)u.Element("action_text")),
                                         Body = (string)u.Elements("body").FirstOrDefault(),
                                         Link = (string)u.Element("link"),
@@ -710,7 +732,7 @@ namespace Goodreads8.ViewModel.Model
                                  Id = Convert.ToInt32((string)s.Element("id")),
                                  Header = HtmlUtilities.ConvertToText((string)s.Element("header")),
                                  Body = HtmlUtilities.ConvertToText((string)s.Element("body")),
-                                 CreatedAt = ParseGRDate((string)s.Element("created_at")),
+                                 CreatedAt = ParseCreatedAtDate((string)s.Element("created_at")),
                                  LikeCount = Convert.ToInt32((string)s.Element("likes_count")),
 
                                  User = new Profile()
