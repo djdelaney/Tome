@@ -81,18 +81,11 @@ namespace Goodreads8
                     });
 
                     UICommand cmd1 = new UICommand("Login", cmdHandler, 1);
-                    UICommand cmd2 = new UICommand("Quit", cmdHandler, 2);
 
                     dialog.Commands.Add(cmd1);
-                    dialog.Commands.Add(cmd2);
                     dialog.DefaultCommandIndex = 0;
 
-                    IUICommand result = await dialog.ShowAsync();
-                    if (result.Label.Equals("Quit"))
-                    {
-                        Application.Current.Exit();
-                        return;
-                    }
+                    await dialog.ShowAsync();
 
                     bool authResult = await DoOAuthLogin();
                     if (!authResult)
