@@ -91,8 +91,11 @@ namespace Goodreads8
                     if (!authResult)
                     {
                         MessageDialog failDialog = new MessageDialog("Unable to login to Goodreads");
+                        failDialog.Commands.Add(new UICommand("Retry"));
                         await failDialog.ShowAsync();
-                        Application.Current.Exit();
+
+                        Logout_Click(null, null);
+                        return;
                     }
                 }
             }

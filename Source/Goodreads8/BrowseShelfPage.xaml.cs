@@ -150,8 +150,14 @@ namespace Goodreads8
             this.Frame.Navigate(typeof(BookDetailPage), r.Book.Id);
         }
 
+        private bool sorting = false;
         private async void Sort_Click(object sender, RoutedEventArgs e)
         {
+            if (sorting == true)
+                    return;
+
+            sorting = true;            
+
             var popupMenu = new PopupMenu();
 
 
@@ -171,12 +177,19 @@ namespace Goodreads8
             var point = transform.TransformPoint(new Point(45, -10));
 
             IUICommand result = await popupMenu.ShowAsync(point);
+            if (result == null)
+            {
+                sorting = false;
+                return;
+            }
 
             int position = (int)result.Id;
 
             args.sort = options[position];
             args.order = defaultOrder[position];
             LoadData();
+
+            sorting = false;
 
         }
 

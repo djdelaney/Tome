@@ -172,6 +172,7 @@ namespace Goodreads8
             ToastNotificationManager.CreateToastNotifier().Show(toast);
         }
 
+        private PopupMenu popupMenu = null;
         private async void Author_Tapped(object sender, TappedRoutedEventArgs e)
         {
             if (model.Book.Authors == null)
@@ -183,7 +184,10 @@ namespace Goodreads8
                 return;
             }
 
-            var popupMenu = new PopupMenu();
+            if (popupMenu != null)
+                return;
+
+            popupMenu = new PopupMenu();
 
             foreach (Author a in model.Book.Authors)
             {
@@ -197,6 +201,11 @@ namespace Goodreads8
             var point = transform.TransformPoint(new Point(45, -10));
 
             IUICommand result = await popupMenu.ShowAsync(point);
+            if (result == null)
+            {
+                popupMenu = null;
+                return;
+            }
 
             Author toView = result.Id as Author;
             if (toView != null)
@@ -204,6 +213,8 @@ namespace Goodreads8
                 this.Frame.Navigate(typeof(AuthorPage), toView.Id);
                 return;
             }
+
+            popupMenu = null;
         }
 
         private void Book_Cover_Tapped(object sender, TappedRoutedEventArgs e)

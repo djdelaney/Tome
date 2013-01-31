@@ -109,6 +109,7 @@ namespace Goodreads8
                 this.Frame.Navigate(typeof(UpdateStatusPage), model.Id);
         }
 
+        PopupMenu popupMenu = null;
         private async void Author_Click(object sender, RoutedEventArgs e)
         {
             if (model == null || model.Authors == null)
@@ -120,7 +121,10 @@ namespace Goodreads8
                 return;
             }
 
-            var popupMenu = new PopupMenu();
+            if (popupMenu != null)
+                return;
+
+            popupMenu = new PopupMenu();
 
             foreach (Author a in model.Authors)
             {
@@ -134,6 +138,11 @@ namespace Goodreads8
             var point = transform.TransformPoint(new Point(45, -10));
 
             IUICommand result = await popupMenu.ShowAsync(point);
+            if (result == null)
+            {
+                popupMenu = null;
+                return;
+            }
 
             Author toView = result.Id as Author;
             if (toView != null)
@@ -141,6 +150,8 @@ namespace Goodreads8
                 this.Frame.Navigate(typeof(AuthorPage), toView.Id);
                     return;
             }
+
+            popupMenu = null;
         }
 
         private void Shelf_Click(object sender, RoutedEventArgs e)
