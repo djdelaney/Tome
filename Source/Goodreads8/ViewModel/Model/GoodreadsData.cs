@@ -51,7 +51,7 @@ namespace Goodreads8.ViewModel.Model
                                        from u in p.Element("updates").Elements()
                                        select new Update
                                        {
-                                           Type = (Update.Actions)Enum.Parse(typeof(Update.Actions), (string)u.Attribute("type"), true),
+                                           Type = ParseUpdateType((string)u.Attribute("type")),
                                            Text = HtmlUtilities.ConvertToText((string)u.Element("action_text")),
                                            Link = (string)u.Element("link"),
                                            ImageUrl = (string)u.Element("image_url"),
