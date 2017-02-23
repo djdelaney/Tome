@@ -17,3 +17,6 @@ You can view your Goodreads updates, bookshelves, and book information.
 ![Shelf](/Assets/ScreenshotShelf.png?raw=true)
 
 ![Book Details](/Assets/ScreenshotBook.png?raw=true)
+
+# License
+This project is Licensed under the [MIT License](LICENSE.txt)
