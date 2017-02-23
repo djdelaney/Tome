@@ -20,8 +20,8 @@ namespace Goodreads8.ViewModel
 {
     class GoodreadsAPI
     {
-        private const string m_consumerKey          = "IM5fTW9NU2LEEsNgZ1T03Q";
-        private const string m_consumerSecretKey    = "W8Nf4yqskWBIGEndGQ0re1g7ECsooAxwaO7LfSTpFo";
+        private const string m_consumerKey          = "KEY";
+        private const string m_consumerSecretKey    = "SECRET";
         private const string m_requestTokenUrl      = "http://www.goodreads.com/oauth/request_token";
         private const string m_accessTokenUrl       = "http://www.goodreads.com/oauth/access_token";
         private const string m_authorizeTokenUrl    = "https://www.goodreads.com/oauth/authorize?mobile=1";
